@@ -82,6 +82,14 @@ When a recipe works well in a regular home kitchen, it’s useful to have a reli
 
 **Cooked by Us** is a way to bring those scattered lessons together into one organized, personal recipe collection — real, tested, and ready to cook from.
 
+## ⚙️ Next.js Features & Technical Decisions
+
+This project uses several modern **Next.js 16 features** and thoughtful technical decisions to make the app scalable, maintainable, and performant.
+
+For a detailed explanation of things used in this hobby project, see the full documentation here:
+
+➡️ [Next.js Features & Technical Decisions](technics.md)
+
 ## 📜 License
 
 This project is released under the MIT License — feel free to fork and adapt for your own home recipes.

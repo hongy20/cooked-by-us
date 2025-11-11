@@ -6,3 +6,4 @@ This section explains the key **Next.js features** and technical decisions behin
 - Uses the modern [App Router](https://nextjs.org/docs/app) instead of the old Pages Router
 - Chose **Biome** instead of ESLint for faster performance and simplified configuration
 - **Runtime**: **Bun** used locally for development scripts, faster installs, and bundling
+- Configure GitHub Action to run Biome for automated code quality checks

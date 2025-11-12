@@ -55,4 +55,13 @@ async function connectDB() {
   return cached.conn;
 }
 
+export const getClient = async () => {
+  await connectDB();
+  const client = cached.conn?.connection.db;
+  if (!client) {
+    throw new Error("Unable to connect to MongoDB!");
+  }
+  return client;
+};
+
 export default connectDB;

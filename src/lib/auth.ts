@@ -1,5 +1,6 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
+import { headers } from "next/headers";
 import { getClient } from "./db/mongodb";
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
@@ -23,3 +24,8 @@ export const auth = betterAuth({
     },
   },
 });
+
+export const getSession = async () =>
+  await auth.api.getSession({
+    headers: await headers(),
+  });

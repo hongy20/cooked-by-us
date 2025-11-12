@@ -8,5 +8,5 @@ This section explains the key **Next.js features** and technical decisions behin
 - Choose [Biome](https://biomejs.dev/) instead of ESLint for faster performance and simplified configuration
   - Configure GitHub Action to run Biome for automated code quality checks
 - Activate Coding Agents
-  - Configure Gemini CLI with a [dedicated context file](<(https://geminicli.com/docs/get-started/configuration/)>)
+  - Configure Gemini CLI with a [dedicated context file](https://geminicli.com/docs/get-started/configuration/)
   - Enable the [Next.js MCP Server](https://nextjs.org/docs/app/guides/mcp)

@@ -10,3 +10,7 @@ This section explains the key **Next.js features** and technical decisions behin
 - Activate Coding Agents
   - Configure Gemini CLI with a [dedicated context file](https://geminicli.com/docs/get-started/configuration/)
   - Enable the [Next.js MCP Server](https://nextjs.org/docs/app/guides/mcp)
+- Authenticate with [Better Auth](https://www.better-auth.com/docs/integrations/next)
+  - Configure Better Auth instance with [installation](https://www.better-auth.com/docs/installation)
+  - Configure [Google](https://www.better-auth.com/docs/authentication/google) for Social Sign-on
+  - Configure [Mongo Database](https://www.mongodb.com/) with [mongoose](https://mongoosejs.com/)

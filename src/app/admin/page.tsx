@@ -1,5 +1,8 @@
+import { getSession } from "@/lib/auth";
+
 const Page = async () => {
-  return <p>Admin</p>;
+  const session = await getSession();
+  return <p>Admin page with {session?.user.email}</p>;
 };
 
 export default Page;

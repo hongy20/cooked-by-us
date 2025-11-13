@@ -55,7 +55,7 @@ async function connectDB() {
   return cached.conn;
 }
 
-export const getClient = async () => {
+export const getClient = async (): Promise<mongoose.mongo.Db> => {
   await connectDB();
   const client = cached.conn?.connection.db;
   if (!client) {

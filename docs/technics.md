@@ -19,3 +19,4 @@ This section explains the key **Next.js features** and technical decisions behin
 - Use [Server and Client Components](https://nextjs.org/docs/app/getting-started/server-and-client-components)
 - Use Next.js built-in [Link](https://nextjs.org/docs/app/getting-started/linking-and-navigating) for prefetching and client-side navigation between routes
 - Setup [Proxy](https://nextjs.org/docs/app/getting-started/proxy) to redirect anonymous visitors from accessing protected pages
+- Prevent client-side execution of server-only code with module [server-only](https://nextjs.org/docs/app/guides/data-security#preventing-client-side-execution-of-server-only-code)

@@ -27,6 +27,12 @@ export const auth = betterAuth({
 });
 
 export const getSession = async () =>
-  await auth.api.getSession({
-    headers: await headers(),
-  });
+  await auth.api
+    .getSession({
+      headers: await headers(),
+    })
+    .catch((error) => {
+      console.error("Failed to get session:", error);
+      // Treat as unauthenticated on session fetch failure
+      return null;
+    });

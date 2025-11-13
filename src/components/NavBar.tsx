@@ -14,7 +14,7 @@ export const NavBar = () => {
     } catch (error) {
       console.error("Sign out failed", error);
     } finally {
-      router.push("/");
+      router.replace("/");
     }
   };
 

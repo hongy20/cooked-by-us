@@ -1,11 +1,15 @@
 import "server-only";
-import { betterAuth } from "better-auth";
+import { APIError, betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { headers } from "next/headers";
 import { getClient } from "./db/mongodb";
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+
+const allowedGoogleEmails = (process.env.ALLOWED_GOOGLE_EMAILS || "")
+  .toLowerCase()
+  .split(",");
 
 if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
   throw new Error(
@@ -22,6 +26,23 @@ export const auth = betterAuth({
       prompt: "select_account",
       clientId: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
+    },
+  },
+  databaseHooks: {
+    user: {
+      create: {
+        before: async (user) => {
+          const isAllowedToSignUp = allowedGoogleEmails.includes(
+            user.email.toLowerCase(),
+          );
+          if (!isAllowedToSignUp) {
+            console.warn(`Signup attempt rejected for email: ${user.email}`);
+            throw new APIError("BAD_REQUEST", {
+              message: "Signup is disabled",
+            });
+          }
+        },
+      },
     },
   },
 });

@@ -14,3 +14,8 @@ This section explains the key **Next.js features** and technical decisions behin
   - Configure Better Auth instance with [installation](https://www.better-auth.com/docs/installation)
   - Configure [Google](https://www.better-auth.com/docs/authentication/google) for Social Sign-on
   - Configure [Mongo Database](https://www.mongodb.com/) with [mongoose](https://mongoosejs.com/)
+- Use [Route Handlers](https://nextjs.org/docs/app/getting-started/route-handlers)
+- Use [Dynamic Routes](https://nextjs.org/docs/app/getting-started/project-structure#dynamic-routes)
+- Use [Server and Client Components](https://nextjs.org/docs/app/getting-started/server-and-client-components)
+- Use Next.js built-in [Link](https://nextjs.org/docs/app/getting-started/linking-and-navigating) for prefetching and client-side navigation between routes
+- Setup [Proxy](https://nextjs.org/docs/app/getting-started/proxy) to redirect anonymous visitors from accessing protected pages

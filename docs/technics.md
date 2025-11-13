@@ -14,6 +14,7 @@ This section explains the key **Next.js features** and technical decisions behin
   - Configure Better Auth instance with [installation](https://www.better-auth.com/docs/installation)
   - Configure [Google](https://www.better-auth.com/docs/authentication/google) for Social Sign-on
   - Configure [Mongo Database](https://www.mongodb.com/) with [mongoose](https://mongoosejs.com/)
+  - Restrict login to [selected accounts](https://github.com/better-auth/better-auth/blob/canary/docs/content/docs/errors/signup_disabled.mdx) only
 - Use [Route Handlers](https://nextjs.org/docs/app/getting-started/route-handlers)
 - Use [Dynamic Routes](https://nextjs.org/docs/app/getting-started/project-structure#dynamic-routes)
 - Use [Server and Client Components](https://nextjs.org/docs/app/getting-started/server-and-client-components)

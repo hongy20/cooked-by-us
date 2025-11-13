@@ -36,6 +36,7 @@ export const auth = betterAuth({
             user.email.toLowerCase(),
           );
           if (!isAllowedToSignUp) {
+            console.warn(`Signup attempt rejected for email: ${user.email}`);
             throw new APIError("BAD_REQUEST", {
               message: "Signup is disabled",
             });

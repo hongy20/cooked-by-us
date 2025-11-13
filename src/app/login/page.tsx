@@ -2,8 +2,8 @@ import { Login } from "@/components/Login";
 
 export default function Page() {
   return (
-    <main className="flex items-center justify-center">
+    <div className="flex items-center justify-center self-center">
       <Login />
-    </main>
+    </div>
   );
 }

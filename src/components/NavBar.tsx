@@ -2,14 +2,19 @@
 
 import { CookingPot } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 
 export const NavBar = () => {
+  const router = useRouter();
+
   const signOutHandler = async () => {
     try {
       await authClient.signOut();
     } catch (error) {
       console.error("Sign out failed", error);
+    } finally {
+      router.push("/");
     }
   };
 

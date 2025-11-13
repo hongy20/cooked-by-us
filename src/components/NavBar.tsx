@@ -5,8 +5,12 @@ import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 
 export const NavBar = () => {
-  const signOutHandler = () => {
-    authClient.signOut();
+  const signOutHandler = async () => {
+    try {
+      await authClient.signOut();
+    } catch (error) {
+      console.error("Sign out failed", error);
+    }
   };
 
   return (
@@ -23,7 +27,7 @@ export const NavBar = () => {
           <Link href={"/login"}>Login</Link>
         </li>
         <li>
-          <button type="button" onClick={() => signOutHandler()}>
+          <button type="button" onClick={signOutHandler}>
             Sign Out
           </button>
         </li>

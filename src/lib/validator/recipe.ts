@@ -26,7 +26,7 @@ export const RecipeValidator = z.object({
   cookTime: z
     .string()
     .regex(
-      /^PT(\dH)?(\dM)?(\dS)?$/,
+      /^PT(\d+H)?(\d+M)?(\d+S)?$/,
       "Cook time must be in ISO 8601 duration format (e.g., PT1H30M).",
     ),
   keywords: stringArraySchemaFactory(1),

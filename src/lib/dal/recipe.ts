@@ -1,0 +1,33 @@
+import "server-only";
+import type { Types } from "mongoose";
+import { type IRecipe, RecipeModel } from "@/lib/model/recipe";
+import connectDB from "../mongodb";
+
+export const createRecipe = async (data: IRecipe) => {
+  await connectDB();
+  return await RecipeModel.create(data);
+};
+
+export const getRecipe = async (recipeId: Types.ObjectId) => {
+  await connectDB();
+  return await RecipeModel.findById(recipeId).lean<IRecipe>();
+};
+
+export const getAllRecipes = async () => {
+  await connectDB();
+  return await RecipeModel.find().sort({ createdAt: -1 }).lean<IRecipe>();
+};
+
+export const getSimilarRecipes = async (recipeId: Types.ObjectId) => {
+  await connectDB();
+  const recipe = await getRecipe(recipeId);
+
+  if (!recipe) {
+    return [];
+  }
+
+  return await RecipeModel.find({
+    keywords: { $in: recipe.keywords },
+    id: { $ne: recipe.id },
+  }).lean<IRecipe>();
+};

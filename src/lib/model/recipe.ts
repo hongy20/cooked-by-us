@@ -81,7 +81,5 @@ const RecipeSchema = new Schema<IRecipe>(
   },
 );
 
-const Recipe =
+export const RecipeModel =
   (models.Recipe as Model<IRecipe>) || model<IRecipe>("Recipe", RecipeSchema);
-
-export default Recipe;

@@ -9,7 +9,7 @@ const InstructionStep = z.object({
 });
 
 // Zod schema for the Recipe model
-export const RecipeSchema = z.object({
+export const RecipeValidator = z.object({
   name: z.string().min(3).trim(),
   description: z.string().min(10),
   image: z.url(),
@@ -31,6 +31,3 @@ export const RecipeSchema = z.object({
     ),
   keywords: stringArraySchemaFactory(1),
 });
-
-// Optional: Infer the TypeScript type from the schema
-export type RecipeInput = z.infer<typeof RecipeSchema>;

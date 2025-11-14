@@ -18,7 +18,7 @@ export const createRecipeAction = async (
   formData: FormData,
 ): Promise<CreateRecipeFormState> => {
   const session = await getSession();
-  if (session) {
+  if (!session) {
     redirect("/login");
   }
 

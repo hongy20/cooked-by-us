@@ -1,7 +1,9 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { z } from "zod";
-import { type RecipeInput, RecipeValidator } from "../validator/recipe";
+import { getSession } from "@/lib/auth";
+import { type RecipeInput, RecipeValidator } from "@/lib/validator/recipe";
 import type { FormState } from "./type";
 
 export type CreateRecipeFormState = FormState<
@@ -15,6 +17,11 @@ export const createRecipeAction = async (
   _prevState: CreateRecipeFormState,
   formData: FormData,
 ): Promise<CreateRecipeFormState> => {
+  const session = await getSession();
+  if (session) {
+    redirect("/login");
+  }
+
   // 1. Validate form data
   const fields = {
     name: formData.get("name") as string,

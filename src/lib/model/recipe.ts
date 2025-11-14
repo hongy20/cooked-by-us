@@ -1,4 +1,5 @@
 import { type Document, type Model, model, models, Schema } from "mongoose";
+import { RECIPE_CATEGORY, RECIPE_CUISINE } from "../constant";
 
 export interface IRecipe extends Document {
   name: string;
@@ -52,42 +53,12 @@ const RecipeSchema = new Schema<IRecipe>(
     recipeCategory: {
       type: String,
       required: true,
-      enum: [
-        "Appetizer / Starter",
-        "Main Course",
-        "Side Dish",
-        "Dessert",
-        "Soup",
-        "Salad",
-        "Bread",
-        "Beverage / Drink",
-        "Sauce",
-        "Spread / Dip",
-        "Marinade",
-        "Dressing",
-      ],
+      enum: RECIPE_CATEGORY,
     },
     recipeCuisine: {
       type: String,
       required: true,
-      enum: [
-        "Italian",
-        "French",
-        "Spanish",
-        "Mexican",
-        "American",
-        "Mediterranean",
-        "Middle Eastern",
-        "Indian",
-        "Chinese",
-        "Japanese",
-        "Thai",
-        "Korean",
-        "Vietnamese",
-        "Nordic / Scandinavian",
-        "African",
-        "Latin American",
-      ],
+      enum: RECIPE_CUISINE,
     },
     recipeIngredient: {
       type: [String],

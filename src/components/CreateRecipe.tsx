@@ -32,6 +32,7 @@ import {
   minutesToHuman,
   minutesToISO,
 } from "@/lib/utils/duration";
+import { Spinner } from "./ui/spinner";
 
 const initialState: CreateRecipeFormState = {
   status: "idle",
@@ -138,7 +139,8 @@ export const CreateRecipe = () => {
             <FieldError>{state.errors?.cookTime}</FieldError>
           </Field>
           <Field orientation="horizontal">
-            <Button type="submit" disabled={pending}>
+            <Button type="submit" className="w-30 relative" disabled={pending}>
+              {pending && <Spinner className="absolute left-3" />}
               Submit
             </Button>
             <Button variant="outline" type="button">

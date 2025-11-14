@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Field,
@@ -27,6 +27,11 @@ import {
   createRecipeAction,
 } from "@/lib/action/recipe";
 import { RECIPE_CATEGORY, RECIPE_CUISINE } from "@/lib/constant";
+import {
+  isoToMinutes,
+  minutesToHuman,
+  minutesToISO,
+} from "@/lib/utils/duration";
 
 const initialState: CreateRecipeFormState = {
   status: "idle",
@@ -44,6 +49,13 @@ export const CreateRecipe = () => {
     createRecipeAction,
     initialState,
   );
+
+  const [cookTimeInMinutes, setCookTimeInMinutes] = useState(30);
+  useEffect(() => {
+    if (state.fields.cookTime) {
+      setCookTimeInMinutes(isoToMinutes(state.fields.cookTime));
+    }
+  }, [state.fields.cookTime]);
 
   return (
     <form action={action} className="w-full max-w-lg">
@@ -108,7 +120,21 @@ export const CreateRecipe = () => {
           </Field>
           <Field>
             <FieldTitle>Cook Time</FieldTitle>
-            <Slider defaultValue={[30]} max={600} min={10} step={1} />
+            <Slider
+              value={[cookTimeInMinutes]}
+              onValueChange={(value) => setCookTimeInMinutes(value[0])}
+              max={600}
+              min={10}
+              step={10}
+            />
+            <FieldDescription>
+              {minutesToHuman(cookTimeInMinutes)}
+            </FieldDescription>
+            <Input
+              type="hidden"
+              name="cookTime"
+              value={minutesToISO(cookTimeInMinutes)}
+            />
             <FieldError>{state.errors?.cookTime}</FieldError>
           </Field>
           <Field orientation="horizontal">

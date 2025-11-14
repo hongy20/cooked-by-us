@@ -31,3 +31,5 @@ export const RecipeValidator = z.object({
     ),
   keywords: stringArraySchemaFactory(1),
 });
+
+export type RecipeInput = z.infer<typeof RecipeValidator>;

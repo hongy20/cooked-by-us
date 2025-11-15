@@ -28,7 +28,7 @@ export const createRecipeAction = async (
     name: formData.get("name") as string,
     description: formData.get("description") as string,
     image,
-    // author: formData.get("author") as string,
+    author: session.user.id,
     recipeCategory: formData.get("recipeCategory") as string,
     recipeCuisine: formData.get("recipeCuisine") as string,
     recipeIngredients: JSON.parse(formData.get("recipeIngredients") as string),

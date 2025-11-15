@@ -4,17 +4,18 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { getSession } from "@/lib/auth";
 import { type RecipeInput, RecipeValidator } from "@/lib/validator/recipe";
+import { upload } from "../cloudinary";
 import type { FormState } from "./type";
 
 export type CreateRecipeFormState = FormState<
   Omit<
     RecipeInput,
-    "image" | "author" | "recipeIngredient" | "recipeInstructions" | "keywords"
+    "author" | "recipeIngredient" | "recipeInstructions" | "keywords"
   >
 >;
 
 export const createRecipeAction = async (
-  _prevState: CreateRecipeFormState,
+  prevState: CreateRecipeFormState,
   formData: FormData,
 ): Promise<CreateRecipeFormState> => {
   const session = await getSession();
@@ -23,10 +24,13 @@ export const createRecipeAction = async (
   }
 
   // 1. Validate form data
+  const file = formData.get("image") as File;
+  const image = file.size > 0 ? await upload(file) : prevState.fields.image;
+
   const fields = {
     name: formData.get("name") as string,
     description: formData.get("description") as string,
-    // image: formData.get("image") as string,
+    image,
     // author: formData.get("author") as string,
     recipeCategory: formData.get("recipeCategory") as string,
     recipeCuisine: formData.get("recipeCuisine") as string,
@@ -39,7 +43,6 @@ export const createRecipeAction = async (
 
   if (!validatedFields.success) {
     const {
-      image: _image,
       author: _author,
       recipeIngredient: _recipeIngredient,
       recipeInstructions: _recipeInstructions,
@@ -55,7 +58,6 @@ export const createRecipeAction = async (
 
   console.log(
     "TODO: 1.",
-    formData.get("image"),
     formData.get("author"),
     formData.get("recipeInstructions"),
   );

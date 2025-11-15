@@ -38,6 +38,7 @@ const initialState: CreateRecipeFormState = {
   status: "idle",
   fields: {
     name: "",
+    image: "",
     description: "",
     recipeCategory: "",
     recipeCuisine: "",
@@ -50,7 +51,6 @@ export const CreateRecipe = () => {
     async (prevState: CreateRecipeFormState, formData: FormData) => {
       // IMPORTANT: convert cook time to ISO string and re-attach it
       formData.set("cookTime", minutesToISO(cookTimeInMinutes));
-      // IMPORTANT: re-attach file because <input type="file"> resets
       return await createRecipeAction(prevState, formData);
     },
     initialState,
@@ -92,6 +92,22 @@ export const CreateRecipe = () => {
               defaultValue={state.fields.description}
             />
             <FieldError>{state.errors?.description}</FieldError>
+          </Field>
+          <Field>
+            <FieldLabel htmlFor="image">Image</FieldLabel>
+            <Input
+              id="image"
+              name="image"
+              type="file"
+              accept="image/*"
+              required={!state.fields.image}
+            />
+            {state.fields.image && (
+              <FieldDescription>
+                Image uploaded: {state.fields.image}
+              </FieldDescription>
+            )}
+            <FieldError>{state.errors?.image}</FieldError>
           </Field>
           <Field>
             <FieldLabel>Recipe Category</FieldLabel>

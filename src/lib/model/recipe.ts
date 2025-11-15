@@ -8,7 +8,7 @@ export interface IRecipe extends Document {
   author: Schema.Types.ObjectId;
   recipeCategory: string;
   recipeCuisine: string;
-  recipeIngredient: string[];
+  recipeIngredients: string[];
   recipeInstructions: {
     text: string;
     image?: string;
@@ -60,7 +60,7 @@ const RecipeSchema = new Schema<IRecipe>(
       required: true,
       enum: RECIPE_CUISINE,
     },
-    recipeIngredient: {
+    recipeIngredients: {
       type: [String],
       required: true,
     },

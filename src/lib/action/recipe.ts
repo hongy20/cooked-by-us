@@ -8,7 +8,7 @@ import { upload } from "../cloudinary";
 import type { FormState } from "./type";
 
 export type CreateRecipeFormState = FormState<
-  Omit<RecipeInput, "author" | "recipeIngredient" | "recipeInstructions">
+  Omit<RecipeInput, "author" | "recipeInstructions">
 >;
 
 export const createRecipeAction = async (
@@ -31,7 +31,7 @@ export const createRecipeAction = async (
     // author: formData.get("author") as string,
     recipeCategory: formData.get("recipeCategory") as string,
     recipeCuisine: formData.get("recipeCuisine") as string,
-    // recipeIngredient: formData.get("recipeIngredient") as string,
+    recipeIngredients: JSON.parse(formData.get("recipeIngredients") as string),
     // recipeInstructions: formData.get("recipeInstructions") as string,
     cookTime: formData.get("cookTime") as string,
     keywords: JSON.parse(formData.get("keywords") as string),
@@ -41,7 +41,6 @@ export const createRecipeAction = async (
   if (!validatedFields.success) {
     const {
       author: _author,
-      recipeIngredient: _recipeIngredient,
       recipeInstructions: _recipeInstructions,
       ...errors
     } = z.flattenError(validatedFields.error).fieldErrors;

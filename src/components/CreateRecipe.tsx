@@ -27,7 +27,8 @@ import {
 } from "@/lib/action/recipe";
 import { RECIPE_CATEGORY, RECIPE_CUISINE } from "@/lib/constant";
 import { CookTimeInput } from "./CookTimeInput";
-import { KeywordInput } from "./KeywordInput";
+import { KeywordsInput } from "./KeywordsInput";
+import { RecipeIngredientsInput } from "./RecipeIngredientsInput";
 import { Spinner } from "./ui/spinner";
 
 const initialState: CreateRecipeFormState = {
@@ -38,6 +39,7 @@ const initialState: CreateRecipeFormState = {
     description: "",
     recipeCategory: "",
     recipeCuisine: "",
+    recipeIngredients: [],
     cookTime: "PT30M",
     keywords: [],
   },
@@ -127,6 +129,14 @@ export const CreateRecipe = () => {
             <FieldError>{state.errors?.recipeCuisine}</FieldError>
           </Field>
           <Field>
+            <FieldTitle>Recipe Ingredients</FieldTitle>
+            <RecipeIngredientsInput
+              name="recipeIngredients"
+              defaultValue={state.fields.recipeIngredients}
+            />
+            <FieldError>{state.errors?.recipeIngredients}</FieldError>
+          </Field>
+          <Field>
             <FieldTitle>Cook Time</FieldTitle>
             <CookTimeInput
               name="cookTime"
@@ -136,7 +146,7 @@ export const CreateRecipe = () => {
           </Field>
           <Field>
             <FieldTitle>Keywords</FieldTitle>
-            <KeywordInput
+            <KeywordsInput
               name="keywords"
               defaultValue={state.fields.keywords}
             />

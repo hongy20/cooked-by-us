@@ -32,6 +32,7 @@ import {
   minutesToHuman,
   minutesToISO,
 } from "@/lib/utils/duration";
+import { KeywordInput } from "./KeywordInput";
 import { Spinner } from "./ui/spinner";
 
 const initialState: CreateRecipeFormState = {
@@ -43,6 +44,7 @@ const initialState: CreateRecipeFormState = {
     recipeCategory: "",
     recipeCuisine: "",
     cookTime: "",
+    keywords: [],
   },
 };
 
@@ -154,6 +156,14 @@ export const CreateRecipe = () => {
               {minutesToHuman(cookTimeInMinutes)}
             </FieldDescription>
             <FieldError>{state.errors?.cookTime}</FieldError>
+          </Field>
+          <Field>
+            <FieldTitle>Keywords</FieldTitle>
+            <KeywordInput
+              name="keywords"
+              defaultValue={state.fields.keywords}
+            />
+            <FieldError>{state.errors?.keywords}</FieldError>
           </Field>
           <Field orientation="horizontal">
             <Button type="submit" className="w-30 relative" disabled={pending}>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Field,
@@ -20,18 +20,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Slider } from "@/components/ui/slider";
 import { Textarea } from "@/components/ui/textarea";
 import {
   type CreateRecipeFormState,
   createRecipeAction,
 } from "@/lib/action/recipe";
 import { RECIPE_CATEGORY, RECIPE_CUISINE } from "@/lib/constant";
-import {
-  isoToMinutes,
-  minutesToHuman,
-  minutesToISO,
-} from "@/lib/utils/duration";
+import { CookTimeInput } from "./CookTimeInput";
 import { KeywordInput } from "./KeywordInput";
 import { Spinner } from "./ui/spinner";
 
@@ -43,28 +38,16 @@ const initialState: CreateRecipeFormState = {
     description: "",
     recipeCategory: "",
     recipeCuisine: "",
-    cookTime: "",
+    cookTime: "PT30M",
     keywords: [],
   },
 };
 
 export const CreateRecipe = () => {
   const [state, action, pending] = useActionState(
-    async (prevState: CreateRecipeFormState, formData: FormData) => {
-      // IMPORTANT: convert cook time to ISO string and re-attach it
-      formData.set("cookTime", minutesToISO(cookTimeInMinutes));
-      return await createRecipeAction(prevState, formData);
-    },
+    createRecipeAction,
     initialState,
   );
-
-  const [cookTimeInMinutes, setCookTimeInMinutes] = useState(30);
-  useEffect(() => {
-    if (state.fields.cookTime) {
-      // Convert ISO cook time to minitus
-      setCookTimeInMinutes(isoToMinutes(state.fields.cookTime));
-    }
-  }, [state.fields.cookTime]);
 
   return (
     <form action={action} className="w-full max-w-lg">
@@ -145,16 +128,10 @@ export const CreateRecipe = () => {
           </Field>
           <Field>
             <FieldTitle>Cook Time</FieldTitle>
-            <Slider
-              value={[cookTimeInMinutes]}
-              onValueChange={(value) => setCookTimeInMinutes(value[0])}
-              max={600}
-              min={10}
-              step={10}
+            <CookTimeInput
+              name="cookTime"
+              defaultValue={state.fields.cookTime}
             />
-            <FieldDescription>
-              {minutesToHuman(cookTimeInMinutes)}
-            </FieldDescription>
             <FieldError>{state.errors?.cookTime}</FieldError>
           </Field>
           <Field>

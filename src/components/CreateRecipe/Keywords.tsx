@@ -8,7 +8,7 @@ interface Props {
   defaultValue?: string[];
 }
 
-export function KeywordsInput({ name, defaultValue = [] }: Props) {
+export function Keywords({ name, defaultValue = [] }: Props) {
   const [keywords, setKeywords] = useState<string[]>(defaultValue);
   const [inputValue, setInputValue] = useState("");
 

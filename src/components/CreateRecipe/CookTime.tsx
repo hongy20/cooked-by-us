@@ -4,15 +4,15 @@ import {
   minutesToHuman,
   minutesToISO,
 } from "@/lib/utils/duration";
-import { FieldDescription } from "./ui/field";
-import { Slider } from "./ui/slider";
+import { FieldDescription } from "../ui/field";
+import { Slider } from "../ui/slider";
 
 interface Props {
   name: string;
   defaultValue: string;
 }
 
-export function CookTimeInput({ name, defaultValue }: Props) {
+export function CookTime({ name, defaultValue }: Props) {
   const [cookTimeInMinutes, setCookTimeInMinutes] = useState(
     isoToMinutes(defaultValue),
   );

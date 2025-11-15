@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { CreateRecipe } from "@/components/CreateRecipe";
+import { CreateRecipe } from "@/components/CreateRecipe/CreateRecipe";
 import { getSession } from "@/lib/auth";
 
 const Page = async () => {

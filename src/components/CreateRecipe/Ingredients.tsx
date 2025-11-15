@@ -8,7 +8,7 @@ interface Props {
   defaultValue?: string[];
 }
 
-export function RecipeIngredientsInput({ name, defaultValue = [] }: Props) {
+export function Ingredients({ name, defaultValue = [] }: Props) {
   const [ingredients, setIngredients] = useState<string[]>(defaultValue);
   const [inputValue, setInputValue] = useState("");
 
@@ -24,7 +24,7 @@ export function RecipeIngredientsInput({ name, defaultValue = [] }: Props) {
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-1">
       {/* Hidden input for form submission */}
       {name && (
         <input type="hidden" name={name} value={JSON.stringify(ingredients)} />

@@ -47,13 +47,19 @@ const initialState: CreateRecipeFormState = {
 
 export const CreateRecipe = () => {
   const [state, action, pending] = useActionState(
-    createRecipeAction,
+    async (prevState: CreateRecipeFormState, formData: FormData) => {
+      // IMPORTANT: convert cook time to ISO string and re-attach it
+      formData.set("cookTime", minutesToISO(cookTimeInMinutes));
+      // IMPORTANT: re-attach file because <input type="file"> resets
+      return await createRecipeAction(prevState, formData);
+    },
     initialState,
   );
 
   const [cookTimeInMinutes, setCookTimeInMinutes] = useState(30);
   useEffect(() => {
     if (state.fields.cookTime) {
+      // Convert ISO cook time to minitus
       setCookTimeInMinutes(isoToMinutes(state.fields.cookTime));
     }
   }, [state.fields.cookTime]);
@@ -131,11 +137,6 @@ export const CreateRecipe = () => {
             <FieldDescription>
               {minutesToHuman(cookTimeInMinutes)}
             </FieldDescription>
-            <Input
-              type="hidden"
-              name="cookTime"
-              value={minutesToISO(cookTimeInMinutes)}
-            />
             <FieldError>{state.errors?.cookTime}</FieldError>
           </Field>
           <Field orientation="horizontal">

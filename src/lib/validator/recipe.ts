@@ -15,8 +15,8 @@ export const RecipeValidator = z.object({
   image: z.url(),
   author: z
     .string()
-    .length(24, "Invalid Event ID")
-    .regex(/^[0-9a-fA-F]{24}$/, "Author ID must be a valid MongoDB ObjectId"),
+    .length(24, "Invalid Author ID")
+    .regex(/^[0-9a-fA-F]{24}$/, "Author ID must be valid"), // MongoDB ObjectId
   recipeCategory: z.enum(RECIPE_CATEGORY),
   recipeCuisine: z.enum(RECIPE_CUISINE),
   recipeIngredient: stringArraySchemaFactory(1),

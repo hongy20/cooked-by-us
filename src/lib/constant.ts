@@ -15,19 +15,8 @@ export const RECIPE_CATEGORY = [
 
 export const RECIPE_CUISINE = [
   "Italian",
-  "French",
-  "Spanish",
-  "Mexican",
-  "American",
-  "Mediterranean",
-  "Middle Eastern",
-  "Indian",
   "Chinese",
   "Japanese",
-  "Thai",
   "Korean",
-  "Vietnamese",
   "Nordic / Scandinavian",
-  "African",
-  "Latin American",
 ];

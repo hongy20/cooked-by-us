@@ -22,3 +22,8 @@ This section explains the key **Next.js features** and technical decisions behin
 - Setup [Proxy](https://nextjs.org/docs/app/getting-started/proxy) to redirect anonymous visitors from accessing protected pages
 - Prevent client-side execution of server-only code with module [server-only](https://nextjs.org/docs/app/guides/data-security#preventing-client-side-execution-of-server-only-code)
 - Handle [redirects](https://nextjs.org/docs/app/guides/redirecting) in proxy, client components and server components
+- Integrate components from the [shadcn](https://ui.shadcn.com/) UI library
+- Set up [Cloudinary](https://cloudinary.com/) for image hosting
+- Use [Zod](https://zod.dev/) to validate form data
+- Handle [form submission](https://nextjs.org/docs/app/guides/forms) using Server Action
+- Apply the [DAL pattern](https://nextjs.org/docs/app/guides/data-security#data-access-layer) for data management

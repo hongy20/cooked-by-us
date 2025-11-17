@@ -1,14 +1,14 @@
 import "server-only";
-import type { Types } from "mongoose";
 import { type IRecipe, RecipeModel } from "@/lib/model/recipe";
-import connectDB from "../mongodb";
+import connectDB from "@/lib/mongodb";
+import type { RecipeInput } from "@/lib/validator/recipe";
 
-export const createRecipe = async (data: IRecipe) => {
+export const createRecipe = async (data: RecipeInput) => {
   await connectDB();
   return await RecipeModel.create(data);
 };
 
-export const getRecipe = async (recipeId: Types.ObjectId) => {
+export const getRecipe = async (recipeId: string) => {
   await connectDB();
   return await RecipeModel.findById(recipeId).lean<IRecipe>();
 };
@@ -18,7 +18,7 @@ export const getAllRecipes = async () => {
   return await RecipeModel.find().sort({ createdAt: -1 }).lean<IRecipe>();
 };
 
-export const getSimilarRecipes = async (recipeId: Types.ObjectId) => {
+export const getSimilarRecipes = async (recipeId: string) => {
   await connectDB();
   const recipe = await getRecipe(recipeId);
 

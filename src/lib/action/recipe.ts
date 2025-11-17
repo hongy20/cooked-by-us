@@ -5,6 +5,8 @@ import { z } from "zod";
 import { getSession } from "@/lib/auth";
 import { type RecipeInput, RecipeValidator } from "@/lib/validator/recipe";
 import { upload } from "../cloudinary";
+import { createRecipe } from "../dal/recipe";
+import type { IRecipe } from "../model/recipe";
 import type { FormState } from "./type";
 
 export type CreateRecipeFormState = FormState<Omit<RecipeInput, "author">>;
@@ -47,16 +49,17 @@ export const createRecipeAction = async (
     };
   }
 
-  console.log("TODO: 1.", validatedFields.data);
+  let recipe: IRecipe | undefined;
+  try {
+    recipe = await createRecipe(validatedFields.data);
+  } catch (e) {
+    console.error("Recipe creation failed", e);
+    // TODO: show error in client
+    return {
+      status: "error",
+      fields,
+    };
+  }
 
-  // 2. Prepare data for insertion into database
-  console.log("TODO: 2. Prepare data for insertion into database");
-
-  // 3. Insert the data into the database
-  console.log("TODO: 3. Insert the data into the database");
-
-  // 4. Redirect to the recipe page
-  console.log("TODO: 4. Redirect to the recipe page");
-
-  return { status: "success", fields };
+  redirect(`/recipe/${recipe.id}`);
 };

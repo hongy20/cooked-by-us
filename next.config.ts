@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "3MB",
     },
   },
+  images: {
+    remotePatterns: [{ protocol: "https", hostname: "res.cloudinary.com" }],
+  },
   reactCompiler: true,
 };
 

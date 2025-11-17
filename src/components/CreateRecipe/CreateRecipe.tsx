@@ -45,8 +45,6 @@ export const CreateRecipe = () => {
     initialState,
   );
 
-  console.log(JSON.stringify(state.fields));
-
   return (
     <form action={action} className="flex-none w-full max-w-xl min-w-0 px-4">
       <FieldSet>
@@ -68,7 +66,11 @@ export const CreateRecipe = () => {
             defaultValue={state.fields.image}
             error={state.errors?.image}
           />
-          <FieldRecipeCategory name="category" error={state.errors?.category} />
+          <FieldRecipeCategory
+            name="category"
+            defaultValue={state.fields.category}
+            error={state.errors?.category}
+          />
           <FieldRecipeCuisine
             name="cuisine"
             defaultValue={state.fields.cuisine}

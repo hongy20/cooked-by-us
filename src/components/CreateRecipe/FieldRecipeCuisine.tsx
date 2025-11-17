@@ -11,19 +11,23 @@ import {
 
 interface Props {
   name: string;
-  defaultValue: string | undefined;
+  defaultValue: string;
   error: string[] | undefined;
 }
 
 const ID = "cuisine";
 
 export const FieldRecipeCuisine = ({ name, defaultValue, error }: Props) => {
-  const [cuisine, setCuisine] = useState<string | undefined>(defaultValue);
+  const [cuisine, setCuisine] = useState<string>(defaultValue);
 
   return (
     <Field>
       <FieldLabel htmlFor={ID}>Recipe Cuisine</FieldLabel>
-      <Select name={name} value={cuisine} onValueChange={setCuisine}>
+
+      {/* Prevent form from losing the selected value */}
+      <input type="hidden" name={name} value={cuisine} />
+
+      <Select value={cuisine} onValueChange={setCuisine}>
         <SelectTrigger id={ID}>
           <SelectValue placeholder="Choose cuisine" />
         </SelectTrigger>

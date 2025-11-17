@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { RECIPE_CATEGORY } from "@/lib/constant";
 import { Field, FieldError, FieldLabel } from "../ui/field";
 import {
@@ -10,16 +11,23 @@ import {
 
 interface Props {
   name: string;
+  defaultValue: string;
   error: string[] | undefined;
 }
 
 const ID = "category";
 
-export const FieldRecipeCategory = ({ name, error }: Props) => {
+export const FieldRecipeCategory = ({ name, defaultValue, error }: Props) => {
+  const [category, setCategory] = useState<string>(defaultValue);
+
   return (
     <Field>
       <FieldLabel htmlFor={ID}>Recipe Category</FieldLabel>
-      <Select name={name}>
+
+      {/* Prevent form from losing the selected value */}
+      <input type="hidden" name={name} value={category} />
+
+      <Select value={category} onValueChange={setCategory}>
         <SelectTrigger id={ID}>
           <SelectValue placeholder="Choose category" />
         </SelectTrigger>

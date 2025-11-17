@@ -11,15 +11,18 @@ const InstructionStep = z.object({
 // Zod schema for the Recipe model
 export const RecipeValidator = z.object({
   name: z.string().min(3).trim(),
-  description: z.string().min(10),
+  description: z.string().trim(),
   image: z.url(),
   author: z
     .string()
     .length(24, "Invalid Author ID")
     .regex(/^[0-9a-fA-F]{24}$/, "Author ID must be valid"), // MongoDB ObjectId
-  category: z.enum(RECIPE_CATEGORY),
-  cuisine: z.enum(RECIPE_CUISINE),
-  ingredients: stringArraySchemaFactory(1),
+  category: z.enum(RECIPE_CATEGORY, "A recipe category is required."),
+  cuisine: z.enum(RECIPE_CUISINE, "A recipe cuisine is required."),
+  ingredients: stringArraySchemaFactory({
+    minLength: 1,
+    errorMessage: "Ingredients cannot be empty — add at least one",
+  }),
   instructions: z
     .array(InstructionStep)
     .min(1, "At least one instruction step is required."),
@@ -29,7 +32,10 @@ export const RecipeValidator = z.object({
       /^PT(\d+H)?(\d+M)?(\d+S)?$/,
       "Cook time must be in ISO 8601 duration format (e.g., PT1H30M).",
     ),
-  keywords: stringArraySchemaFactory(1),
+  keywords: stringArraySchemaFactory({
+    minLength: 1,
+    errorMessage: "Keywords cannot be empty — add at least one",
+  }),
 });
 
 export type RecipeInput = z.infer<typeof RecipeValidator>;

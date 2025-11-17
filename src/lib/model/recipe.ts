@@ -38,7 +38,6 @@ const RecipeSchema = new Schema<IRecipe>(
     },
     description: {
       type: String,
-      required: true,
       trim: true,
     },
     image: {

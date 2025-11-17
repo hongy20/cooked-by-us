@@ -74,7 +74,6 @@ export const CreateRecipe = () => {
             <Textarea
               id="description"
               name="description"
-              required
               placeholder="Recipe Description"
               defaultValue={state.fields.description}
             />

@@ -37,9 +37,9 @@ const initialState: CreateRecipeFormState = {
     name: "",
     image: "",
     description: "",
-    recipeCategory: "",
-    recipeCuisine: "",
-    recipeIngredients: [],
+    category: "",
+    cuisine: "",
+    ingredients: [],
     cookTime: "PT30M",
     keywords: [],
   },
@@ -98,7 +98,7 @@ export const CreateRecipe = () => {
           </Field>
           <Field>
             <FieldLabel>Recipe Category</FieldLabel>
-            <Select name="recipeCategory">
+            <Select name="category">
               <SelectTrigger>
                 <SelectValue placeholder="Choose category" />
               </SelectTrigger>
@@ -110,11 +110,11 @@ export const CreateRecipe = () => {
                 ))}
               </SelectContent>
             </Select>
-            <FieldError>{state.errors?.recipeCategory}</FieldError>
+            <FieldError>{state.errors?.category}</FieldError>
           </Field>
           <Field>
             <FieldLabel>Recipe Cuisine</FieldLabel>
-            <Select name="recipeCuisine">
+            <Select name="cuisine">
               <SelectTrigger>
                 <SelectValue placeholder="Choose cuisine" />
               </SelectTrigger>
@@ -126,15 +126,15 @@ export const CreateRecipe = () => {
                 ))}
               </SelectContent>
             </Select>
-            <FieldError>{state.errors?.recipeCuisine}</FieldError>
+            <FieldError>{state.errors?.cuisine}</FieldError>
           </Field>
           <Field>
             <FieldTitle>Recipe Ingredients</FieldTitle>
             <Ingredients
-              name="recipeIngredients"
-              defaultValue={state.fields.recipeIngredients}
+              name="ingredients"
+              defaultValue={state.fields.ingredients}
             />
-            <FieldError>{state.errors?.recipeIngredients}</FieldError>
+            <FieldError>{state.errors?.ingredients}</FieldError>
           </Field>
           <Field>
             <FieldTitle>Cook Time</FieldTitle>

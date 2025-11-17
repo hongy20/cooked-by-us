@@ -6,10 +6,10 @@ export interface IRecipe extends Document {
   description: string;
   image: string;
   author: Schema.Types.ObjectId;
-  recipeCategory: string;
-  recipeCuisine: string;
-  recipeIngredients: string[];
-  recipeInstructions: {
+  category: string;
+  cuisine: string;
+  ingredients: string[];
+  instructions: {
     text: string;
     image?: string;
   }[];
@@ -50,21 +50,21 @@ const RecipeSchema = new Schema<IRecipe>(
       ref: "User", // Should reference the User model once it's created
       required: true,
     },
-    recipeCategory: {
+    category: {
       type: String,
       required: true,
       enum: RECIPE_CATEGORY,
     },
-    recipeCuisine: {
+    cuisine: {
       type: String,
       required: true,
       enum: RECIPE_CUISINE,
     },
-    recipeIngredients: {
+    ingredients: {
       type: [String],
       required: true,
     },
-    recipeInstructions: {
+    instructions: {
       type: [InstructionStepSchema],
       required: true,
     },

@@ -17,10 +17,10 @@ export const RecipeValidator = z.object({
     .string()
     .length(24, "Invalid Author ID")
     .regex(/^[0-9a-fA-F]{24}$/, "Author ID must be valid"), // MongoDB ObjectId
-  recipeCategory: z.enum(RECIPE_CATEGORY),
-  recipeCuisine: z.enum(RECIPE_CUISINE),
-  recipeIngredients: stringArraySchemaFactory(1),
-  recipeInstructions: z
+  category: z.enum(RECIPE_CATEGORY),
+  cuisine: z.enum(RECIPE_CUISINE),
+  ingredients: stringArraySchemaFactory(1),
+  instructions: z
     .array(InstructionStep)
     .min(1, "At least one instruction step is required."),
   cookTime: z

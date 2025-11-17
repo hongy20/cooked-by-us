@@ -8,7 +8,7 @@ import { upload } from "../cloudinary";
 import type { FormState } from "./type";
 
 export type CreateRecipeFormState = FormState<
-  Omit<RecipeInput, "author" | "recipeInstructions">
+  Omit<RecipeInput, "author" | "instructions">
 >;
 
 export const createRecipeAction = async (
@@ -29,10 +29,10 @@ export const createRecipeAction = async (
     description: formData.get("description") as string,
     image,
     author: session.user.id,
-    recipeCategory: formData.get("recipeCategory") as string,
-    recipeCuisine: formData.get("recipeCuisine") as string,
-    recipeIngredients: JSON.parse(formData.get("recipeIngredients") as string),
-    // recipeInstructions: formData.get("recipeInstructions") as string,
+    category: formData.get("category") as string,
+    cuisine: formData.get("cuisine") as string,
+    ingredients: JSON.parse(formData.get("ingredients") as string),
+    // instructions: formData.get("instructions") as string,
     cookTime: formData.get("cookTime") as string,
     keywords: JSON.parse(formData.get("keywords") as string),
   };
@@ -41,7 +41,7 @@ export const createRecipeAction = async (
   if (!validatedFields.success) {
     const {
       author: _author,
-      recipeInstructions: _recipeInstructions,
+      instructions: _instructions,
       ...errors
     } = z.flattenError(validatedFields.error).fieldErrors;
     return {
@@ -51,11 +51,7 @@ export const createRecipeAction = async (
     };
   }
 
-  console.log(
-    "TODO: 1.",
-    formData.get("author"),
-    formData.get("recipeInstructions"),
-  );
+  console.log("TODO: 1.", formData.get("instructions"));
 
   // 2. Prepare data for insertion into database
   console.log("TODO: 2. Prepare data for insertion into database");

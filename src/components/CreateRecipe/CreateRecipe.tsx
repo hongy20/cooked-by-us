@@ -5,32 +5,24 @@ import { Button } from "@/components/ui/button";
 import {
   Field,
   FieldDescription,
-  FieldError,
   FieldGroup,
-  FieldLabel,
   FieldLegend,
   FieldSet,
-  FieldTitle,
 } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import {
   type CreateRecipeFormState,
   createRecipeAction,
 } from "@/lib/action/recipe";
-import { RECIPE_CATEGORY, RECIPE_CUISINE } from "@/lib/constant";
 import { Spinner } from "../ui/spinner";
-import { CookTime } from "./CookTime";
-import { Ingredients } from "./Ingredients";
-import { Instructions } from "./Instructions";
-import { Keywords } from "./Keywords";
+import { FieldRecipeCategory } from "./FieldRecipeCategory";
+import { FieldRecipeCookTime } from "./FieldRecipeCookTime";
+import { FieldRecipeCuisine } from "./FieldRecipeCuisine";
+import { FieldRecipeDescription } from "./FieldRecipeDescription";
+import { FieldRecipeImage } from "./FieldRecipeImage";
+import { FieldRecipeIngredients } from "./FieldRecipeIngredients";
+import { FieldRecipeInstructions } from "./FieldRecipeInstructions";
+import { FieldRecipeKeywords } from "./FieldRecipeKeywords";
+import { FieldRecipeName } from "./FieldRecipeName";
 
 const initialState: CreateRecipeFormState = {
   status: "idle",
@@ -53,108 +45,55 @@ export const CreateRecipe = () => {
     initialState,
   );
 
+  console.log(JSON.stringify(state.fields));
+
   return (
     <form action={action} className="flex-none w-full max-w-xl min-w-0 px-4">
       <FieldSet>
         <FieldLegend>New Recipe</FieldLegend>
         <FieldDescription>Create and publish new recipe 🚀</FieldDescription>
         <FieldGroup>
-          <Field>
-            <FieldLabel htmlFor="name">Name</FieldLabel>
-            <Input
-              id="name"
-              name="name"
-              autoComplete="off"
-              required
-              placeholder="Recipe Name"
-              defaultValue={state.fields.name}
-            />
-            <FieldError>{state.errors?.name}</FieldError>
-          </Field>
-          <Field>
-            <FieldLabel htmlFor="description">Description</FieldLabel>
-            <Textarea
-              id="description"
-              name="description"
-              placeholder="Recipe Description"
-              defaultValue={state.fields.description}
-            />
-            <FieldError>{state.errors?.description}</FieldError>
-          </Field>
-          <Field>
-            <FieldLabel htmlFor="image">Image</FieldLabel>
-            <Input
-              id="image"
-              name="image"
-              type="file"
-              accept="image/*"
-              required={!state.fields.image}
-            />
-            {state.fields.image && (
-              <FieldDescription>
-                Image uploaded: {state.fields.image}
-              </FieldDescription>
-            )}
-            <FieldError>{state.errors?.image}</FieldError>
-          </Field>
-          <Field>
-            <FieldLabel>Recipe Category</FieldLabel>
-            <Select name="category">
-              <SelectTrigger>
-                <SelectValue placeholder="Choose category" />
-              </SelectTrigger>
-              <SelectContent>
-                {RECIPE_CATEGORY.map((category) => (
-                  <SelectItem key={category} value={category}>
-                    {category}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <FieldError>{state.errors?.category}</FieldError>
-          </Field>
-          <Field>
-            <FieldLabel>Recipe Cuisine</FieldLabel>
-            <Select name="cuisine">
-              <SelectTrigger>
-                <SelectValue placeholder="Choose cuisine" />
-              </SelectTrigger>
-              <SelectContent>
-                {RECIPE_CUISINE.map((cuisine) => (
-                  <SelectItem key={cuisine} value={cuisine}>
-                    {cuisine}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <FieldError>{state.errors?.cuisine}</FieldError>
-          </Field>
-          <Field>
-            <FieldTitle>Recipe Ingredients</FieldTitle>
-            <Ingredients
-              name="ingredients"
-              defaultValue={state.fields.ingredients}
-            />
-            <FieldError>{state.errors?.ingredients}</FieldError>
-          </Field>
-          <Field>
-            <FieldTitle>Recipe Instructions</FieldTitle>
-            <Instructions
-              name="instructions"
-              defaultValue={state.fields.instructions}
-            />
-            <FieldError>{state.errors?.instructions}</FieldError>
-          </Field>
-          <Field>
-            <FieldTitle>Cook Time</FieldTitle>
-            <CookTime name="cookTime" defaultValue={state.fields.cookTime} />
-            <FieldError>{state.errors?.cookTime}</FieldError>
-          </Field>
-          <Field>
-            <FieldTitle>Keywords</FieldTitle>
-            <Keywords name="keywords" defaultValue={state.fields.keywords} />
-            <FieldError>{state.errors?.keywords}</FieldError>
-          </Field>
+          <FieldRecipeName
+            name="name"
+            defaultValue={state.fields.name}
+            error={state.errors?.name}
+          />
+          <FieldRecipeDescription
+            name="description"
+            defaultValue={state.fields.description}
+            error={state.errors?.description}
+          />
+          <FieldRecipeImage
+            name="image"
+            defaultValue={state.fields.image}
+            error={state.errors?.image}
+          />
+          <FieldRecipeCategory name="category" error={state.errors?.category} />
+          <FieldRecipeCuisine
+            name="cuisine"
+            defaultValue={state.fields.cuisine}
+            error={state.errors?.cuisine}
+          />
+          <FieldRecipeIngredients
+            name="ingredients"
+            defaultValue={state.fields.ingredients}
+            error={state.errors?.ingredients}
+          />
+          <FieldRecipeInstructions
+            name="instructions"
+            defaultValue={state.fields.instructions}
+            error={state.errors?.instructions}
+          />
+          <FieldRecipeCookTime
+            name="cookTime"
+            defaultValue={state.fields.cookTime}
+            error={state.errors?.cookTime}
+          />
+          <FieldRecipeKeywords
+            name="keywords"
+            defaultValue={state.fields.keywords}
+            error={state.errors?.keywords}
+          />
           <Field orientation="horizontal">
             <Button type="submit" className="w-30 relative" disabled={pending}>
               {pending && <Spinner className="absolute left-3" />}

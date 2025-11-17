@@ -3,7 +3,7 @@ import { RECIPE_CATEGORY, RECIPE_CUISINE } from "../constant";
 import { stringArraySchemaFactory } from "./util";
 
 // Zod schema for an individual instruction step
-const InstructionStep = z.object({
+const InstructionValidator = z.object({
   text: z.string().min(1, "Instruction text cannot be empty."),
   image: z.url("Instruction image must be a valid URL.").optional(),
 });
@@ -24,7 +24,7 @@ export const RecipeValidator = z.object({
     errorMessage: "Ingredients cannot be empty — add at least one",
   }),
   instructions: z
-    .array(InstructionStep)
+    .array(InstructionValidator)
     .min(1, "At least one instruction step is required."),
   cookTime: z
     .string()
@@ -37,5 +37,7 @@ export const RecipeValidator = z.object({
     errorMessage: "Keywords cannot be empty — add at least one",
   }),
 });
+
+export type InstructionInput = z.infer<typeof InstructionValidator>;
 
 export type RecipeInput = z.infer<typeof RecipeValidator>;

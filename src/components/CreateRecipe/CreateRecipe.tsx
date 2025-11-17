@@ -29,6 +29,7 @@ import { RECIPE_CATEGORY, RECIPE_CUISINE } from "@/lib/constant";
 import { Spinner } from "../ui/spinner";
 import { CookTime } from "./CookTime";
 import { Ingredients } from "./Ingredients";
+import { Instructions } from "./Instructions";
 import { Keywords } from "./Keywords";
 
 const initialState: CreateRecipeFormState = {
@@ -40,6 +41,7 @@ const initialState: CreateRecipeFormState = {
     category: "",
     cuisine: "",
     ingredients: [],
+    instructions: [],
     cookTime: "PT30M",
     keywords: [],
   },
@@ -52,7 +54,7 @@ export const CreateRecipe = () => {
   );
 
   return (
-    <form action={action} className="w-full max-w-lg">
+    <form action={action} className="flex-none w-full max-w-xl min-w-0 px-4">
       <FieldSet>
         <FieldLegend>New Recipe</FieldLegend>
         <FieldDescription>Create and publish new recipe 🚀</FieldDescription>
@@ -134,6 +136,14 @@ export const CreateRecipe = () => {
               defaultValue={state.fields.ingredients}
             />
             <FieldError>{state.errors?.ingredients}</FieldError>
+          </Field>
+          <Field>
+            <FieldTitle>Recipe Instructions</FieldTitle>
+            <Instructions
+              name="instructions"
+              defaultValue={state.fields.instructions}
+            />
+            <FieldError>{state.errors?.instructions}</FieldError>
           </Field>
           <Field>
             <FieldTitle>Cook Time</FieldTitle>

@@ -7,9 +7,7 @@ import { type RecipeInput, RecipeValidator } from "@/lib/validator/recipe";
 import { upload } from "../cloudinary";
 import type { FormState } from "./type";
 
-export type CreateRecipeFormState = FormState<
-  Omit<RecipeInput, "author" | "instructions">
->;
+export type CreateRecipeFormState = FormState<Omit<RecipeInput, "author">>;
 
 export const createRecipeAction = async (
   prevState: CreateRecipeFormState,
@@ -32,18 +30,16 @@ export const createRecipeAction = async (
     category: formData.get("category") as string,
     cuisine: formData.get("cuisine") as string,
     ingredients: JSON.parse(formData.get("ingredients") as string),
-    // instructions: formData.get("instructions") as string,
+    instructions: JSON.parse(formData.get("instructions") as string),
     cookTime: formData.get("cookTime") as string,
     keywords: JSON.parse(formData.get("keywords") as string),
   };
   const validatedFields = RecipeValidator.safeParse(fields);
 
   if (!validatedFields.success) {
-    const {
-      author: _author,
-      instructions: _instructions,
-      ...errors
-    } = z.flattenError(validatedFields.error).fieldErrors;
+    const { author: _author, ...errors } = z.flattenError(
+      validatedFields.error,
+    ).fieldErrors;
     return {
       status: "error",
       fields,
@@ -51,7 +47,7 @@ export const createRecipeAction = async (
     };
   }
 
-  console.log("TODO: 1.", formData.get("instructions"));
+  console.log("TODO: 1.", validatedFields.data);
 
   // 2. Prepare data for insertion into database
   console.log("TODO: 2. Prepare data for insertion into database");

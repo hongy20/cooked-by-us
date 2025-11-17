@@ -10,7 +10,7 @@ const Page = async () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
+    <div className="w-full flex flex-col items-center justify-center gap-4">
       <h1>Admin page with {session.user.email}</h1>
       <CreateRecipe />
     </div>

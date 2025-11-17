@@ -6,6 +6,10 @@
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+
+  input[type="file"]:not(:disabled)::file-selector-button {
+    cursor: pointer;
+  }
 }
 
 @custom-variant dark (&:is(.dark *));

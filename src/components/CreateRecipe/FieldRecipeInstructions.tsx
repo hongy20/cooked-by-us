@@ -51,7 +51,6 @@ export const FieldRecipeInstructions = ({
           value={textareaValue}
           onChange={(e) => setTextareaValue(e.target.value)}
         />
-        />
 
         {/* Instruction list */}
         <ol className="list-decimal list-inside">

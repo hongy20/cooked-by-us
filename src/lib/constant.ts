@@ -11,7 +11,7 @@ export const RECIPE_CATEGORY = [
   "Spread / Dip",
   "Marinade",
   "Dressing",
-];
+] as const;
 
 export const RECIPE_CUISINE = [
   "Italian",
@@ -19,4 +19,4 @@ export const RECIPE_CUISINE = [
   "Japanese",
   "Korean",
   "Nordic / Scandinavian",
-];
+] as const;

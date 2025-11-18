@@ -48,9 +48,10 @@ export const FieldRecipeInstructions = ({
 
         {/* Instruction list */}
         <ol className="list-decimal list-inside">
-          {instructions.map((instruction) => (
+          {instructions.map((instruction, index) => (
             <li
-              key={instruction.text}
+              // biome-ignore lint/suspicious/noArrayIndexKey: list order is meaningful and items aren't reordered
+              key={index}
               className="text-muted-foreground p-0.5 odd:bg-gray-100 even:bg-white"
             >
               {instruction.text}

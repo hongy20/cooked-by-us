@@ -16,7 +16,9 @@ export const stringArraySchemaFactory = ({
       // Try JSON.parse first
       try {
         const parsed = JSON.parse(val);
-        if (Array.isArray(parsed)) return parsed.map(String);
+        if (Array.isArray(parsed)) {
+          return parsed.map((item) => String(item).trim()).filter(Boolean);
+        }
       } catch {}
 
       // Fallback: split by comma, remove quotes, trim

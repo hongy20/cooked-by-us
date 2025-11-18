@@ -46,7 +46,7 @@ export default async function Page() {
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center gap-4 m-4">
         {recipes.map((recipe) => (
-          <RecipeCard key={recipe._id as string} recipe={recipe} />
+          <RecipeCard key={`${recipe._id}`} recipe={recipe} />
         ))}
       </div>
     </div>

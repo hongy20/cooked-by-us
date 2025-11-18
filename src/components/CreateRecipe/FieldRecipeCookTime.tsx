@@ -34,7 +34,9 @@ export const FieldRecipeCookTime = ({ name, defaultValue, error }: Props) => {
         <Slider
           id={ID}
           value={[cookTimeInMinutes]}
-          onValueChange={(value) => setCookTimeInMinutes(value[0])}
+          onValueChange={(value) => {
+            if (value.length > 0) setCookTimeInMinutes(value[0]);
+          }}
           max={600}
           min={10}
           step={10}

@@ -32,9 +32,9 @@ export const FieldRecipeCuisine = ({ name, defaultValue, error }: Props) => {
           <SelectValue placeholder="Choose cuisine" />
         </SelectTrigger>
         <SelectContent>
-          {RECIPE_CUISINE.map((cuisine) => (
-            <SelectItem key={cuisine} value={cuisine}>
-              {cuisine}
+          {RECIPE_CUISINE.map((cuisineOption) => (
+            <SelectItem key={cuisineOption} value={cuisineOption}>
+              {cuisineOption}
             </SelectItem>
           ))}
         </SelectContent>

@@ -30,7 +30,7 @@ export const FieldRecipeImage = ({ name, defaultValue, error }: Props) => {
             file.size > FILE_LIMIT_IN_MB * 1024 * 1024
           ) {
             setClientError(`File must be smaller than ${FILE_LIMIT_IN_MB}MB`);
-            // 🔥 Reset file input
+            // Reset file input
             e.target.value = "";
           } else {
             setClientError(null);

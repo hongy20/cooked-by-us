@@ -40,8 +40,7 @@ export const FieldRecipeImage = ({ name, defaultValue, error }: Props) => {
       {defaultValue && (
         <FieldDescription>Image uploaded: {defaultValue}</FieldDescription>
       )}
-      <FieldError>{clientError}</FieldError>
-      <FieldError>{error}</FieldError>
+      <FieldError>{clientError || error}</FieldError>
     </Field>
   );
 };

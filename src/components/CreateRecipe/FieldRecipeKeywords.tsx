@@ -19,12 +19,11 @@ export const FieldRecipeKeywords = ({ name, defaultValue, error }: Props) => {
   const addKeyword = (keyword: string) => {
     const cleaned = keyword.trim();
     if (!cleaned) return;
-    if (keywords.includes(cleaned)) return;
-    setKeywords([...keywords, cleaned]);
+    setKeywords((prev) => (prev.includes(cleaned) ? prev : [...prev, cleaned]));
   };
 
   const removeKeyword = (keyword: string) => {
-    setKeywords(keywords.filter((k) => k !== keyword));
+    setKeywords((prev) => prev.filter((k) => k !== keyword));
   };
 
   return (

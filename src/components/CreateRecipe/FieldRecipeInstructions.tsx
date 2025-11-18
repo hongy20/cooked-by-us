@@ -48,8 +48,9 @@ export const FieldRecipeInstructions = ({
         <Textarea
           id={ID}
           placeholder="Type your recipe instructions, with each step on its own line"
+          value={textareaValue}
           onChange={(e) => setTextareaValue(e.target.value)}
-          defaultValue={textareaValue}
+        />
         />
 
         {/* Instruction list */}

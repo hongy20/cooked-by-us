@@ -26,14 +26,14 @@ Every recipe featured here is home-tested — no AI-generated fluff, just real d
 
 ## 🧠 Tech Stack
 
-| Layer            | Technology                                                                                 |
-| ---------------- | ------------------------------------------------------------------------------------------ |
-| **Frontend**     | [Next.js 16](https://nextjs.org/) (App Router)                                             |
-| **UI**           | [Tailwind CSS](https://tailwindcss.com/) + [Framer Motion](https://www.framer.com/motion/) |
-| **Auth**         | [Better Auth](https://better-auth.vercel.app/) with Google provider                        |
-| **Database**     | [MongoDB](https://www.mongodb.com/) with Mongoose or Prisma adapter                        |
-| **Image Upload** | [Cloudinary](https://cloudinary.com/)                                                      |
-| **Hosting**      | [Vercel](https://vercel.com/)                                                              |
+| Layer            | Technology                                                                     |
+| ---------------- | ------------------------------------------------------------------------------ |
+| **Frontend**     | [Next.js 16](https://nextjs.org/) (App Router)                                 |
+| **UI**           | [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/) |
+| **Auth**         | [Better Auth](https://better-auth.vercel.app/) with Google provider            |
+| **Database**     | [MongoDB](https://www.mongodb.com/) with Mongoose or Prisma adapter            |
+| **Image Upload** | [Cloudinary](https://cloudinary.com/)                                          |
+| **Hosting**      | [Vercel](https://vercel.com/)                                                  |
 
 ---
 

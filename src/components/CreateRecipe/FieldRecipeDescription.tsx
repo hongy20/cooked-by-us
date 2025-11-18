@@ -1,29 +1,29 @@
+import { useId } from "react";
 import { Field, FieldError, FieldLabel } from "../ui/field";
 import { Textarea } from "../ui/textarea";
 
 interface Props {
   name: string;
   defaultValue: string;
-  error: string[] | undefined;
+  errors?: string[];
 }
-
-const ID = "description";
 
 export const FieldRecipeDescription = ({
   name,
   defaultValue,
-  error,
+  errors,
 }: Props) => {
+  const id = useId();
   return (
     <Field>
-      <FieldLabel htmlFor={ID}>Description</FieldLabel>
+      <FieldLabel htmlFor={id}>Description</FieldLabel>
       <Textarea
-        id={ID}
+        id={id}
         name={name}
         placeholder="Recipe Description"
         defaultValue={defaultValue}
       />
-      <FieldError>{error}</FieldError>
+      <FieldError errors={errors?.map((message) => ({ message }))} />
     </Field>
   );
 };

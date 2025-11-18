@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Field, FieldError, FieldLabel } from "../ui/field";
@@ -7,14 +7,13 @@ import { Field, FieldError, FieldLabel } from "../ui/field";
 interface Props {
   name: string;
   defaultValue: string[];
-  error: string[] | undefined;
+  errors?: string[];
 }
 
-const ID = "keywords";
-
-export const FieldRecipeKeywords = ({ name, defaultValue, error }: Props) => {
+export const FieldRecipeKeywords = ({ name, defaultValue, errors }: Props) => {
   const [keywords, setKeywords] = useState<string[]>(defaultValue);
   const [inputValue, setInputValue] = useState("");
+  const id = useId();
 
   const addKeyword = (keyword: string) => {
     const cleaned = keyword.trim();
@@ -28,14 +27,14 @@ export const FieldRecipeKeywords = ({ name, defaultValue, error }: Props) => {
 
   return (
     <Field>
-      <FieldLabel htmlFor={ID}>Keywords</FieldLabel>
+      <FieldLabel htmlFor={id}>Keywords</FieldLabel>
       <div className="flex flex-col gap-2">
         {/* 🔒 Hidden input that integrates with native form */}
         <input type="hidden" name={name} value={JSON.stringify(keywords)} />
 
         {/* Editable input */}
         <Input
-          id={ID}
+          id={id}
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={(e) => {
@@ -69,7 +68,7 @@ export const FieldRecipeKeywords = ({ name, defaultValue, error }: Props) => {
           ))}
         </div>
       </div>
-      <FieldError>{error}</FieldError>
+      <FieldError errors={errors?.map((message) => ({ message }))} />
     </Field>
   );
 };

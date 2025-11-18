@@ -1,25 +1,24 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 
 interface Props {
   name: string;
   defaultValue: string;
-  error: string[] | undefined;
+  errors?: string[];
 }
-
-const ID = "image";
 
 const FILE_SIZE_LIMIT_IN_MB = 2;
 
-export const FieldRecipeImage = ({ name, defaultValue, error }: Props) => {
+export const FieldRecipeImage = ({ name, defaultValue, errors }: Props) => {
   const [clientError, setClientError] = useState<string | null>(null);
+  const id = useId();
 
   return (
     <Field>
-      <FieldLabel htmlFor={ID}>Image</FieldLabel>
+      <FieldLabel htmlFor={id}>Image</FieldLabel>
       <Input
-        id={ID}
+        id={id}
         name={name}
         type="file"
         accept="image/*"
@@ -43,7 +42,13 @@ export const FieldRecipeImage = ({ name, defaultValue, error }: Props) => {
       {defaultValue && (
         <FieldDescription>Image uploaded: {defaultValue}</FieldDescription>
       )}
-      <FieldError>{clientError || error}</FieldError>
+      <FieldError
+        errors={
+          clientError
+            ? [{ message: clientError }]
+            : errors?.map((message) => ({ message }))
+        }
+      />
     </Field>
   );
 };

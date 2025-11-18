@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import type { InstructionInput } from "@/lib/validator/recipe";
 import { Field, FieldError, FieldLabel } from "../ui/field";
 import { Textarea } from "../ui/textarea";
@@ -6,21 +6,20 @@ import { Textarea } from "../ui/textarea";
 interface Props {
   name: string;
   defaultValue: InstructionInput[];
-  error: string[] | undefined;
+  errors?: string[];
 }
-
-const ID = "instructions";
 
 export const FieldRecipeInstructions = ({
   name,
   defaultValue,
-  error,
+  errors,
 }: Props) => {
   const [instructions, setInstructions] =
     useState<InstructionInput[]>(defaultValue);
   const [textareaValue, setTextareaValue] = useState(
     defaultValue.map(({ text }) => text).join("\n"),
   );
+  const id = useId();
 
   useEffect(() => {
     setInstructions(
@@ -39,14 +38,14 @@ export const FieldRecipeInstructions = ({
 
   return (
     <Field>
-      <FieldLabel htmlFor={ID}>Recipe Instructions</FieldLabel>
+      <FieldLabel htmlFor={id}>Recipe Instructions</FieldLabel>
       <div className="flex flex-col gap-1">
         {/* Hidden input for form submission */}
         <input type="hidden" name={name} value={JSON.stringify(instructions)} />
 
         {/* Textarea for instructions */}
         <Textarea
-          id={ID}
+          id={id}
           placeholder="Type your recipe instructions, with each step on its own line"
           value={textareaValue}
           onChange={(e) => setTextareaValue(e.target.value)}
@@ -65,7 +64,7 @@ export const FieldRecipeInstructions = ({
           ))}
         </ol>
       </div>
-      <FieldError>{error}</FieldError>
+      <FieldError errors={errors?.map((message) => ({ message }))} />
     </Field>
   );
 };

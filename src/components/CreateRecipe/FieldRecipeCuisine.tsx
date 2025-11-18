@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { RECIPE_CUISINE } from "@/lib/constant";
 import { Field, FieldError, FieldLabel } from "../ui/field";
 import {
@@ -12,23 +12,22 @@ import {
 interface Props {
   name: string;
   defaultValue: string;
-  error: string[] | undefined;
+  errors?: string[];
 }
 
-const ID = "cuisine";
-
-export const FieldRecipeCuisine = ({ name, defaultValue, error }: Props) => {
+export const FieldRecipeCuisine = ({ name, defaultValue, errors }: Props) => {
   const [cuisine, setCuisine] = useState<string>(defaultValue);
+  const id = useId();
 
   return (
     <Field>
-      <FieldLabel htmlFor={ID}>Recipe Cuisine</FieldLabel>
+      <FieldLabel htmlFor={id}>Recipe Cuisine</FieldLabel>
 
       {/* Prevent form from losing the selected value */}
       <input type="hidden" name={name} value={cuisine} />
 
       <Select value={cuisine} onValueChange={setCuisine}>
-        <SelectTrigger id={ID}>
+        <SelectTrigger id={id}>
           <SelectValue placeholder="Choose cuisine" />
         </SelectTrigger>
         <SelectContent>
@@ -39,7 +38,7 @@ export const FieldRecipeCuisine = ({ name, defaultValue, error }: Props) => {
           ))}
         </SelectContent>
       </Select>
-      <FieldError>{error}</FieldError>
+      <FieldError errors={errors?.map((message) => ({ message }))} />
     </Field>
   );
 };

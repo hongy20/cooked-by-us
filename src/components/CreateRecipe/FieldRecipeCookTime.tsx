@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import {
   isoToMinutes,
   minutesToHuman,
@@ -10,15 +10,15 @@ import { Slider } from "../ui/slider";
 interface Props {
   name: string;
   defaultValue: string;
-  error: string[] | undefined;
+  errors?: string[];
 }
 
-const ID = "cookTime";
 const MIN_MINUTES = 10;
 const MAX_MINUTES = 600;
 const DEFAULT_MINUTES = 30;
 
-export const FieldRecipeCookTime = ({ name, defaultValue, error }: Props) => {
+export const FieldRecipeCookTime = ({ name, defaultValue, errors }: Props) => {
+  const id = useId();
   const [cookTimeInMinutes, setCookTimeInMinutes] = useState(() => {
     if (!defaultValue) return DEFAULT_MINUTES;
     try {
@@ -32,7 +32,7 @@ export const FieldRecipeCookTime = ({ name, defaultValue, error }: Props) => {
 
   return (
     <Field>
-      <FieldLabel htmlFor={ID}>Cook Time</FieldLabel>
+      <FieldLabel htmlFor={id}>Cook Time</FieldLabel>
       <div className="flex flex-col gap-2">
         {/* 🔒 Hidden input that integrates with native form */}
         <input
@@ -42,7 +42,7 @@ export const FieldRecipeCookTime = ({ name, defaultValue, error }: Props) => {
         />
 
         <Slider
-          id={ID}
+          id={id}
           value={[cookTimeInMinutes]}
           onValueChange={(value) => {
             if (value.length > 0) setCookTimeInMinutes(value[0]);
@@ -53,7 +53,7 @@ export const FieldRecipeCookTime = ({ name, defaultValue, error }: Props) => {
         />
         <FieldDescription>{minutesToHuman(cookTimeInMinutes)}</FieldDescription>
       </div>
-      <FieldError>{error}</FieldError>
+      <FieldError errors={errors?.map((message) => ({ message }))} />
     </Field>
   );
 };

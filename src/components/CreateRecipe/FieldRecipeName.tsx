@@ -1,27 +1,28 @@
+import { useId } from "react";
 import { Field, FieldError, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 
 interface Props {
   name: string;
   defaultValue: string;
-  error: string[] | undefined;
+  errors?: string[];
 }
 
-const ID = "name";
+export const FieldRecipeName = ({ name, defaultValue, errors }: Props) => {
+  const id = useId();
 
-export const FieldRecipeName = ({ name, defaultValue, error }: Props) => {
   return (
     <Field>
-      <FieldLabel htmlFor={ID}>Name</FieldLabel>
+      <FieldLabel htmlFor={id}>Name</FieldLabel>
       <Input
-        id={ID}
+        id={id}
         name={name}
         autoComplete="off"
         required
         placeholder="Recipe Name"
         defaultValue={defaultValue}
       />
-      <FieldError>{error}</FieldError>
+      <FieldError errors={errors?.map((message) => ({ message }))} />
     </Field>
   );
 };

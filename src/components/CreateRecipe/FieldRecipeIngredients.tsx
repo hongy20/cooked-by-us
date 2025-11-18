@@ -1,22 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { Field, FieldError, FieldLabel } from "../ui/field";
 import { Textarea } from "../ui/textarea";
 
 interface Props {
   name: string;
   defaultValue: string[];
-  error: string[] | undefined;
+  errors?: string[];
 }
-
-const ID = "ingredients";
 
 export const FieldRecipeIngredients = ({
   name,
   defaultValue,
-  error,
+  errors,
 }: Props) => {
   const [ingredients, setIngredients] = useState<string[]>(defaultValue);
   const [textareaValue, setTextareaValue] = useState(defaultValue.join("\n"));
+  const id = useId();
 
   useEffect(() => {
     setIngredients(textareaValue.split("\n").filter(Boolean));
@@ -28,14 +27,14 @@ export const FieldRecipeIngredients = ({
 
   return (
     <Field>
-      <FieldLabel htmlFor={ID}>Recipe Ingredients</FieldLabel>
+      <FieldLabel htmlFor={id}>Recipe Ingredients</FieldLabel>
       <div className="flex flex-col gap-1">
         {/* Hidden input for form submission */}
         <input type="hidden" name={name} value={JSON.stringify(ingredients)} />
 
         {/* Textarea for ingredients */}
         <Textarea
-          id={ID}
+          id={id}
           placeholder="Type your recipe ingredients"
           onChange={(e) => setTextareaValue(e.target.value)}
           defaultValue={textareaValue}
@@ -53,7 +52,7 @@ export const FieldRecipeIngredients = ({
           ))}
         </ul>
       </div>
-      <FieldError>{error}</FieldError>
+      <FieldError errors={errors?.map((message) => ({ message }))} />
     </Field>
   );
 };

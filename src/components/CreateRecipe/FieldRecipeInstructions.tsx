@@ -18,18 +18,24 @@ export const FieldRecipeInstructions = ({
 }: Props) => {
   const [instructions, setInstructions] =
     useState<InstructionInput[]>(defaultValue);
-  const [textareaValue, setTextareaValue] = useState("");
+  const [textareaValue, setTextareaValue] = useState(
+    defaultValue.map(({ text }) => text).join("\n"),
+  );
 
   useEffect(() => {
     setInstructions(
       textareaValue
         .split("\n")
         .filter(Boolean)
-        .map((step) => ({
-          text: step,
+        .map((text) => ({
+          text,
         })),
     );
   }, [textareaValue]);
+
+  useEffect(() => {
+    setTextareaValue(defaultValue.map(({ text }) => text).join("\n"));
+  }, [defaultValue]);
 
   return (
     <Field>

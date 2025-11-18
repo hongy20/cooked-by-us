@@ -16,11 +16,15 @@ export const FieldRecipeIngredients = ({
   error,
 }: Props) => {
   const [ingredients, setIngredients] = useState<string[]>(defaultValue);
-  const [textareaValue, setTextareaValue] = useState("");
+  const [textareaValue, setTextareaValue] = useState(defaultValue.join("\n"));
 
   useEffect(() => {
     setIngredients(textareaValue.split("\n").filter(Boolean));
   }, [textareaValue]);
+
+  useEffect(() => {
+    setTextareaValue(defaultValue.join("\n"));
+  }, [defaultValue]);
 
   return (
     <Field>

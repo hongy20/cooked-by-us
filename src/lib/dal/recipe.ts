@@ -19,7 +19,6 @@ export const getAllRecipes = async () => {
 };
 
 export const getSimilarRecipes = async (recipeId: string) => {
-  await connectDB();
   const recipe = await getRecipe(recipeId);
 
   if (!recipe) {
@@ -28,6 +27,6 @@ export const getSimilarRecipes = async (recipeId: string) => {
 
   return await RecipeModel.find({
     keywords: { $in: recipe.keywords },
-    id: { $ne: recipe.id },
+    _id: { $ne: recipe._id },
   }).lean<IRecipe>();
 };

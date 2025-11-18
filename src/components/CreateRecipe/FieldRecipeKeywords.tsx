@@ -60,6 +60,7 @@ export const FieldRecipeKeywords = ({ name, defaultValue, error }: Props) => {
               <button
                 type="button"
                 className="rounded-sm hover:text-destructive"
+                aria-label={`Remove keyword ${keyword}`}
                 onClick={() => removeKeyword(keyword)}
               >
                 <X className="h-3 w-3" />

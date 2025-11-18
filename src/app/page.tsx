@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import type { ItemList, Recipe, WithContext } from "schema-dts";
 import { RecipeCard } from "@/components/RecipeCard";
 import { getAllRecipesAction } from "@/lib/action/recipe";
+
+export const metadata: Metadata = {
+  title: "All Recipes - Discover Delicious Meals",
+  description:
+    "Browse our complete collection of recipes, from quick weeknight meals to gourmet dishes. Find step-by-step instructions, ingredients, and tips for every cuisine.",
+};
 
 export default async function Page() {
   const recipes = await getAllRecipesAction();

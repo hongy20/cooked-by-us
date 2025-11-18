@@ -3,6 +3,10 @@ import { v2 as cloudinary, type UploadApiResponse } from "cloudinary";
 const folder = "cooked-by-us";
 
 export async function upload(file: File) {
+  if (!(file instanceof File)) {
+    throw new Error("Invalid file parameter: expected File instance");
+  }
+
   // Convert File -> Buffer
   const arrayBuffer = await file.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
@@ -11,10 +15,13 @@ export async function upload(file: File) {
     (resolve, reject) =>
       cloudinary.uploader
         .upload_stream({ folder }, (error, result) => {
-          if (error || !result) reject(error);
+          if (error) reject(error);
+          else if (!result)
+            reject(new Error("Cloudinary upload failed: no result returned"));
           else resolve(result);
         })
         .end(buffer),
   );
+
   return uploadAPIResponse.secure_url;
 }

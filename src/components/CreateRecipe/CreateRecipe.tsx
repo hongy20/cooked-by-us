@@ -54,47 +54,47 @@ export const CreateRecipe = () => {
           <FieldRecipeName
             name="name"
             defaultValue={state.fields.name}
-            error={state.errors?.name}
+            errors={state.errors?.name}
           />
           <FieldRecipeDescription
             name="description"
             defaultValue={state.fields.description}
-            error={state.errors?.description}
+            errors={state.errors?.description}
           />
           <FieldRecipeImage
             name="image"
             defaultValue={state.fields.image}
-            error={state.errors?.image}
+            errors={state.errors?.image}
           />
           <FieldRecipeCategory
             name="category"
             defaultValue={state.fields.category}
-            error={state.errors?.category}
+            errors={state.errors?.category}
           />
           <FieldRecipeCuisine
             name="cuisine"
             defaultValue={state.fields.cuisine}
-            error={state.errors?.cuisine}
+            errors={state.errors?.cuisine}
           />
           <FieldRecipeIngredients
             name="ingredients"
             defaultValue={state.fields.ingredients}
-            error={state.errors?.ingredients}
+            errors={state.errors?.ingredients}
           />
           <FieldRecipeInstructions
             name="instructions"
             defaultValue={state.fields.instructions}
-            error={state.errors?.instructions}
+            errors={state.errors?.instructions}
           />
           <FieldRecipeCookTime
             name="cookTime"
             defaultValue={state.fields.cookTime}
-            error={state.errors?.cookTime}
+            errors={state.errors?.cookTime}
           />
           <FieldRecipeKeywords
             name="keywords"
             defaultValue={state.fields.keywords}
-            error={state.errors?.keywords}
+            errors={state.errors?.keywords}
           />
           <Field orientation="horizontal">
             <Button type="submit" className="w-30 relative" disabled={pending}>

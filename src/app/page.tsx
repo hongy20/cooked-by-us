@@ -13,6 +13,10 @@ export default async function Page() {
   const recipes = await getAllRecipesAction();
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
+  if (!BASE_URL) {
+    throw new Error("NEXT_PUBLIC_BASE_URL environment variable is not defined");
+  }
+
   const jsonLd: WithContext<ItemList> = {
     "@context": "https://schema.org",
     "@type": "ItemList",

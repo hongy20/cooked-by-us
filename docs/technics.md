@@ -27,3 +27,5 @@ This section explains the key **Next.js features** and technical decisions behin
 - Use [Zod](https://zod.dev/) to validate form data
 - Handle [form submission](https://nextjs.org/docs/app/guides/forms) using Server Action
 - Apply the [DAL pattern](https://nextjs.org/docs/app/guides/data-security#data-access-layer) for data management
+- Add general [metadata](https://nextjs.org/docs/app/getting-started/metadata-and-og-images)
+- Add [structured data](https://nextjs.org/docs/app/guides/json-ld) for better search visibility

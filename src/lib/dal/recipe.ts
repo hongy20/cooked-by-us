@@ -15,7 +15,7 @@ export const getRecipe = async (recipeId: string) => {
 
 export const getAllRecipes = async () => {
   await connectDB();
-  return await RecipeModel.find().sort({ createdAt: -1 }).lean<IRecipe>();
+  return await RecipeModel.find().sort({ createdAt: -1 }).lean<IRecipe[]>();
 };
 
 export const getSimilarRecipes = async (recipeId: string) => {

@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "res.cloudinary.com",
-        pathname: "/cooked-by-us/**",
+        pathname: "**/cooked-by-us/**",
       },
     ],
   },

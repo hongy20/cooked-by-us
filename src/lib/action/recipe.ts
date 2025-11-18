@@ -5,7 +5,7 @@ import { z } from "zod";
 import { getSession } from "@/lib/auth";
 import { type RecipeInput, RecipeValidator } from "@/lib/validator/recipe";
 import { upload } from "../cloudinary";
-import { createRecipe } from "../dal/recipe";
+import { createRecipe, getAllRecipes } from "../dal/recipe";
 import type { IRecipe } from "../model/recipe";
 import type { FormState } from "./type";
 
@@ -62,4 +62,9 @@ export const createRecipeAction = async (
   }
 
   redirect(`/recipe/${recipe.id}`);
+};
+
+export const getAllRecipesAction = async () => {
+  const recipes = await getAllRecipes();
+  return recipes;
 };

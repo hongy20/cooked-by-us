@@ -16,9 +16,13 @@ interface Props {
 const ID = "cookTime";
 
 export const FieldRecipeCookTime = ({ name, defaultValue, error }: Props) => {
-  const [cookTimeInMinutes, setCookTimeInMinutes] = useState(
-    isoToMinutes(defaultValue),
-  );
+  const [cookTimeInMinutes, setCookTimeInMinutes] = useState(() => {
+    try {
+      return isoToMinutes(defaultValue);
+    } catch {
+      return 30; // Default to 30 minutes on parse error
+    }
+  });
 
   return (
     <Field>

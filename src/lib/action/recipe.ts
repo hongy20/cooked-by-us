@@ -66,5 +66,5 @@ export const createRecipeAction = async (
 
 export const getAllRecipesAction = async () => {
   const recipes = await getAllRecipes();
-  return [...recipes, ...recipes, ...recipes];
+  return recipes;
 };

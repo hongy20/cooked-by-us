@@ -48,7 +48,7 @@ export default async function Page() {
       <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">
         All Recipes
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center gap-4 m-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center w-full gap-4 p-6">
         {recipes.map((recipe) => (
           <RecipeCard key={`${recipe._id}`} recipe={recipe} />
         ))}

@@ -19,8 +19,13 @@ export const RecipeCard = ({ recipe }: { recipe: IRecipe }) => {
           {recipe.description}
         </CardDescription>
       </CardHeader>
-      <CardContent className="relative aspect-3/2 w-[300px]">
-        <Image src={recipe.image} alt={recipe.name} fill />
+      <CardContent className="relative aspect-3/2 w-full">
+        <Image
+          src={recipe.image}
+          alt={recipe.name}
+          fill
+          className="object-cover"
+        />
       </CardContent>
       <CardFooter>
         <Link href={`/recipe/${recipe._id}`}>Open</Link>

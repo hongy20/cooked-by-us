@@ -14,13 +14,19 @@ interface Props {
 }
 
 const ID = "cookTime";
+const MIN_MINUTES = 10;
+const MAX_MINUTES = 600;
+const DEFAULT_MINUTES = 30;
 
 export const FieldRecipeCookTime = ({ name, defaultValue, error }: Props) => {
   const [cookTimeInMinutes, setCookTimeInMinutes] = useState(() => {
+    if (!defaultValue) return DEFAULT_MINUTES;
     try {
-      return isoToMinutes(defaultValue);
+      const minutes = isoToMinutes(defaultValue);
+      if (!Number.isFinite(minutes) || minutes <= 0) return DEFAULT_MINUTES;
+      return Math.min(MAX_MINUTES, Math.max(MIN_MINUTES, minutes));
     } catch {
-      return 30; // Default to 30 minutes on parse error
+      return DEFAULT_MINUTES; // Fallback on parse error
     }
   });
 
@@ -41,8 +47,8 @@ export const FieldRecipeCookTime = ({ name, defaultValue, error }: Props) => {
           onValueChange={(value) => {
             if (value.length > 0) setCookTimeInMinutes(value[0]);
           }}
-          max={600}
-          min={10}
+          max={MAX_MINUTES}
+          min={MIN_MINUTES}
           step={10}
         />
         <FieldDescription>{minutesToHuman(cookTimeInMinutes)}</FieldDescription>

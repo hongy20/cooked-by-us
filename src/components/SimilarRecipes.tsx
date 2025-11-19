@@ -1,10 +1,10 @@
-import { useId } from "react";
 import { getSimilarRecipes } from "@/lib/dal/recipe";
 import { RecipeCard } from "./RecipeCard";
 
 type Props = { recipeId: string };
+
 export const SimilarRecipes = async ({ recipeId }: Props) => {
-  const id = useId();
+  const id = `similar-recipes-${recipeId}`;
   const similarRecipes = await getSimilarRecipes(recipeId);
 
   if (similarRecipes.length === 0) {

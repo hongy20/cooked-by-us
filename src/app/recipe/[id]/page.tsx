@@ -1,9 +1,32 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { RecipeView } from "@/components/RecipeView";
 import { SimilarRecipes } from "@/components/SimilarRecipes";
 import { getRecipe } from "@/lib/dal/recipe";
 
-export default async function Page({ params }: PageProps<"/recipe/[id]">) {
+// TODO: author name
+// TODO: json-ld
+
+type Props = PageProps<"/recipe/[id]">;
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const recipeId = await params.then(({ id }) => id);
+  const recipe = await getRecipe(recipeId).catch(console.error);
+
+  if (!recipe) {
+    notFound();
+  }
+
+  return {
+    title: recipe.name,
+    description: recipe.description,
+    openGraph: {
+      images: recipe.image,
+    },
+  };
+}
+
+export default async function Page({ params }: Props) {
   const recipeId = await params.then(({ id }) => id);
   const recipe = await getRecipe(recipeId).catch(console.error);
 
@@ -12,7 +35,7 @@ export default async function Page({ params }: PageProps<"/recipe/[id]">) {
   }
 
   return (
-    <div className="mx-12 md:mx-24 lg:mx-36">
+    <div className="my-10 mx-12 md:mx-24 lg:mx-36">
       <RecipeView recipe={recipe} authorName="" />
       <SimilarRecipes recipeId={recipeId} />
     </div>

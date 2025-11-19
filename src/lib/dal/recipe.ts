@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import { type IRecipe, RecipeModel } from "@/lib/model/recipe";
 import connectDB from "@/lib/mongodb";
 import type { RecipeInput } from "@/lib/validator/recipe";
@@ -8,10 +9,10 @@ export const createRecipe = async (data: RecipeInput) => {
   return await RecipeModel.create(data);
 };
 
-export const getRecipe = async (recipeId: string) => {
+export const getRecipe = cache(async (recipeId: string) => {
   await connectDB();
   return await RecipeModel.findById(recipeId).lean<IRecipe>();
-};
+});
 
 export const getAllRecipes = async () => {
   await connectDB();

@@ -33,7 +33,7 @@ export default function RootLayout({
           <NavBar />
         </header>
         <main className="flex-1 min-h-0 flex justify-center">{children}</main>
-        <footer>
+        <footer className="px-4 py-2">
           <Footer />
         </footer>
       </body>

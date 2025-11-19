@@ -16,8 +16,9 @@ This section explains the key **Next.js features** and technical decisions behin
 - Handle [redirects](https://nextjs.org/docs/app/guides/redirecting) in proxy, client components and server components
 - Handle [form submission and validation](https://nextjs.org/docs/app/guides/forms) using Server Action
 - Apply the [DAL pattern](https://nextjs.org/docs/app/guides/data-security#data-access-layer) for data management
-- Add general [metadata](https://nextjs.org/docs/app/getting-started/metadata-and-og-images)
+- Define metadata with [static `metadata` object and dynamic `generateMetadata` function](https://nextjs.org/docs/app/getting-started/metadata-and-og-images)
 - Use [structured data](https://nextjs.org/docs/app/guides/json-ld) for better search visibility
+- [Cache database requests](https://nextjs.org/docs/app/getting-started/fetching-data#deduplicate-requests-and-cache-data) across the current render pass with React `cache` function
 
 ## Other Tools and Integrations
 
@@ -32,3 +33,4 @@ This section explains the key **Next.js features** and technical decisions behin
 - Integrate UI components from [shadcn](https://ui.shadcn.com/)
 - Set up [Cloudinary](https://cloudinary.com/) for image hosting
 - Use [Zod](https://zod.dev/) to validate form data
+- Adopt semantic HTML for better structure and accessibility

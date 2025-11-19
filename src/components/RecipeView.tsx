@@ -4,7 +4,7 @@ import { isoToHuman } from "@/lib/utils/duration";
 
 type Props = {
   recipe: IRecipe;
-  authorName: string; // resolved from author id
+  authorName: string;
 };
 
 export const RecipeView = ({

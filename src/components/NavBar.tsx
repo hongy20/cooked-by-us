@@ -46,7 +46,9 @@ export const NavBar = () => {
               <li>
                 {RECIPE_CATEGORY.map((category) => (
                   <NavigationMenuLink key={category} asChild>
-                    <Link href={`/category?${category.toLowerCase()}`}>
+                    <Link
+                      href={`/search?category=${encodeURIComponent(category)}`}
+                    >
                       {category}
                     </Link>
                   </NavigationMenuLink>
@@ -62,7 +64,9 @@ export const NavBar = () => {
               <li>
                 {RECIPE_CUISINE.map((cuisine) => (
                   <NavigationMenuLink key={cuisine} asChild>
-                    <Link href={`/cuisine?${cuisine.toLowerCase()}`}>
+                    <Link
+                      href={`/search?cuisine=${encodeURIComponent(cuisine)}`}
+                    >
                       {cuisine}
                     </Link>
                   </NavigationMenuLink>
@@ -74,7 +78,7 @@ export const NavBar = () => {
         {
           !isPending ? (
             session ? (
-              <NavigationMenuItem className="hidden md:block ml-auto">
+              <NavigationMenuItem className="ml-auto">
                 <NavigationMenuTrigger>
                   <User />
                 </NavigationMenuTrigger>
@@ -105,7 +109,7 @@ export const NavBar = () => {
                 </NavigationMenuContent>
               </NavigationMenuItem>
             ) : (
-              <NavigationMenuItem className="hidden md:block ml-auto">
+              <NavigationMenuItem className="ml-auto">
                 <NavigationMenuLink
                   asChild
                   className={navigationMenuTriggerStyle()}
@@ -114,7 +118,9 @@ export const NavBar = () => {
                 </NavigationMenuLink>
               </NavigationMenuItem>
             )
-          ) : null // Hide the UI when it's still loading
+          ) : (
+            <p />
+          ) // Hide the UI when it's still loading
         }
       </NavigationMenuList>
     </NavigationMenu>

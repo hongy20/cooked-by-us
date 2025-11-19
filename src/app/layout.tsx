@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-svh`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-svh overflow-x-hidden`}
       >
         <header className="sticky top-0 z-10 py-2 bg-gray-100 dark:bg-gray-900">
           <NavBar />

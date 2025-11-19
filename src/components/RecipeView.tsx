@@ -64,7 +64,12 @@ export const RecipeView = ({
             <li key={i}>
               <p>{instruction.text}</p>
               {instruction.image && (
-                <Image src={instruction.image} alt={`Step ${i + 1}`} />
+                <Image
+                  src={instruction.image}
+                  alt={`Step ${i + 1}`}
+                  width={600}
+                  height={400}
+                />
               )}
             </li>
           ))}

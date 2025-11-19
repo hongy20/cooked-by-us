@@ -22,7 +22,7 @@ export const RecipeCard = ({ recipe }: { recipe: IRecipe }) => {
       <CardContent className="relative aspect-3/2 w-full">
         <Image
           src={recipe.image}
-          alt={recipe.name}
+          alt={`Photo of ${recipe.name}`}
           fill
           className="object-cover"
         />

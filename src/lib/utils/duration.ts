@@ -16,3 +16,5 @@ export const minutesToHuman = (durationInMinutes: number) => {
 
 export const isoToMinutes = (iso: string) =>
   Duration.fromISO(iso).as("minutes");
+
+export const isoToHuman = (iso: string) => minutesToHuman(isoToMinutes(iso));

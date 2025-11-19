@@ -3,7 +3,7 @@
 import { FilePenLine, LogOut, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useIsMobile } from "@/components/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { authClient } from "@/lib/auth-client";
 import { RECIPE_CATEGORY, RECIPE_CUISINE } from "@/lib/constant";
 import {

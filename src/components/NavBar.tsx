@@ -80,7 +80,7 @@ export const NavBar = () => {
           !isPending ? (
             session ? (
               <NavigationMenuItem className="ml-auto">
-                <NavigationMenuTrigger>
+                <NavigationMenuTrigger aria-label="User menu">
                   <User />
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="right-0 left-auto">

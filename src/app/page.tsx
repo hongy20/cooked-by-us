@@ -1,13 +1,6 @@
-import type { Metadata } from "next";
 import { RecipeCard } from "@/components/RecipeCard";
 import { RecipesJsonLd } from "@/components/RecipesJsonLd";
 import { getAllRecipesAction } from "@/lib/action/recipe";
-
-export const metadata: Metadata = {
-  title: "All Recipes - Discover Delicious Meals",
-  description:
-    "Browse our complete collection of recipes, from quick weeknight meals to gourmet dishes. Find step-by-step instructions, ingredients, and tips for every cuisine.",
-};
 
 export default async function Page() {
   const recipes = await getAllRecipesAction();

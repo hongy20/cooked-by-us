@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { CLOUDINARY_UPLOAD_FOLDER } from "@/lib/constant";
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -12,7 +13,7 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "res.cloudinary.com",
-        pathname: "**/cooked-by-us/**",
+        pathname: `**/${CLOUDINARY_UPLOAD_FOLDER}/**`,
       },
     ],
   },

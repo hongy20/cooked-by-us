@@ -1,6 +1,5 @@
 import { v2 as cloudinary, type UploadApiResponse } from "cloudinary";
-
-const folder = "cooked-by-us";
+import { CLOUDINARY_UPLOAD_FOLDER } from "./constant";
 
 export async function upload(file: File) {
   if (!(file instanceof File)) {
@@ -14,12 +13,15 @@ export async function upload(file: File) {
   const uploadAPIResponse: UploadApiResponse = await new Promise(
     (resolve, reject) =>
       cloudinary.uploader
-        .upload_stream({ folder }, (error, result) => {
-          if (error) reject(error);
-          else if (!result)
-            reject(new Error("Cloudinary upload failed: no result returned"));
-          else resolve(result);
-        })
+        .upload_stream(
+          { folder: CLOUDINARY_UPLOAD_FOLDER },
+          (error, result) => {
+            if (error) reject(error);
+            else if (!result)
+              reject(new Error("Cloudinary upload failed: no result returned"));
+            else resolve(result);
+          },
+        )
         .end(buffer),
   );
 

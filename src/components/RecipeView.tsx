@@ -2,50 +2,42 @@ import Image from "next/image";
 import type { IRecipe } from "@/lib/model/recipe";
 import { isoToHuman } from "@/lib/utils/duration";
 
-type Props = Pick<
-  IRecipe,
-  | "name"
-  | "description"
-  | "image"
-  | "category"
-  | "cuisine"
-  | "ingredients"
-  | "instructions"
-  | "cookTime"
-  | "keywords"
-  | "createdAt"
-  | "updatedAt"
-> & {
+type Props = {
+  recipe: IRecipe;
   authorName: string; // resolved from author id
 };
 
 export const RecipeView = ({
-  name,
-  description,
-  image,
+  recipe: {
+    name,
+    description,
+    image,
+    category,
+    cuisine,
+    ingredients,
+    instructions,
+    cookTime,
+    keywords,
+    createdAt,
+    updatedAt,
+  },
   authorName,
-  category,
-  cuisine,
-  ingredients,
-  instructions,
-  cookTime,
-  keywords,
-  createdAt,
-  updatedAt,
 }: Props) => {
   return (
-    <article className="flex flex-col space-y-8 mx-12 md:mx-24 lg:mx-36">
+    <article className="flex flex-col space-y-8">
       <header className="flex flex-col space-y-6">
         <h1>{name}</h1>
+
+        <p className="text-muted-foreground text-base">{description}</p>
+
+        <figure className="relative aspect-3/2 w-full">
+          <Image src={image} alt={`Photo of ${name}`} fill />
+        </figure>
 
         <p className="text-sm">
           By <span>{authorName}</span> Published{" "}
           <time dateTime={new Date(createdAt).toISOString()}>
             {new Date(createdAt).toLocaleDateString()}
-          </time>{" "}
-          Updated{" "}
-          <time dateTime={new Date(updatedAt).toISOString()}>
-            {new Date(updatedAt).toLocaleDateString()}
           </time>
         </p>
 
@@ -53,12 +45,6 @@ export const RecipeView = ({
           <span>Category: {category}</span> · <span>Cuisine: {cuisine}</span> ·{" "}
           <span>Cook Time: {isoToHuman(cookTime)}</span>
         </p>
-
-        <p className="text-muted-foreground text-base">{description}</p>
-
-        <figure className="relative aspect-3/2 w-full">
-          <Image src={image} alt={`Photo of ${name}`} fill />
-        </figure>
       </header>
 
       <section>
@@ -94,6 +80,12 @@ export const RecipeView = ({
               {i < keywords.length - 1 ? ", " : ""}
             </span>
           ))}
+        </p>
+        <p className="text-muted-foreground text-sm">
+          Updated{" "}
+          <time dateTime={new Date(updatedAt).toISOString()}>
+            {new Date(updatedAt).toLocaleDateString()}
+          </time>
         </p>
       </footer>
     </article>

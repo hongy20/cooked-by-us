@@ -28,5 +28,5 @@ export const getSimilarRecipes = async (recipeId: string) => {
   return await RecipeModel.find({
     keywords: { $in: recipe.keywords },
     _id: { $ne: recipe._id },
-  }).lean<IRecipe>();
+  }).lean<IRecipe[]>();
 };

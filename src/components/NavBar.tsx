@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { authClient } from "@/lib/auth-client";
 import { RECIPE_CATEGORY, RECIPE_CUISINE } from "@/lib/constant";
+import { Button } from "./ui/button";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -42,36 +43,36 @@ export const NavBar = () => {
         <NavigationMenuItem className="hidden md:block">
           <NavigationMenuTrigger>Category</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid w-[200px] gap-4">
-              <li>
-                {RECIPE_CATEGORY.map((category) => (
-                  <NavigationMenuLink key={category} asChild>
+            <ul className="grid w-[200px] gap-1">
+              {RECIPE_CATEGORY.map((category) => (
+                <li key={category}>
+                  <NavigationMenuLink asChild>
                     <Link
                       href={`/search?category=${encodeURIComponent(category)}`}
                     >
                       {category}
                     </Link>
                   </NavigationMenuLink>
-                ))}
-              </li>
+                </li>
+              ))}
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem className="hidden md:block">
           <NavigationMenuTrigger>Cuisine</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid w-[200px] gap-4">
-              <li>
-                {RECIPE_CUISINE.map((cuisine) => (
-                  <NavigationMenuLink key={cuisine} asChild>
+            <ul className="grid w-[200px] gap-1">
+              {RECIPE_CUISINE.map((cuisine) => (
+                <li key={cuisine}>
+                  <NavigationMenuLink asChild>
                     <Link
                       href={`/search?cuisine=${encodeURIComponent(cuisine)}`}
                     >
                       {cuisine}
                     </Link>
                   </NavigationMenuLink>
-                ))}
-              </li>
+                </li>
+              ))}
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
@@ -83,26 +84,28 @@ export const NavBar = () => {
                   <User />
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="right-0 left-auto">
-                  <ul className="grid w-[200px] gap-4">
+                  <ul className="grid w-[100px] gap-1">
                     <li>
                       <NavigationMenuLink asChild>
                         <Link
                           href="/admin"
-                          className="flex-row items-center gap-2"
+                          className="flex-row items-center justify-center gap-2"
                         >
                           <FilePenLine />
                           Admin
                         </Link>
                       </NavigationMenuLink>
+                    </li>
+                    <li>
                       <NavigationMenuLink asChild>
-                        <Link
-                          href="#"
-                          className="flex-row items-center gap-2"
+                        <Button
+                          variant="outline"
                           onClick={signOutHandler}
+                          className="flex-row items-center gap-2 w-full"
                         >
                           <LogOut />
                           Logout
-                        </Link>
+                        </Button>
                       </NavigationMenuLink>
                     </li>
                   </ul>

@@ -63,8 +63,3 @@ export const createRecipeAction = async (
 
   redirect(`/recipe/${recipe.id}`);
 };
-
-export const getAllRecipesAction = async () => {
-  const recipes = await getAllRecipes();
-  return recipes;
-};

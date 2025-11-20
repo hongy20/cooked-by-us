@@ -37,3 +37,8 @@ export const stringArraySchemaFactory = ({
     z.array(z.string()).min(minLength, errorMessage),
   );
 };
+
+export const objectIdSchema = z
+  .string()
+  .length(24, "Invalid Author ID")
+  .regex(/^[0-9a-fA-F]{24}$/, "Author ID must be valid"); // MongoDB ObjectId

@@ -17,7 +17,7 @@ export default async function Layout({
   return (
     <SidebarProvider>
       <AdminSidebar />
-      <main>
+      <main className="flex">
         <SidebarTrigger />
         {children}
       </main>

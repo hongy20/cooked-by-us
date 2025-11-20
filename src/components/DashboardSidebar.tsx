@@ -30,7 +30,7 @@ const items = [
   },
 ];
 
-export function AdminSidebar() {
+export function DashboardSidebar() {
   return (
     <Sidebar className="mt-14" collapsible="icon">
       <SidebarContent>

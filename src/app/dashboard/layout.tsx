@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { AdminSidebar } from "@/components/AdminSidebar";
+import { DashboardSidebar } from "@/components/DashboardSidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { getSession } from "@/lib/auth";
 
@@ -16,7 +16,7 @@ export default async function Layout({
 
   return (
     <SidebarProvider>
-      <AdminSidebar />
+      <DashboardSidebar />
       <main className="flex">
         <SidebarTrigger />
         {children}

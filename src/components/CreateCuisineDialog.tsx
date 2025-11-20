@@ -15,43 +15,43 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  type CreateCategoryFormState,
-  createCategoryAction,
-} from "@/lib/action/category";
+  type CreateCuisineFormState,
+  createCuisineAction,
+} from "@/lib/action/cuisine";
 import { FieldError } from "./ui/field";
 import { Spinner } from "./ui/spinner";
 
-const initialState: CreateCategoryFormState = {
+const initialState: CreateCuisineFormState = {
   status: "idle",
   fields: {
     name: "",
   },
 };
 
-export const CreateCategoryDialog = () => {
+export const CreateCuisineDialog = () => {
   const id = useId();
   const [state, action, pending] = useActionState(
-    createCategoryAction,
+    createCuisineAction,
     initialState,
   );
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Create New Category</Button>
+        <Button variant="outline">Create New Cuisine</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Create new category</DialogTitle>
+          <DialogTitle>Create new cuisine</DialogTitle>
           <DialogDescription>
-            Create new category to your app here. Click save when you&apos;re
+            Create new cursine to your app here. Click save when you&apos;re
             done.
           </DialogDescription>
         </DialogHeader>
 
         <form action={action}>
           <div className="grid gap-4 mb-6">
-            <Label htmlFor={id}>Category Name</Label>
+            <Label htmlFor={id}>Cuisine Name</Label>
             <Input
               id={id}
               name="name"

@@ -4,5 +4,8 @@
   },
   "privacy": {
     "usageStatisticsEnabled": false
+  },
+  "tools": {
+    "exclude": ["run_shell_command"]
   }
 }

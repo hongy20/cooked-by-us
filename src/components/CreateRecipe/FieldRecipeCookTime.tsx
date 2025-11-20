@@ -1,11 +1,16 @@
 import { useId, useState } from "react";
 import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/components/ui/field";
+import { Slider } from "@/components/ui/slider";
+import {
   isoToMinutes,
   minutesToHuman,
   minutesToISO,
 } from "@/lib/utils/duration";
-import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field";
-import { Slider } from "../ui/slider";
 
 interface Props {
   name: string;

@@ -9,11 +9,11 @@ import {
   FieldLegend,
   FieldSet,
 } from "@/components/ui/field";
+import { Spinner } from "@/components/ui/spinner";
 import {
   type CreateRecipeFormState,
   createRecipeAction,
 } from "@/lib/action/recipe";
-import { Spinner } from "../ui/spinner";
 import { FieldRecipeCategory } from "./FieldRecipeCategory";
 import { FieldRecipeCookTime } from "./FieldRecipeCookTime";
 import { FieldRecipeCuisine } from "./FieldRecipeCuisine";

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { RECIPE_CATEGORY, RECIPE_CUISINE } from "../constant";
+import { RECIPE_CATEGORY, RECIPE_CUISINE } from "@/lib/constant";
 import { objectIdSchema, stringArraySchemaFactory } from "./util";
 
 // Zod schema for an individual instruction step

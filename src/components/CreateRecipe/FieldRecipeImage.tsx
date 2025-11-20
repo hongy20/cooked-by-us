@@ -1,6 +1,11 @@
 import { useId, useState } from "react";
-import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field";
-import { Input } from "../ui/input";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 
 interface Props {
   name: string;

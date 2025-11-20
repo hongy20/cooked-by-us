@@ -1,5 +1,5 @@
 import type { ItemList, Recipe, WithContext } from "schema-dts";
-import type { IRecipe } from "../lib/model/recipe";
+import type { IRecipe } from "@/lib/model/recipe";
 
 type Props = { recipes: IRecipe[] };
 

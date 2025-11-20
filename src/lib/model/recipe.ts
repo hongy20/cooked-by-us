@@ -1,5 +1,5 @@
 import { type Document, type Model, model, models, Schema } from "mongoose";
-import { RECIPE_CATEGORY, RECIPE_CUISINE } from "../constant";
+import { RECIPE_CATEGORY, RECIPE_CUISINE } from "@/lib/constant";
 
 export interface IRecipe extends Document {
   name: string;

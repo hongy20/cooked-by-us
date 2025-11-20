@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
+import { migrateXXX } from "@/lib/migration";
 
 export async function GET() {
   const session = await getSession();
@@ -9,6 +10,7 @@ export async function GET() {
 
   try {
     // Run your migration
+    await migrateXXX();
 
     return NextResponse.json({ status: "ok" });
   } catch (err) {

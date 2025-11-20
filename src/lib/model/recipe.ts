@@ -1,13 +1,12 @@
 import { type Document, type Model, model, models, Schema } from "mongoose";
-import { RECIPE_CATEGORY, RECIPE_CUISINE } from "@/lib/constant";
 
 export interface IRecipe extends Document {
   name: string;
   description: string;
   image: string;
   author: Schema.Types.ObjectId;
-  category: string;
-  cuisine: string;
+  category: Schema.Types.ObjectId;
+  cuisine: Schema.Types.ObjectId;
   ingredients: string[];
   instructions: {
     text: string;
@@ -47,18 +46,18 @@ const RecipeSchema = new Schema<IRecipe>(
     },
     author: {
       type: Schema.Types.ObjectId,
-      ref: "User", // Should reference the User model once it's created
+      ref: "User",
       required: true,
     },
     category: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "Category",
       required: true,
-      enum: RECIPE_CATEGORY,
     },
     cuisine: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "Cuisine",
       required: true,
-      enum: RECIPE_CUISINE,
     },
     ingredients: {
       type: [String],

@@ -1,4 +1,4 @@
-import { CreateRecipe } from "@/components/CreateRecipe/CreateRecipe";
+import { CreateRecipe } from "@/components/CreateRecipeDialog/CreateRecipeDialog";
 import {
   Table,
   TableBody,

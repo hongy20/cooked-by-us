@@ -1,5 +1,9 @@
 import type { NextConfig } from "next";
-import { CLOUDINARY_UPLOAD_FOLDER } from "@/lib/constant";
+
+const CLOUDINARY_FOLDER = process.env.CLOUDINARY_FOLDER;
+if (!CLOUDINARY_FOLDER) {
+  throw new Error("Please define the CLOUDINARY_FOLDER environment variable");
+}
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -13,7 +17,7 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "res.cloudinary.com",
-        pathname: `**/${CLOUDINARY_UPLOAD_FOLDER}/**`,
+        pathname: `**/${CLOUDINARY_FOLDER}/**`,
       },
     ],
   },

@@ -20,5 +20,3 @@ export const RECIPE_CUISINE = [
   "Korean",
   "Nordic / Scandinavian",
 ];
-
-export const CLOUDINARY_UPLOAD_FOLDER = "cooked-by-us";

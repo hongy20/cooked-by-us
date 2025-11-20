@@ -124,7 +124,9 @@ export const NavBar = () => {
               </NavigationMenuItem>
             ) : (
               <NavigationMenuItem className="ml-auto">
-                <NavigationMenuTrigger>Login</NavigationMenuTrigger>
+                <NavigationMenuTrigger aria-label="Login menu">
+                  Login
+                </NavigationMenuTrigger>
                 <NavigationMenuContent className="right-0 left-auto">
                   <Button onClick={handleLogin} className="px-6">
                     <Image
@@ -138,7 +140,7 @@ export const NavBar = () => {
                     </span>
                   </Button>
                   <p className="text-muted-foreground pt-2 text-xs text-center">
-                    Limited to selected accounts
+                    Access restricted to authorized accounts
                   </p>
                 </NavigationMenuContent>
               </NavigationMenuItem>

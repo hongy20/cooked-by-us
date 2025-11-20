@@ -1,6 +1,7 @@
 "use client";
 
 import { FilePenLine, LogOut, User } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -22,13 +23,23 @@ export const NavBar = () => {
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
 
-  const signOutHandler = async () => {
+  const handleLogout = async () => {
     try {
       await authClient.signOut();
     } catch (error) {
       console.error("Sign out failed", error);
     } finally {
       router.replace("/");
+    }
+  };
+
+  const handleLogin = async () => {
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+      });
+    } catch (error) {
+      console.error("Sign in failed", error);
     }
   };
 
@@ -100,7 +111,7 @@ export const NavBar = () => {
                       <NavigationMenuLink asChild>
                         <Button
                           variant="outline"
-                          onClick={signOutHandler}
+                          onClick={handleLogout}
                           className="flex-row items-center gap-2 w-full"
                         >
                           <LogOut />
@@ -113,12 +124,25 @@ export const NavBar = () => {
               </NavigationMenuItem>
             ) : (
               <NavigationMenuItem className="ml-auto">
-                <NavigationMenuLink
-                  asChild
-                  className={navigationMenuTriggerStyle()}
-                >
-                  <Link href="/login">Login</Link>
-                </NavigationMenuLink>
+                <NavigationMenuTrigger aria-label="Login menu">
+                  Login
+                </NavigationMenuTrigger>
+                <NavigationMenuContent className="right-0 left-auto">
+                  <Button onClick={handleLogin} className="px-6">
+                    <Image
+                      src="/google.svg"
+                      alt="Google logo"
+                      width={20}
+                      height={20}
+                    />
+                    <span className="dark:text-gray-300">
+                      Login with Google
+                    </span>
+                  </Button>
+                  <p className="text-muted-foreground pt-2 text-xs text-center">
+                    Access restricted to authorized accounts
+                  </p>
+                </NavigationMenuContent>
               </NavigationMenuItem>
             )
           ) : (

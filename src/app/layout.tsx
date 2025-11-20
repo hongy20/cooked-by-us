@@ -15,7 +15,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "All Recipes - Discover Delicious Meals",
+  title: {
+    template: "%s | Cooked by Us",
+    default: "Cooked by Us",
+  },
   description:
     "Browse our complete collection of recipes, from quick weeknight meals to gourmet dishes. Find step-by-step instructions, ingredients, and tips for every cuisine.",
 };
@@ -30,7 +33,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-svh overflow-x-hidden`}
       >
-        <header className="sticky top-0 z-10 py-2 bg-gray-100 dark:bg-gray-900">
+        <header className="sticky top-0 z-10 py-2 bg-white dark:bg-gray-900">
           <NavBar />
         </header>
         <main className="flex-1 min-h-0 flex justify-center">{children}</main>

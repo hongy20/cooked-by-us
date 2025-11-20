@@ -129,7 +129,7 @@ export const NavBar = () => {
                   <Button onClick={handleLogin} className="px-6">
                     <Image
                       src="/google.svg"
-                      alt="Google Icon"
+                      alt="Google logo"
                       width={20}
                       height={20}
                     />

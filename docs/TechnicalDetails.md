@@ -34,3 +34,4 @@ This section explains the key **Next.js features** and technical decisions behin
 - Set up [Cloudinary](https://cloudinary.com/) for image hosting
 - Use [Zod](https://zod.dev/) to validate form data
 - Adopt semantic HTML for better structure and accessibility
+- Build and deploy with [vercel](https://vercel.com/home)

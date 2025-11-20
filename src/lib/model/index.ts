@@ -25,3 +25,5 @@ export type IPopulatedRecipe = Omit<IRecipe, "category" | "cuisine"> & {
 } & {
   cuisine: ICuisine;
 };
+
+export type { ICategory, ICuisine, IRecipe };

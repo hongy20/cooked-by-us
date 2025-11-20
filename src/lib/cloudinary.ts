@@ -1,5 +1,9 @@
 import { v2 as cloudinary, type UploadApiResponse } from "cloudinary";
-import { CLOUDINARY_UPLOAD_FOLDER } from "./constant";
+
+const CLOUDINARY_FOLDER = process.env.CLOUDINARY_FOLDER;
+if (!CLOUDINARY_FOLDER) {
+  throw new Error("Please define the CLOUDINARY_FOLDER environment variable");
+}
 
 export async function upload(file: File) {
   if (!(file instanceof File)) {
@@ -13,15 +17,12 @@ export async function upload(file: File) {
   const uploadAPIResponse: UploadApiResponse = await new Promise(
     (resolve, reject) =>
       cloudinary.uploader
-        .upload_stream(
-          { folder: CLOUDINARY_UPLOAD_FOLDER },
-          (error, result) => {
-            if (error) reject(error);
-            else if (!result)
-              reject(new Error("Cloudinary upload failed: no result returned"));
-            else resolve(result);
-          },
-        )
+        .upload_stream({ folder: CLOUDINARY_FOLDER }, (error, result) => {
+          if (error) reject(error);
+          else if (!result)
+            reject(new Error("Cloudinary upload failed: no result returned"));
+          else resolve(result);
+        })
         .end(buffer),
   );
 

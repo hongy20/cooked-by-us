@@ -1,6 +1,11 @@
+import type { Metadata } from "next";
 import { RecipeCard } from "@/components/RecipeCard";
 import { RecipesJsonLd } from "@/components/RecipesJsonLd";
 import { getAllRecipesAction } from "@/lib/action/recipe";
+
+export const metadata: Metadata = {
+  title: "Discover Delicious Meals | Cooked by Us",
+};
 
 export default async function Page() {
   const recipes = await getAllRecipesAction();

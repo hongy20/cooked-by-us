@@ -21,4 +21,5 @@ const CuisineSchema = new Schema<ICuisine>(
 );
 
 export const CuisineModel =
-  (models.Cuisine as Model<ICuisine>) || model<ICuisine>("Cuisine", CuisineSchema);
+  (models.Cuisine as Model<ICuisine>) ||
+  model<ICuisine>("Cuisine", CuisineSchema);

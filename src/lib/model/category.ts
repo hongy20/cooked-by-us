@@ -21,4 +21,5 @@ const CategorySchema = new Schema<ICategory>(
 );
 
 export const CategoryModel =
-  (models.Category as Model<ICategory>) || model<ICategory>("Category", CategorySchema);
+  (models.Category as Model<ICategory>) ||
+  model<ICategory>("Category", CategorySchema);

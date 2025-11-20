@@ -7,30 +7,26 @@ import { createCuisine } from "@/lib/dal/cuisine";
 import { type CuisineInput, CuisineValidator } from "@/lib/validator/cuisine";
 import type { FormState } from "./type";
 
-export type CreateCuisineFormState = FormState<Omit<CuisineInput, "author">>;
+export type CreateCuisineFormState = FormState<CuisineInput>;
 
 export const createCuisineAction = async (
   _prevState: CreateCuisineFormState,
   formData: FormData,
 ): Promise<CreateCuisineFormState> => {
   const session = await getSession();
-  const author = session?.user.id;
 
   // 1. Validate form data
   const fields = {
     name: formData.get("name") as string,
-    author,
   };
 
-  if (!author) {
+  if (!session) {
     return { status: "error", fields, message: "You have to login first" };
   }
 
   const validatedFields = CuisineValidator.safeParse(fields);
   if (!validatedFields.success) {
-    const { author: _author, ...errors } = z.flattenError(
-      validatedFields.error,
-    ).fieldErrors;
+    const errors = z.flattenError(validatedFields.error).fieldErrors;
     return {
       status: "error",
       fields,

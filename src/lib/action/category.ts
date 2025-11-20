@@ -1,5 +1,6 @@
 "use server";
 
+import { refresh } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { getSession } from "@/lib/auth";
@@ -10,30 +11,26 @@ import {
 } from "@/lib/validator/category";
 import type { FormState } from "./type";
 
-export type CreateCategoryFormState = FormState<Omit<CategoryInput, "author">>;
+export type CreateCategoryFormState = FormState<CategoryInput>;
 
 export const createCategoryAction = async (
   _prevState: CreateCategoryFormState,
   formData: FormData,
 ): Promise<CreateCategoryFormState> => {
   const session = await getSession();
-  const author = session?.user.id;
 
   // 1. Validate form data
   const fields = {
     name: formData.get("name") as string,
-    author,
   };
 
-  if (!author) {
+  if (!session) {
     return { status: "error", fields, message: "You have to login first" };
   }
 
   const validatedFields = CategoryValidator.safeParse(fields);
   if (!validatedFields.success) {
-    const { author: _author, ...errors } = z.flattenError(
-      validatedFields.error,
-    ).fieldErrors;
+    const errors = z.flattenError(validatedFields.error).fieldErrors;
     return {
       status: "error",
       fields,

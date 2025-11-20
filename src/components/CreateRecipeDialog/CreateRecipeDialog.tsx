@@ -4,8 +4,10 @@ import { useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -52,7 +54,11 @@ export const CreateRecipe = () => {
       <DialogTrigger asChild>
         <Button variant="outline">Create New Recipe</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] w-2xl">
+      <DialogContent
+        className="sm:max-w-[425px] w-2xl"
+        onInteractOutside={(event) => event.preventDefault()}
+        onEscapeKeyDown={(event) => event.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle>Create New Recipe</DialogTitle>
           <DialogDescription>
@@ -112,19 +118,19 @@ export const CreateRecipe = () => {
                 defaultValue={state.fields.keywords}
                 errors={state.errors?.keywords}
               />
-              <Field orientation="horizontal">
+              <DialogFooter>
+                <DialogClose asChild>
+                  <Button variant="outline">Cancel</Button>
+                </DialogClose>
                 <Button
                   type="submit"
                   className="w-30 relative"
                   disabled={pending}
                 >
                   {pending && <Spinner className="absolute left-3" />}
-                  Submit
+                  Create
                 </Button>
-                <Button variant="outline" type="button">
-                  Cancel
-                </Button>
-              </Field>
+              </DialogFooter>
             </FieldGroup>
           </FieldSet>
         </form>

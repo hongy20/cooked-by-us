@@ -40,7 +40,11 @@ export const CreateCategoryDialog = () => {
       <DialogTrigger asChild>
         <Button variant="outline">Create New Category</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent
+        className="sm:max-w-[425px]"
+        onInteractOutside={(event) => event.preventDefault()}
+        onEscapeKeyDown={(event) => event.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle>Create new category</DialogTitle>
           <DialogDescription>

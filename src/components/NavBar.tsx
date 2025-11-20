@@ -99,11 +99,11 @@ export const NavBar = () => {
                     <li>
                       <NavigationMenuLink asChild>
                         <Link
-                          href="/admin"
+                          href="/dashboard"
                           className="flex-row items-center justify-center gap-2"
                         >
                           <FilePenLine />
-                          Admin
+                          Dashboard
                         </Link>
                       </NavigationMenuLink>
                     </li>

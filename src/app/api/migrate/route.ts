@@ -12,7 +12,7 @@ export async function GET() {
     // Run your migration
     await migrateXXX();
 
-    return NextResponse.json({ status: "ok" });
+    return NextResponse.json({ ok: true });
   } catch (err) {
     console.error(err);
     return NextResponse.json({ error: err }, { status: 500 });

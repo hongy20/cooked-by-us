@@ -48,7 +48,7 @@ export const CreateCuisineDialog = () => {
         <DialogHeader>
           <DialogTitle>Create new cuisine</DialogTitle>
           <DialogDescription>
-            Create new cursine to your app here. Click save when you&apos;re
+            Create new cuisine to your app here. Click save when you&apos;re
             done.
           </DialogDescription>
         </DialogHeader>

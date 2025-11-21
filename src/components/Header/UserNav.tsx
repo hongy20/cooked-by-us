@@ -35,13 +35,12 @@ export function UserNav() {
   const handleLogout = async () => {
     try {
       await authClient.signOut();
+      router.replace("/");
     } catch (error) {
       toast(
         "Logout failed",
         error instanceof Error ? { description: error.message } : undefined,
       );
-    } finally {
-      router.replace("/");
     }
   };
 

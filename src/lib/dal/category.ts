@@ -11,13 +11,16 @@ export const createCategory = async (data: CategoryInput) => {
 
 export const editCategory = async (categoryId: string, data: CategoryInput) => {
   await connectDB();
-  return await CategoryModel.updateOne({ _id: categoryId }, { $set: data });
+  return await CategoryModel.findByIdAndUpdate(
+    { _id: categoryId },
+    { $set: data },
+  );
 };
 
 export const bootstrapCategories = async () => {
   await connectDB();
 
-  for (const name of [
+  const categories = [
     "Appetizer / Starter",
     "Main Course",
     "Side Dish",
@@ -30,13 +33,17 @@ export const bootstrapCategories = async () => {
     "Spread / Dip",
     "Marinade",
     "Dressing",
-  ]) {
-    await CategoryModel.findOneAndUpdate(
-      { name },
-      { name },
-      { upsert: true, new: true },
-    );
-  }
+  ];
+
+  await CategoryModel.bulkWrite(
+    categories.map((name) => ({
+      updateOne: {
+        filter: { name },
+        update: { $setOnInsert: { name } },
+        upsert: true,
+      },
+    })),
+  );
 };
 
 export const getAllCategories = cache(async () => {

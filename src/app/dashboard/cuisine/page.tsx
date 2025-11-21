@@ -23,7 +23,6 @@ export default async function Page() {
         <TableCaption>A list of recipe cuisines.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead>Author</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Created Date</TableHead>
           </TableRow>
@@ -31,7 +30,6 @@ export default async function Page() {
         <TableBody>
           {cuisines.map((cuisine) => (
             <TableRow key={`${cuisine._id}`}>
-              <TableCell className="font-medium">{`${cuisine.author}`}</TableCell>
               <TableCell>{cuisine.name}</TableCell>
               <TableCell>{formatDateForHuman(cuisine.createdAt)}</TableCell>
             </TableRow>

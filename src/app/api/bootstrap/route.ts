@@ -16,6 +16,6 @@ export async function GET() {
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error(err);
-    return NextResponse.json({ error: err }, { status: 500 });
+    return NextResponse.json({ error: "Bootstrap failed" }, { status: 500 });
   }
 }

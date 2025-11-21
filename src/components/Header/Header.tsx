@@ -15,7 +15,7 @@ export const Header = () => {
 
         <DesktopNav />
 
-        <p className="grow"></p>
+        <div className="grow" />
 
         <UserNav />
       </div>

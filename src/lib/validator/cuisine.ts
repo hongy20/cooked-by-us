@@ -6,6 +6,7 @@ export const CuisineValidator = z.object({
     .min(3, {
       message: "Name must be at least 3 characters long",
     })
+    .max(100)
     .trim(),
 });
 

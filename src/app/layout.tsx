@@ -34,10 +34,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Header />
-        <main className="flex-1 min-h-0 flex justify-center">{children}</main>
-        <footer className="px-4 py-2">
-          <Footer />
-        </footer>
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );

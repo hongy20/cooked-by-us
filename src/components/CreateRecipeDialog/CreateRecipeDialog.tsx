@@ -62,7 +62,7 @@ export const CreateRecipe = () => {
         <DialogHeader>
           <DialogTitle>Create New Recipe</DialogTitle>
           <DialogDescription>
-            Create new category to your app here. Click save when you&apos;re
+            Create new recipe to your app here. Click save when you&apos;re
             done.
           </DialogDescription>
         </DialogHeader>

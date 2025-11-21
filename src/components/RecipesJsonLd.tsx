@@ -20,8 +20,9 @@ export const RecipesJsonLd = ({ recipes }: Props) => {
         "@type": "Recipe",
         name: recipe.name,
         image: recipe.image,
-        recipeCuisine: recipe.cuisine,
-        recipeCategory: recipe.category,
+        // TODO: populate the real value
+        // recipeCuisine: recipe.cuisine,
+        // recipeCategory: recipe.category,
         keywords: recipe.keywords.join(", "),
         url: `${BASE_URL}/recipe/${recipe._id}`,
       } satisfies Recipe,

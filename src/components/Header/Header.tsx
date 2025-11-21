@@ -1,21 +1,23 @@
 import Link from "next/link";
 import { DesktopNav } from "./DesktopNav";
 import { MobileNav } from "./MobileNav";
+import { UserNav } from "./UserNav";
 
 export const Header = () => {
-  // <header className="sticky top-0 z-20 py-2 bg-white dark:bg-gray-900">
-  //   <NavBar />
-  // </header>
   return (
     <header className="border-b bg-background mx-4">
-      <div className="container flex h-16 items-center gap-1">
+      <div className="flex h-16 items-center gap-1">
         <MobileNav />
 
-        <Link href="/" className="text-xl font-bold">
+        <Link href="/" className="text-xl font-bold mr-4">
           Cooked By Us
         </Link>
 
         <DesktopNav />
+
+        <p className="grow"></p>
+
+        <UserNav />
       </div>
     </header>
   );

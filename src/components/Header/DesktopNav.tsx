@@ -1,56 +1,66 @@
-import { NavigationMenuTrigger } from "@radix-ui/react-navigation-menu";
 import Link from "next/link";
+import { getAllCategories } from "@/lib/dal/category";
+import { getAllCuisines } from "@/lib/dal/cuisine";
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
 } from "../ui/navigation-menu";
 
-export const DesktopNav = () => {
+export const DesktopNav = async () => {
+  const categories = await getAllCategories();
+  const cuisines = await getAllCuisines();
+
   return (
     <nav className="hidden md:block">
       <NavigationMenu>
         <NavigationMenuList>
-          {/* Recipes */}
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Recipes</NavigationMenuTrigger>
+            <NavigationMenuTrigger>Category</NavigationMenuTrigger>
             <NavigationMenuContent>
-              <ul className="grid gap-3 p-4 md:w-80">
-                <li>
-                  <NavigationMenuLink asChild>
-                    <Link
-                      href="/recipes"
-                      className="block rounded p-2 hover:bg-accent"
-                    >
-                      All Recipes
-                    </Link>
-                  </NavigationMenuLink>
-                </li>
-                <li>
-                  <NavigationMenuLink asChild>
-                    <Link
-                      href="/categories"
-                      className="block rounded p-2 hover:bg-accent"
-                    >
-                      Categories
-                    </Link>
-                  </NavigationMenuLink>
-                </li>
+              <ul className="grid w-[200px] gap-1">
+                {categories.map((category) => (
+                  <li key={category.name}>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href={`/search?category=${encodeURIComponent(category.name)}`}
+                      >
+                        {category.name}
+                      </Link>
+                    </NavigationMenuLink>
+                  </li>
+                ))}
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
-
-          {/* Static link */}
           <NavigationMenuItem>
-            <NavigationMenuLink asChild>
-              <Link
-                href="/about"
-                className="px-4 py-2 hover:text-primary transition-colors"
-              >
-                About
-              </Link>
+            <NavigationMenuTrigger>Cuisine</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="grid w-[200px] gap-1">
+                {cuisines.map((cuisine) => (
+                  <li key={cuisine.name}>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href={`/search?cuisine=${encodeURIComponent(cuisine.name)}`}
+                      >
+                        {cuisine.name}
+                      </Link>
+                    </NavigationMenuLink>
+                  </li>
+                ))}
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              asChild
+              className={navigationMenuTriggerStyle()}
+            >
+              <Link href="/about">About</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
         </NavigationMenuList>

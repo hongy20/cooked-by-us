@@ -1,8 +1,8 @@
-// app/about/page.tsx
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "About",
 };
 

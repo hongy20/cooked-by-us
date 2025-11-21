@@ -25,6 +25,7 @@ This section explains the key **Next.js features** and technical decisions behin
 - **Runtime**: [Bun](https://bun.com/) used locally for development scripts, faster installs, and bundling
 - Choose [Biome](https://biomejs.dev/) instead of ESLint for faster performance and simplified configuration
 - Configure GitHub Action to run Biome for automated code quality checks
+- Configure GitHub Action for automated type checking
 - Configure Gemini CLI with a [dedicated context file](https://geminicli.com/docs/get-started/configuration/)
 - Authenticate with [Better Auth](https://www.better-auth.com/docs/integrations/next)
   - Restrict signup to [selected accounts](https://github.com/better-auth/better-auth/blob/canary/docs/content/docs/errors/signup_disabled.mdx) only

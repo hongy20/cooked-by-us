@@ -1,0 +1,26 @@
+name: Type Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  type-check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: stable
+      - name: Install Dependencies
+        run: bun install
+      - name: TypeScript Check
+        run: bun tsc --noEmit

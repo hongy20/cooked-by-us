@@ -41,7 +41,7 @@ export const MobileNav = async () => {
             </Link>
             <Accordion type="single" collapsible>
               <AccordionItem value="categories">
-                <AccordionTrigger className="">Categories</AccordionTrigger>
+                <AccordionTrigger>Categories</AccordionTrigger>
                 <AccordionContent className="flex flex-col pl-4 space-y-1">
                   {categories.length === 0 ? (
                     <span className="p-2 text-sm text-muted-foreground">
@@ -61,7 +61,7 @@ export const MobileNav = async () => {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="cuisine">
-                <AccordionTrigger className="">Cuisines</AccordionTrigger>
+                <AccordionTrigger>Cuisines</AccordionTrigger>
                 <AccordionContent className="flex flex-col pl-4 space-y-1">
                   {cuisines.length === 0 ? (
                     <span className="p-2 text-sm text-muted-foreground">

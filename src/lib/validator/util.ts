@@ -41,5 +41,5 @@ export const stringArraySchemaFactory = ({
 export const objectIdSchema = (errorMessage: string) =>
   z
     .string()
-    .length(24, "Invalid Object ID")
+    .length(24, errorMessage)
     .regex(/^[0-9a-fA-F]{24}$/, errorMessage); // MongoDB ObjectId

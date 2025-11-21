@@ -23,17 +23,23 @@ export const DesktopNav = async () => {
             <NavigationMenuTrigger>Category</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[200px] gap-1">
-                {categories.map((category) => (
-                  <li key={category.name}>
-                    <NavigationMenuLink asChild>
-                      <Link
-                        href={`/search?category=${encodeURIComponent(category.name)}`}
-                      >
-                        {category.name}
-                      </Link>
-                    </NavigationMenuLink>
-                  </li>
-                ))}
+                {categories.length === 0 ? (
+                  <span className="p-2 text-sm text-muted-foreground">
+                    No categories available
+                  </span>
+                ) : (
+                  categories.map((category) => (
+                    <li key={category.name}>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          href={`/search?category=${encodeURIComponent(category.name)}`}
+                        >
+                          {category.name}
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                  ))
+                )}
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
@@ -41,17 +47,23 @@ export const DesktopNav = async () => {
             <NavigationMenuTrigger>Cuisine</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[200px] gap-1">
-                {cuisines.map((cuisine) => (
-                  <li key={cuisine.name}>
-                    <NavigationMenuLink asChild>
-                      <Link
-                        href={`/search?cuisine=${encodeURIComponent(cuisine.name)}`}
-                      >
-                        {cuisine.name}
-                      </Link>
-                    </NavigationMenuLink>
-                  </li>
-                ))}
+                {cuisines.length === 0 ? (
+                  <span className="p-2 text-sm text-muted-foreground">
+                    No cuisines available
+                  </span>
+                ) : (
+                  cuisines.map((cuisine) => (
+                    <li key={cuisine.name}>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          href={`/search?cuisine=${encodeURIComponent(cuisine.name)}`}
+                        >
+                          {cuisine.name}
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                  ))
+                )}
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>

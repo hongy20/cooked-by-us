@@ -43,29 +43,41 @@ export const MobileNav = async () => {
               <AccordionItem value="categories">
                 <AccordionTrigger className="">Categories</AccordionTrigger>
                 <AccordionContent className="flex flex-col pl-4 space-y-1">
-                  {categories.map((category) => (
-                    <Link
-                      key={category.name}
-                      href={`/search?category=${encodeURIComponent(category.name)}`}
-                      className="p-2 rounded hover:bg-accent"
-                    >
-                      {category.name}
-                    </Link>
-                  ))}
+                  {categories.length === 0 ? (
+                    <span className="p-2 text-sm text-muted-foreground">
+                      No categories available
+                    </span>
+                  ) : (
+                    categories.map((category) => (
+                      <Link
+                        key={category.name}
+                        href={`/search?category=${encodeURIComponent(category.name)}`}
+                        className="p-2 rounded hover:bg-accent"
+                      >
+                        {category.name}
+                      </Link>
+                    ))
+                  )}
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="cuisine">
                 <AccordionTrigger className="">Cuisines</AccordionTrigger>
                 <AccordionContent className="flex flex-col pl-4 space-y-1">
-                  {cuisines.map((cuisine) => (
-                    <Link
-                      key={cuisine.name}
-                      href={`/search?cuisine=${encodeURIComponent(cuisine.name)}`}
-                      className="p-2 rounded hover:bg-accent"
-                    >
-                      {cuisine.name}
-                    </Link>
-                  ))}
+                  {cuisines.length === 0 ? (
+                    <span className="p-2 text-sm text-muted-foreground">
+                      No cuisines available
+                    </span>
+                  ) : (
+                    cuisines.map((cuisine) => (
+                      <Link
+                        key={cuisine.name}
+                        href={`/search?cuisine=${encodeURIComponent(cuisine.name)}`}
+                        className="p-2 rounded hover:bg-accent"
+                      >
+                        {cuisine.name}
+                      </Link>
+                    ))
+                  )}
                 </AccordionContent>
               </AccordionItem>
             </Accordion>

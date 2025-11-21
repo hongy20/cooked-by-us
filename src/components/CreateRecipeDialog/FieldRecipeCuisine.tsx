@@ -1,13 +1,13 @@
 import { useId, useState } from "react";
-import { RECIPE_CUISINE } from "@/lib/constant";
-import { Field, FieldError, FieldLabel } from "../ui/field";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
+} from "@/components/ui/select";
+import { RECIPE_CUISINE } from "@/lib/constant";
 
 interface Props {
   name: string;

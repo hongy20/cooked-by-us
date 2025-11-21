@@ -1,21 +1,19 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
 
-const protectedRoutes = ["/admin"];
-const authRoutes = ["/login"];
+const protectedRoutesPattern = /^\/dashboard(\/|$)/;
 
 export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
-  const isProtectedRoute = protectedRoutes.includes(path);
-  const isAuthRoute = authRoutes.includes(path);
+  const isProtectedRoute = protectedRoutesPattern.test(path);
   const session = await getSession();
 
   if (isProtectedRoute && !session) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
-  if (isAuthRoute && session) {
-    return NextResponse.redirect(new URL("/", request.url));
+  if (path === "/dashboard") {
+    return NextResponse.redirect(new URL("/dashboard/recipe", request.url));
   }
 
   return NextResponse.next();

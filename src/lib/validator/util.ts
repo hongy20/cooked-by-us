@@ -37,3 +37,9 @@ export const stringArraySchemaFactory = ({
     z.array(z.string()).min(minLength, errorMessage),
   );
 };
+
+export const objectIdSchema = (errorMessage: string) =>
+  z
+    .string()
+    .length(24, errorMessage)
+    .regex(/^[0-9a-fA-F]{24}$/, errorMessage); // MongoDB ObjectId

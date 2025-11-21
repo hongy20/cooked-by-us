@@ -1,13 +1,21 @@
-import { type Document, type Model, model, models, Schema } from "mongoose";
-import { RECIPE_CATEGORY, RECIPE_CUISINE } from "../constant";
+import {
+  type Document,
+  type Model,
+  model,
+  models,
+  Schema,
+  type Types,
+} from "mongoose";
+import { doesCategoryExist } from "../dal/category";
+import { doesCuisineExist } from "../dal/cuisine";
 
 export interface IRecipe extends Document {
   name: string;
   description: string;
   image: string;
-  author: Schema.Types.ObjectId;
-  category: string;
-  cuisine: string;
+  author: Types.ObjectId;
+  category: Types.ObjectId;
+  cuisine: Types.ObjectId;
   ingredients: string[];
   instructions: {
     text: string;
@@ -46,18 +54,18 @@ const RecipeSchema = new Schema<IRecipe>(
     },
     author: {
       type: Schema.Types.ObjectId,
-      ref: "User", // Should reference the User model once it's created
+      ref: "User",
       required: true,
     },
     category: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "Category",
       required: true,
-      enum: RECIPE_CATEGORY,
     },
     cuisine: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "Cuisine",
       required: true,
-      enum: RECIPE_CUISINE,
     },
     ingredients: {
       type: [String],
@@ -79,6 +87,44 @@ const RecipeSchema = new Schema<IRecipe>(
     timestamps: true,
   },
 );
+
+RecipeSchema.pre("save", async function (next) {
+  const recipe = this as IRecipe;
+
+  try {
+    // Only validate category if it's new or modified
+    if (recipe.isModified("category") || recipe.isNew) {
+      const categoryExists = await doesCategoryExist(recipe.category);
+      if (!categoryExists) {
+        const error = new Error(
+          `Category with ID ${recipe.category} does not exist`,
+        );
+        error.name = "ValidationError";
+        return next(error);
+      }
+    }
+
+    // Only validate cuisine if it's new or modified
+    if (recipe.isModified("cuisine") || recipe.isNew) {
+      const cuisineExists = await doesCuisineExist(recipe.cuisine);
+      if (!cuisineExists) {
+        const error = new Error(
+          `Cuisine with ID ${recipe.cuisine} does not exist`,
+        );
+        error.name = "ValidationError";
+        return next(error);
+      }
+    }
+  } catch {
+    const validationError = new Error(
+      "Invalid category|cuisine ID format or database error",
+    );
+    validationError.name = "ValidationError";
+    return next(validationError);
+  }
+
+  next();
+});
 
 export const RecipeModel =
   (models.Recipe as Model<IRecipe>) || model<IRecipe>("Recipe", RecipeSchema);

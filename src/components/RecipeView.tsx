@@ -1,9 +1,9 @@
 import Image from "next/image";
-import type { IRecipe } from "@/lib/model/recipe";
+import type { IPopulatedRecipe } from "@/lib/model";
 import { isoToHuman } from "@/lib/utils/duration";
 
 type Props = {
-  recipe: IRecipe;
+  recipe: IPopulatedRecipe;
   authorName: string;
 };
 
@@ -42,7 +42,8 @@ export const RecipeView = ({
         </p>
 
         <p>
-          <span>Category: {category}</span> · <span>Cuisine: {cuisine}</span> ·{" "}
+          <span>Category: {category.name}</span> ·{" "}
+          <span>Cuisine: {cuisine.name}</span> ·{" "}
           <span>Cook Time: {isoToHuman(cookTime)}</span>
         </p>
       </header>

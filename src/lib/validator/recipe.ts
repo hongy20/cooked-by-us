@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { RECIPE_CATEGORY, RECIPE_CUISINE } from "../constant";
-import { stringArraySchemaFactory } from "./util";
+import { objectIdSchema, stringArraySchemaFactory } from "./util";
 
 // Zod schema for an individual instruction step
 const InstructionValidator = z.object({
@@ -13,12 +12,9 @@ export const RecipeValidator = z.object({
   name: z.string().min(3).trim(),
   description: z.string().trim(),
   image: z.url(),
-  author: z
-    .string()
-    .length(24, "Invalid Author ID")
-    .regex(/^[0-9a-fA-F]{24}$/, "Author ID must be valid"), // MongoDB ObjectId
-  category: z.enum(RECIPE_CATEGORY, "A recipe category is required."),
-  cuisine: z.enum(RECIPE_CUISINE, "A recipe cuisine is required."),
+  author: objectIdSchema("Author ID must be valid"),
+  category: objectIdSchema("A recipe category is required"),
+  cuisine: objectIdSchema("A recipe cuisine is required"),
   ingredients: stringArraySchemaFactory({
     minLength: 1,
     errorMessage: "Ingredients cannot be empty — add at least one",

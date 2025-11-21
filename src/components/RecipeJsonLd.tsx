@@ -1,8 +1,8 @@
 import type { HowToStep, Person, Recipe, WithContext } from "schema-dts";
-import type { IRecipe } from "../lib/model/recipe";
-import { formatDateForJsonLd } from "../lib/utils/date";
+import type { IPopulatedRecipe } from "@/lib/model";
+import { formatDateForJsonLd } from "@/lib/utils/date";
 
-type Props = { recipe: IRecipe; authorName: string };
+type Props = { recipe: IPopulatedRecipe; authorName: string };
 
 export const RecipeJsonLd = ({ recipe, authorName }: Props) => {
   const jsonLd: WithContext<Recipe> = {
@@ -16,10 +16,10 @@ export const RecipeJsonLd = ({ recipe, authorName }: Props) => {
     } satisfies Person,
     datePublished: formatDateForJsonLd(recipe.createdAt),
     description: recipe.description,
-    recipeCuisine: recipe.cuisine,
+    recipeCuisine: recipe.cuisine.name,
     cookTime: recipe.cookTime,
     keywords: recipe.keywords.join(", "),
-    recipeCategory: recipe.category,
+    recipeCategory: recipe.category.name,
     recipeIngredient: recipe.ingredients,
     recipeInstructions: recipe.instructions.map(
       (instruction) =>

@@ -1,7 +1,7 @@
 import { useEffect, useId, useState } from "react";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
+import { Textarea } from "@/components/ui/textarea";
 import type { InstructionInput } from "@/lib/validator/recipe";
-import { Field, FieldError, FieldLabel } from "../ui/field";
-import { Textarea } from "../ui/textarea";
 
 interface Props {
   name: string;

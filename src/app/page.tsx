@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import { RecipeCard } from "@/components/RecipeCard";
 import { RecipesJsonLd } from "@/components/RecipesJsonLd";
-import { getAllRecipesAction } from "@/lib/action/recipe";
+import { getAllRecipes } from "@/lib/dal/recipe";
 
 export const metadata: Metadata = {
   title: "Discover Delicious Meals | Cooked by Us",
 };
 
 export default async function Page() {
-  const recipes = await getAllRecipesAction();
+  const recipes = await getAllRecipes();
 
   return (
     <div className="w-full flex flex-col items-center gap-4">

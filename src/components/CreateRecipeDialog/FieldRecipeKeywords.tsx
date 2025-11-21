@@ -1,8 +1,8 @@
 import { X } from "lucide-react";
 import { useId, useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Field, FieldError, FieldLabel } from "../ui/field";
 
 interface Props {
   name: string;

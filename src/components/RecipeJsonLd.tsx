@@ -1,34 +1,41 @@
-import type { HowToStep, Person, Recipe, WithContext } from "schema-dts";
+import type { HowToStep, Organization, Recipe, WithContext } from "schema-dts";
 import type { IPopulatedRecipe } from "@/lib/model";
 import { formatDateForJsonLd } from "@/lib/utils/date";
 
-type Props = { recipe: IPopulatedRecipe; authorName: string };
+type Props = { recipe: IPopulatedRecipe };
 
-export const RecipeJsonLd = ({ recipe, authorName }: Props) => {
+export const RecipeJsonLd = ({ recipe }: Props) => {
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+  if (!BASE_URL) {
+    throw new Error("NEXT_PUBLIC_BASE_URL environment variable is not defined");
+  }
+
   const jsonLd: WithContext<Recipe> = {
     "@context": "https://schema.org",
     "@type": "Recipe",
     name: recipe.name,
     image: recipe.image,
     author: {
-      "@type": "Person",
-      name: authorName,
-    } satisfies Person,
+      "@type": "Organization",
+      name: "Cooked By Us",
+      url: BASE_URL,
+    } satisfies Organization,
     datePublished: formatDateForJsonLd(recipe.createdAt),
     description: recipe.description,
-    recipeCuisine: recipe.cuisine.name,
+    recipeCuisine: recipe.cuisine?.name,
     cookTime: recipe.cookTime,
     keywords: recipe.keywords.join(", "),
-    recipeCategory: recipe.category.name,
+    recipeCategory: recipe.category?.name,
     recipeIngredient: recipe.ingredients,
     recipeInstructions: recipe.instructions.map(
       (instruction) =>
         ({
           "@type": "HowToStep",
-          text: instruction.text,
-          image: instruction.image,
+          text: instruction,
         }) satisfies HowToStep,
     ),
+    url: `${BASE_URL}/recipe/${recipe._id}`,
   };
 
   return (

@@ -36,8 +36,8 @@ export const FieldRecipeIngredients = ({
         <Textarea
           id={id}
           placeholder="Type your recipe ingredients"
+          value={textareaValue}
           onChange={(e) => setTextareaValue(e.target.value)}
-          defaultValue={textareaValue}
         />
 
         {/* Ingredient list */}

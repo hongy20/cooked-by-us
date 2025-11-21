@@ -1,7 +1,7 @@
 import type { ItemList, Recipe, WithContext } from "schema-dts";
-import type { IRecipe } from "@/lib/model/recipe";
+import type { IPopulatedRecipe } from "@/lib/model";
 
-type Props = { recipes: IRecipe[] };
+type Props = { recipes: IPopulatedRecipe[] };
 
 export const RecipesJsonLd = ({ recipes }: Props) => {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -20,9 +20,8 @@ export const RecipesJsonLd = ({ recipes }: Props) => {
         "@type": "Recipe",
         name: recipe.name,
         image: recipe.image,
-        // TODO: populate the real value
-        // recipeCuisine: recipe.cuisine,
-        // recipeCategory: recipe.category,
+        recipeCuisine: recipe.cuisine?.name,
+        recipeCategory: recipe.category?.name,
         keywords: recipe.keywords.join(", "),
         url: `${BASE_URL}/recipe/${recipe._id}`,
       } satisfies Recipe,

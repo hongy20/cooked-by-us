@@ -11,12 +11,12 @@ import { RECIPE_CATEGORY } from "@/lib/constant";
 
 interface Props {
   name: string;
-  defaultValue: string;
+  defaultValue: string | undefined;
   errors?: string[];
 }
 
 export const FieldRecipeCategory = ({ name, defaultValue, errors }: Props) => {
-  const [category, setCategory] = useState<string>(defaultValue);
+  const [category, setCategory] = useState<string | undefined>(defaultValue);
   const id = useId();
 
   return (

@@ -21,9 +21,9 @@ import type { ICuisine } from "./cuisine";
 import type { IRecipe } from "./recipe";
 
 export type IPopulatedRecipe = Omit<IRecipe, "category" | "cuisine"> & {
-  category: ICategory;
+  category: ICategory | null;
 } & {
-  cuisine: ICuisine;
+  cuisine: ICuisine | null;
 };
 
 export type { ICategory, ICuisine, IRecipe };

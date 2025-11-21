@@ -5,14 +5,10 @@ import { CuisineModel, type ICuisine } from "@/lib/model/cuisine";
 import connectDB from "@/lib/mongodb";
 import type { CuisineInput } from "@/lib/validator/cuisine";
 
+// Write
 export const createCuisine = async (data: CuisineInput) => {
   await connectDB();
   return await CuisineModel.create(data);
-};
-
-export const doesCuisineExist = async (cuisineId: Types.ObjectId) => {
-  await connectDB();
-  return await CuisineModel.findById(cuisineId).select("_id");
 };
 
 export const editCuisine = async (cuisineId: string, data: CuisineInput) => {
@@ -23,27 +19,11 @@ export const editCuisine = async (cuisineId: string, data: CuisineInput) => {
   );
 };
 
-export const bootstrapCuisines = async () => {
+// Read
+export const doesCuisineExist = cache(async (cuisineId: Types.ObjectId) => {
   await connectDB();
-
-  const cuisines = [
-    "Italian",
-    "Chinese",
-    "Japanese",
-    "Korean",
-    "Nordic / Scandinavian",
-  ];
-
-  await CuisineModel.bulkWrite(
-    cuisines.map((name) => ({
-      updateOne: {
-        filter: { name },
-        update: { $setOnInsert: { name } },
-        upsert: true,
-      },
-    })),
-  );
-};
+  return await CuisineModel.findById(cuisineId).select("_id");
+});
 
 export const getAllCuisines = cache(async () => {
   await connectDB();

@@ -4,7 +4,6 @@ import { isoToHuman } from "@/lib/utils/duration";
 
 type Props = {
   recipe: IPopulatedRecipe;
-  authorName: string;
 };
 
 export const RecipeView = ({
@@ -21,7 +20,6 @@ export const RecipeView = ({
     createdAt,
     updatedAt,
   },
-  authorName,
 }: Props) => {
   return (
     <article className="flex flex-col space-y-8">
@@ -35,15 +33,15 @@ export const RecipeView = ({
         </figure>
 
         <p className="text-sm">
-          By <span>{authorName}</span> Published{" "}
+          Published{" "}
           <time dateTime={new Date(createdAt).toISOString()}>
             {new Date(createdAt).toLocaleDateString()}
           </time>
         </p>
 
         <p>
-          <span>Category: {category.name}</span> ·{" "}
-          <span>Cuisine: {cuisine.name}</span> ·{" "}
+          {category?.name && <span>Category: {category.name} · </span>}
+          {cuisine?.name && <span>Cuisine: {cuisine.name} · </span>}
           <span>Cook Time: {isoToHuman(cookTime)}</span>
         </p>
       </header>
@@ -63,15 +61,7 @@ export const RecipeView = ({
           {instructions.map((instruction, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: list order is meaningful and items aren't reordered
             <li key={i}>
-              <p>{instruction.text}</p>
-              {instruction.image && (
-                <Image
-                  src={instruction.image}
-                  alt={`Step ${i + 1}`}
-                  width={600}
-                  height={400}
-                />
-              )}
+              <p>{instruction}</p>
             </li>
           ))}
         </ol>

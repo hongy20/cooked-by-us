@@ -13,29 +13,16 @@ export interface IRecipe extends Document {
   name: string;
   description: string;
   image: string;
-  author: Types.ObjectId;
-  category: Types.ObjectId;
-  cuisine: Types.ObjectId;
+  author: Types.ObjectId | null;
+  category: Types.ObjectId | null;
+  cuisine: Types.ObjectId | null;
   ingredients: string[];
-  instructions: {
-    text: string;
-    image?: string;
-  }[];
+  instructions: string[];
   cookTime: string;
   keywords: string[];
   createdAt: Date;
   updatedAt: Date;
 }
-
-const InstructionStepSchema = new Schema({
-  text: {
-    type: String,
-    required: true,
-  },
-  image: {
-    type: String,
-  },
-});
 
 const RecipeSchema = new Schema<IRecipe>(
   {
@@ -43,44 +30,68 @@ const RecipeSchema = new Schema<IRecipe>(
       type: String,
       required: true,
       trim: true,
+      minlength: [2, "Name must be at least 2 characters"],
+      maxlength: [30, "Name must be no greater than 30 characters"],
     },
     description: {
       type: String,
       trim: true,
+      maxlength: [200, "Description must be no greater than 200 characters"],
     },
     image: {
       type: String,
       required: true,
+      trim: true,
+      validate: {
+        validator: (v: string) =>
+          /^https:\/\/(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/\S*)?/.test(v),
+        message: "Please provide a valid url",
+      },
     },
     author: {
       type: Schema.Types.ObjectId,
       ref: "User",
-      required: true,
     },
     category: {
       type: Schema.Types.ObjectId,
       ref: "Category",
-      required: true,
     },
     cuisine: {
       type: Schema.Types.ObjectId,
       ref: "Cuisine",
-      required: true,
     },
     ingredients: {
       type: [String],
       required: true,
+      validate: {
+        validator: (v) => Array.isArray(v) && v.length > 0,
+        message: "Ingredients cannot be empty — add at least one",
+      },
     },
     instructions: {
-      type: [InstructionStepSchema],
+      type: [String],
       required: true,
+      validate: {
+        validator: (v) => Array.isArray(v) && v.length > 0,
+        message: "Instructions cannot be empty — add at least one",
+      },
     },
     cookTime: {
       type: String, // ISO 8601 duration format e.g. "PT1H30M"
       required: true,
+      validate: {
+        validator: (v: string) => /^PT(\d+H)?(\d+M)?(\d+S)?$/.test(v),
+        message:
+          "Cook time must be in ISO 8601 duration format (e.g., PT1H30M)",
+      },
     },
     keywords: {
       type: [String],
+      required: true,
+      validate: {
+        validator: (v) => Array.isArray(v) && v.length > 0,
+        message: "Keywords cannot be empty — add at least one",
+      },
     },
   },
   {
@@ -92,8 +103,20 @@ RecipeSchema.pre("save", async function (next) {
   const recipe = this as IRecipe;
 
   try {
+    // // Only validate author if it's new or modified
+    // if ((recipe.isModified("author") || recipe.isNew) && recipe.author) {
+    //   const authorExists = await doesCategoryExist(recipe.author);
+    //   if (!authorExists) {
+    //     const error = new Error(
+    //       `Author with ID ${recipe.author} does not exist`,
+    //     );
+    //     error.name = "ValidationError";
+    //     return next(error);
+    //   }
+    // }
+
     // Only validate category if it's new or modified
-    if (recipe.isModified("category") || recipe.isNew) {
+    if ((recipe.isModified("category") || recipe.isNew) && recipe.category) {
       const categoryExists = await doesCategoryExist(recipe.category);
       if (!categoryExists) {
         const error = new Error(
@@ -105,7 +128,7 @@ RecipeSchema.pre("save", async function (next) {
     }
 
     // Only validate cuisine if it's new or modified
-    if (recipe.isModified("cuisine") || recipe.isNew) {
+    if ((recipe.isModified("cuisine") || recipe.isNew) && recipe.cuisine) {
       const cuisineExists = await doesCuisineExist(recipe.cuisine);
       if (!cuisineExists) {
         const error = new Error(

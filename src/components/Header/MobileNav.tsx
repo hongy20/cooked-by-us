@@ -50,7 +50,7 @@ export const MobileNav = async () => {
                   ) : (
                     categories.map((category) => (
                       <Link
-                        key={category.name}
+                        key={`${category._id}`}
                         href={`/search?category=${encodeURIComponent(category.name)}`}
                         className="p-2 rounded hover:bg-accent"
                       >
@@ -70,7 +70,7 @@ export const MobileNav = async () => {
                   ) : (
                     cuisines.map((cuisine) => (
                       <Link
-                        key={cuisine.name}
+                        key={`${cuisine._id}`}
                         href={`/search?cuisine=${encodeURIComponent(cuisine.name)}`}
                         className="p-2 rounded hover:bg-accent"
                       >

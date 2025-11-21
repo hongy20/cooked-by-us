@@ -17,7 +17,7 @@ export const createRecipeAction = async (
 ): Promise<CreateRecipeFormState> => {
   const session = await getSession();
   if (!session) {
-    redirect("/login");
+    redirect("/");
   }
 
   // 1. Validate form data

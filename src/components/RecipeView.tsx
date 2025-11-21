@@ -4,7 +4,6 @@ import { isoToHuman } from "@/lib/utils/duration";
 
 type Props = {
   recipe: IPopulatedRecipe;
-  authorName: string;
 };
 
 export const RecipeView = ({
@@ -21,7 +20,6 @@ export const RecipeView = ({
     createdAt,
     updatedAt,
   },
-  authorName,
 }: Props) => {
   return (
     <article className="flex flex-col space-y-8">
@@ -35,7 +33,7 @@ export const RecipeView = ({
         </figure>
 
         <p className="text-sm">
-          By <span>{authorName}</span> Published{" "}
+          Published{" "}
           <time dateTime={new Date(createdAt).toISOString()}>
             {new Date(createdAt).toLocaleDateString()}
           </time>

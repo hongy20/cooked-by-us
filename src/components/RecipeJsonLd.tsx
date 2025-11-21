@@ -1,10 +1,10 @@
-import type { HowToStep, Person, Recipe, WithContext } from "schema-dts";
+import type { HowToStep, Organization, Recipe, WithContext } from "schema-dts";
 import type { IPopulatedRecipe } from "@/lib/model";
 import { formatDateForJsonLd } from "@/lib/utils/date";
 
-type Props = { recipe: IPopulatedRecipe; authorName: string };
+type Props = { recipe: IPopulatedRecipe };
 
-export const RecipeJsonLd = ({ recipe, authorName }: Props) => {
+export const RecipeJsonLd = ({ recipe }: Props) => {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
   if (!BASE_URL) {
@@ -17,9 +17,10 @@ export const RecipeJsonLd = ({ recipe, authorName }: Props) => {
     name: recipe.name,
     image: recipe.image,
     author: {
-      "@type": "Person",
-      name: authorName,
-    } satisfies Person,
+      "@type": "Organization",
+      name: "Cooked By Us",
+      url: BASE_URL,
+    } satisfies Organization,
     datePublished: formatDateForJsonLd(recipe.createdAt),
     description: recipe.description,
     recipeCuisine: recipe.cuisine?.name,

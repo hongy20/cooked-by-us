@@ -27,8 +27,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Page({ params }: Props) {
   const recipeId = await params.then(({ id }) => id);
   const recipe = await getRecipe(recipeId).catch(console.error);
-  const authorName = "TODO: TBD";
-  console.log(recipe);
 
   if (!recipe) {
     notFound();
@@ -36,8 +34,8 @@ export default async function Page({ params }: Props) {
 
   return (
     <div className="my-10 mx-12 md:mx-24 lg:mx-36">
-      <RecipeJsonLd recipe={recipe} authorName={authorName} />
-      <RecipeView recipe={recipe} authorName={authorName} />
+      <RecipeJsonLd recipe={recipe} />
+      <RecipeView recipe={recipe} />
       <SimilarRecipes recipeId={recipeId} />
     </div>
   );

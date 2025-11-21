@@ -9,6 +9,8 @@ on:
 jobs:
   type-check:
     runs-on: ubuntu-latest
+    env:
+      CLOUDINARY_FOLDER: "test-folder"
     permissions:
       contents: read
     steps:

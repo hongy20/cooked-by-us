@@ -8,6 +8,8 @@ export const Footer = () => {
         <Link
           href="https://github.com/hongy20"
           className="underline hover:text-primary"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           hongy20
         </Link>{" "}
@@ -15,6 +17,8 @@ export const Footer = () => {
         <Link
           href="https://vercel.com"
           className="underline hover:text-primary"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           Vercel
         </Link>
@@ -22,6 +26,8 @@ export const Footer = () => {
         <Link
           href="https://github.com/hongy20/cooked-by-us"
           className="underline hover:text-primary"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           GitHub
         </Link>

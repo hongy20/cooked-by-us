@@ -21,7 +21,7 @@ export default async function Page() {
         <CreateRecipe />
       </div>
       <Table>
-        <TableCaption>A list of recipe cuisines.</TableCaption>
+        <TableCaption>A list of recipes.</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead>Author</TableHead>

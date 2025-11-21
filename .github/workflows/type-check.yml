@@ -23,4 +23,4 @@ jobs:
       - name: Install Dependencies
         run: bun install
       - name: TypeScript Check
-        run: bun tsc --noEmit
+        run: bun type-check

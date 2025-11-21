@@ -11,12 +11,12 @@ import { RECIPE_CUISINE } from "@/lib/constant";
 
 interface Props {
   name: string;
-  defaultValue: string;
+  defaultValue: string | undefined;
   errors?: string[];
 }
 
 export const FieldRecipeCuisine = ({ name, defaultValue, errors }: Props) => {
-  const [cuisine, setCuisine] = useState<string>(defaultValue);
+  const [cuisine, setCuisine] = useState<string | undefined>(defaultValue);
   const id = useId();
 
   return (

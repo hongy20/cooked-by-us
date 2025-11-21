@@ -16,17 +16,16 @@ export const RecipeJsonLd = ({ recipe, authorName }: Props) => {
     } satisfies Person,
     datePublished: formatDateForJsonLd(recipe.createdAt),
     description: recipe.description,
-    recipeCuisine: recipe.cuisine.name,
+    recipeCuisine: recipe.cuisine?.name,
     cookTime: recipe.cookTime,
     keywords: recipe.keywords.join(", "),
-    recipeCategory: recipe.category.name,
+    recipeCategory: recipe.category?.name,
     recipeIngredient: recipe.ingredients,
     recipeInstructions: recipe.instructions.map(
       (instruction) =>
         ({
           "@type": "HowToStep",
-          text: instruction.text,
-          image: instruction.image,
+          text: instruction,
         }) satisfies HowToStep,
     ),
   };

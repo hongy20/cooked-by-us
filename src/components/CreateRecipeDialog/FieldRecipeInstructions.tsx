@@ -1,11 +1,10 @@
 import { useEffect, useId, useState } from "react";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/textarea";
-import type { InstructionInput } from "@/lib/validator/recipe";
 
 interface Props {
   name: string;
-  defaultValue: InstructionInput[];
+  defaultValue: string[];
   errors?: string[];
 }
 
@@ -14,26 +13,16 @@ export const FieldRecipeInstructions = ({
   defaultValue,
   errors,
 }: Props) => {
-  const [instructions, setInstructions] =
-    useState<InstructionInput[]>(defaultValue);
-  const [textareaValue, setTextareaValue] = useState(
-    defaultValue.map(({ text }) => text).join("\n"),
-  );
+  const [instructions, setInstructions] = useState<string[]>(defaultValue);
+  const [textareaValue, setTextareaValue] = useState(defaultValue.join("\n"));
   const id = useId();
 
   useEffect(() => {
-    setInstructions(
-      textareaValue
-        .split("\n")
-        .filter(Boolean)
-        .map((text) => ({
-          text,
-        })),
-    );
+    setInstructions(textareaValue.split("\n").filter(Boolean));
   }, [textareaValue]);
 
   useEffect(() => {
-    setTextareaValue(defaultValue.map(({ text }) => text).join("\n"));
+    setTextareaValue(defaultValue.join("\n"));
   }, [defaultValue]);
 
   return (
@@ -59,7 +48,7 @@ export const FieldRecipeInstructions = ({
               key={index}
               className="text-muted-foreground p-0.5 odd:bg-gray-100 even:bg-white"
             >
-              {instruction.text}
+              {instruction}
             </li>
           ))}
         </ol>

@@ -13,29 +13,16 @@ export interface IRecipe extends Document {
   name: string;
   description: string;
   image: string;
-  author: Types.ObjectId;
-  category: Types.ObjectId;
-  cuisine: Types.ObjectId;
+  author: Types.ObjectId | null;
+  category: Types.ObjectId | null;
+  cuisine: Types.ObjectId | null;
   ingredients: string[];
-  instructions: {
-    text: string;
-    image?: string;
-  }[];
+  instructions: string[];
   cookTime: string;
   keywords: string[];
   createdAt: Date;
   updatedAt: Date;
 }
-
-const InstructionStepSchema = new Schema({
-  text: {
-    type: String,
-    required: true,
-  },
-  image: {
-    type: String,
-  },
-});
 
 const RecipeSchema = new Schema<IRecipe>(
   {
@@ -55,24 +42,21 @@ const RecipeSchema = new Schema<IRecipe>(
     author: {
       type: Schema.Types.ObjectId,
       ref: "User",
-      required: true,
     },
     category: {
       type: Schema.Types.ObjectId,
       ref: "Category",
-      required: true,
     },
     cuisine: {
       type: Schema.Types.ObjectId,
       ref: "Cuisine",
-      required: true,
     },
     ingredients: {
       type: [String],
       required: true,
     },
     instructions: {
-      type: [InstructionStepSchema],
+      type: [String],
       required: true,
     },
     cookTime: {
@@ -92,8 +76,20 @@ RecipeSchema.pre("save", async function (next) {
   const recipe = this as IRecipe;
 
   try {
+    // // Only validate author if it's new or modified
+    // if ((recipe.isModified("author") || recipe.isNew) && recipe.author) {
+    //   const authorExists = await doesCategoryExist(recipe.author);
+    //   if (!authorExists) {
+    //     const error = new Error(
+    //       `Author with ID ${recipe.author} does not exist`,
+    //     );
+    //     error.name = "ValidationError";
+    //     return next(error);
+    //   }
+    // }
+
     // Only validate category if it's new or modified
-    if (recipe.isModified("category") || recipe.isNew) {
+    if ((recipe.isModified("category") || recipe.isNew) && recipe.category) {
       const categoryExists = await doesCategoryExist(recipe.category);
       if (!categoryExists) {
         const error = new Error(
@@ -105,7 +101,7 @@ RecipeSchema.pre("save", async function (next) {
     }
 
     // Only validate cuisine if it's new or modified
-    if (recipe.isModified("cuisine") || recipe.isNew) {
+    if ((recipe.isModified("cuisine") || recipe.isNew) && recipe.cuisine) {
       const cuisineExists = await doesCuisineExist(recipe.cuisine);
       if (!cuisineExists) {
         const error = new Error(

@@ -42,8 +42,8 @@ export const RecipeView = ({
         </p>
 
         <p>
-          <span>Category: {category.name}</span> ·{" "}
-          <span>Cuisine: {cuisine.name}</span> ·{" "}
+          {category?.name && <span>Category: {category.name} · </span>}
+          {cuisine?.name && <span>Cuisine: {cuisine.name} · </span>}
           <span>Cook Time: {isoToHuman(cookTime)}</span>
         </p>
       </header>
@@ -63,15 +63,7 @@ export const RecipeView = ({
           {instructions.map((instruction, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: list order is meaningful and items aren't reordered
             <li key={i}>
-              <p>{instruction.text}</p>
-              {instruction.image && (
-                <Image
-                  src={instruction.image}
-                  alt={`Step ${i + 1}`}
-                  width={600}
-                  height={400}
-                />
-              )}
+              <p>{instruction}</p>
             </li>
           ))}
         </ol>

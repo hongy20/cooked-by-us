@@ -3,19 +3,19 @@ import { objectIdSchema, stringArraySchemaFactory } from "./util";
 
 // Zod schema for the Recipe model
 export const RecipeValidator = z.object({
-  name: z.string().min(3).trim(),
-  description: z.string().trim(),
+  name: z.string().min(2).max(30).trim(),
+  description: z.string().max(200).trim(),
   image: z.url(),
-  author: objectIdSchema("Author ID must be valid"),
-  category: objectIdSchema("A recipe category is required"),
-  cuisine: objectIdSchema("A recipe cuisine is required"),
+  author: objectIdSchema("Invalid author id"),
+  category: objectIdSchema("Invalid category id"),
+  cuisine: objectIdSchema("Invalid cuisine id"),
   ingredients: stringArraySchemaFactory({
     minLength: 1,
     errorMessage: "Ingredients cannot be empty — add at least one",
   }),
   instructions: stringArraySchemaFactory({
     minLength: 1,
-    errorMessage: "At least one instruction step is required.",
+    errorMessage: "Instructions cannot be empty — add at least one",
   }),
   cookTime: z
     .string()

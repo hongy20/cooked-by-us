@@ -30,14 +30,23 @@ const RecipeSchema = new Schema<IRecipe>(
       type: String,
       required: true,
       trim: true,
+      minlength: [2, "Name must be at least 2 characters"],
+      maxlength: [30, "Name must be no greater than 30 characters"],
     },
     description: {
       type: String,
       trim: true,
+      maxlength: [200, "Description must be no greater than 200 characters"],
     },
     image: {
       type: String,
       required: true,
+      trim: true,
+      validate: {
+        validator: (v: string) =>
+          /^https:\/\/(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/\S*)?/.test(v),
+        message: "Please provide a valid url",
+      },
     },
     author: {
       type: Schema.Types.ObjectId,
@@ -54,17 +63,35 @@ const RecipeSchema = new Schema<IRecipe>(
     ingredients: {
       type: [String],
       required: true,
+      validate: {
+        validator: (v) => Array.isArray(v) && v.length > 0,
+        message: "Ingredients cannot be empty — add at least one",
+      },
     },
     instructions: {
       type: [String],
       required: true,
+      validate: {
+        validator: (v) => Array.isArray(v) && v.length > 0,
+        message: "Instructions cannot be empty — add at least one",
+      },
     },
     cookTime: {
       type: String, // ISO 8601 duration format e.g. "PT1H30M"
       required: true,
+      validate: {
+        validator: (v: string) => /^PT(\d+H)?(\d+M)?(\d+S)?$/.test(v),
+        message:
+          "Cook time must be in ISO 8601 duration format (e.g., PT1H30M)",
+      },
     },
     keywords: {
       type: [String],
+      required: true,
+      validate: {
+        validator: (v) => Array.isArray(v) && v.length > 0,
+        message: "Keywords cannot be empty — add at least one",
+      },
     },
   },
   {

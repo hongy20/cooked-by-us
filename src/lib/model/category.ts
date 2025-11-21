@@ -13,6 +13,8 @@ const CategorySchema = new Schema<ICategory>(
       required: true,
       unique: true,
       trim: true,
+      minlength: [1, "Category name must be at least 1 character"],
+      maxLength: [100, "Category name must be no greater than 100 characters"],
     },
   },
   {

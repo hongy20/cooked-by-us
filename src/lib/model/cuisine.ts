@@ -13,6 +13,8 @@ const CuisineSchema = new Schema<ICuisine>(
       required: true,
       unique: true,
       trim: true,
+      minlength: [3, "Cuisine name must be at least 3 characters"],
+      maxLength: [100, "Cuisine name must be no greater than 100 characters"],
     },
   },
   {

@@ -33,7 +33,6 @@ const RecipeSchema = new Schema<IRecipe>(
     name: {
       type: String,
       required: true,
-      unique: true,
       trim: true,
     },
     description: {

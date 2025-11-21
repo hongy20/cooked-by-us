@@ -5,6 +5,12 @@ import { formatDateForJsonLd } from "@/lib/utils/date";
 type Props = { recipe: IPopulatedRecipe; authorName: string };
 
 export const RecipeJsonLd = ({ recipe, authorName }: Props) => {
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+  if (!BASE_URL) {
+    throw new Error("NEXT_PUBLIC_BASE_URL environment variable is not defined");
+  }
+
   const jsonLd: WithContext<Recipe> = {
     "@context": "https://schema.org",
     "@type": "Recipe",
@@ -28,6 +34,7 @@ export const RecipeJsonLd = ({ recipe, authorName }: Props) => {
           text: instruction,
         }) satisfies HowToStep,
     ),
+    url: `${BASE_URL}/recipe/${recipe._id}`,
   };
 
   return (

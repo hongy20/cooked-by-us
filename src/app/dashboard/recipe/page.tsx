@@ -26,8 +26,8 @@ export default async function Page() {
           <TableRow>
             <TableHead>Author</TableHead>
             <TableHead>Name</TableHead>
-            {/* <TableHead>Category</TableHead>
-            <TableHead>Cuisine</TableHead> */}
+            <TableHead>Category</TableHead>
+            <TableHead>Cuisine</TableHead>
             <TableHead>Cook time</TableHead>
             <TableHead>Created Date</TableHead>
           </TableRow>
@@ -37,9 +37,8 @@ export default async function Page() {
             <TableRow key={`${recipe._id}`}>
               <TableCell className="font-medium">{`${recipe.author}`}</TableCell>
               <TableCell>{recipe.name}</TableCell>
-              {/* TODO: populate the real value */}
-              {/* <TableCell>{recipe.category._id}</TableCell>
-              <TableCell>{recipe.cuisine}</TableCell> */}
+              <TableCell>{recipe.category?.name}</TableCell>
+              <TableCell>{recipe.cuisine?.name}</TableCell>
               <TableCell>{isoToHuman(recipe.cookTime)}</TableCell>
               <TableCell>{formatDateForHuman(recipe.createdAt)}</TableCell>
             </TableRow>

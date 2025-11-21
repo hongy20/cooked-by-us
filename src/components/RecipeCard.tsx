@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { IRecipe } from "@/lib/model/recipe";
+import type { IPopulatedRecipe } from "@/lib/model";
 import {
   Card,
   CardContent,
@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "./ui/card";
 
-export const RecipeCard = ({ recipe }: { recipe: IRecipe }) => {
+export const RecipeCard = ({ recipe }: { recipe: IPopulatedRecipe }) => {
   return (
     <Card>
       <CardHeader>

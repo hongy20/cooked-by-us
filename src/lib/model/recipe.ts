@@ -91,9 +91,9 @@ const RecipeSchema = new Schema<IRecipe>(
 RecipeSchema.pre("save", async function (next) {
   const recipe = this as IRecipe;
 
-  // Only validate category and cuisine if it's new or modified
-  if (recipe.isModified(["category", "cuisine"]) || recipe.isNew) {
-    try {
+  try {
+    // Only validate category if it's new or modified
+    if (recipe.isModified("category") || recipe.isNew) {
       const categoryExists = await doesCategoryExist(recipe.category);
       if (!categoryExists) {
         const error = new Error(
@@ -102,7 +102,10 @@ RecipeSchema.pre("save", async function (next) {
         error.name = "ValidationError";
         return next(error);
       }
+    }
 
+    // Only validate cuisine if it's new or modified
+    if (recipe.isModified("cuisine") || recipe.isNew) {
       const cuisineExists = await doesCuisineExist(recipe.cuisine);
       if (!cuisineExists) {
         const error = new Error(
@@ -111,13 +114,13 @@ RecipeSchema.pre("save", async function (next) {
         error.name = "ValidationError";
         return next(error);
       }
-    } catch {
-      const validationError = new Error(
-        "Invalid category|cuisine ID format or database error",
-      );
-      validationError.name = "ValidationError";
-      return next(validationError);
     }
+  } catch {
+    const validationError = new Error(
+      "Invalid category|cuisine ID format or database error",
+    );
+    validationError.name = "ValidationError";
+    return next(validationError);
   }
 
   next();

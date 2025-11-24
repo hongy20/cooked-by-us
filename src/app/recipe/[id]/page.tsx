@@ -33,10 +33,10 @@ export default async function Page({ params }: Props) {
   }
 
   return (
-    <div className="my-10 mx-12 md:mx-24 lg:mx-36">
+    <main className="my-10 mx-12 md:mx-24 lg:mx-36">
       <RecipeJsonLd recipe={recipe} />
       <RecipeView recipe={recipe} />
       <SimilarRecipes recipeId={recipeId} />
-    </div>
+    </main>
   );
 }

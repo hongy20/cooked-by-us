@@ -1,55 +1,18 @@
-import { CreateRecipe } from "@/components/CreateRecipeDialog/CreateRecipeDialog";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { AddRecipeButton } from "@/components/RecipeTable/AddRecipeButton";
+import { RecipeTable } from "@/components/RecipeTable/RecipeTable";
 import { getAllRecipes } from "@/lib/dal/recipe";
-import { formatDateForHuman } from "@/lib/utils/date";
-import { isoToHuman } from "@/lib/utils/duration";
 
 export default async function Page() {
   const recipes = await getAllRecipes();
 
   return (
-    <div className="ml-10 w-3xl">
-      <div className="flex flex-row-reverse my-10">
-        <CreateRecipe />
+    <div className="space-y-4">
+      <div className="flex justify-between">
+        <h1 className="text-2xl font-semibold">Recipes</h1>
+        <AddRecipeButton />
       </div>
-      <Table>
-        <TableCaption>A list of recipes.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Author</TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead>Category</TableHead>
-            <TableHead>Cuisine</TableHead>
-            <TableHead>Cook time</TableHead>
-            <TableHead>Created Date</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {recipes.map((recipe) => (
-            <TableRow key={`${recipe._id}`}>
-              <TableCell className="font-medium">{`${recipe.author}`}</TableCell>
-              <TableCell>{recipe.name}</TableCell>
-              <TableCell>{recipe.category?.name}</TableCell>
-              <TableCell>{recipe.cuisine?.name}</TableCell>
-              <TableCell>{isoToHuman(recipe.cookTime)}</TableCell>
-              <TableCell>{formatDateForHuman(recipe.createdAt)}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+
+      <RecipeTable recipes={recipes} />
     </div>
   );
-  // return (
-  //   <div className="w-full flex flex-col items-center justify-center gap-4">
-  //     <CreateRecipe />
-  //   </div>
-  // );
 }

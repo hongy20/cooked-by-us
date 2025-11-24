@@ -1,11 +1,10 @@
-import { Calendar, Home, Inbox } from "lucide-react";
+import { BookOpen, Globe, List } from "lucide-react";
 import Link from "next/link";
 import {
   Sidebar,
   SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
+  SidebarFooter,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -14,44 +13,53 @@ import {
 // Menu items.
 const items = [
   {
-    title: "Recipes",
-    url: "/dashboard",
-    icon: Home,
+    label: "Recipes",
+    href: "/dashboard",
+    icon: BookOpen,
   },
   {
-    title: "Category",
-    url: "/dashboard/category",
-    icon: Inbox,
+    label: "Category",
+    href: "/dashboard/category",
+    icon: List,
   },
   {
-    title: "Cuisine",
-    url: "/dashboard/cuisine",
-    icon: Calendar,
+    label: "Cuisine",
+    href: "/dashboard/cuisine",
+    icon: Globe,
   },
 ];
 
 export function DashboardSidebar() {
   return (
-    <Sidebar className="mt-14" collapsible="icon">
+    <Sidebar
+      className="
+        top-16                      /* adjust to match your global header height */
+        h-[calc(100vh-4rem)]       /* 100vh minus global header */
+        border-r
+      "
+    >
+      <SidebarHeader className="p-4 text-xl font-semibold">
+        Dashboard
+      </SidebarHeader>
+
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        <SidebarMenu>
+          {items.map((item) => (
+            <SidebarMenuItem key={item.href}>
+              <SidebarMenuButton asChild>
+                <Link href={item.href} className="flex items-center gap-2">
+                  <item.icon size={18} />
+                  <span>{item.label}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
       </SidebarContent>
+
+      <SidebarFooter className="p-4 text-sm text-muted-foreground">
+        © {new Date().getFullYear()}
+      </SidebarFooter>
     </Sidebar>
   );
 }

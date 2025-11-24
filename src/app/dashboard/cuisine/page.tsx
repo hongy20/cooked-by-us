@@ -1,41 +1,18 @@
-import { CreateCuisineDialog } from "@/components/CreateCuisineDialog";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { AddCuisineButton } from "@/components/CuisineTable/AddCuisineButton";
+import { CuisineTable } from "@/components/CuisineTable/CuisineTable";
 import { getAllCuisines } from "@/lib/dal/cuisine";
-import { formatDateForHuman } from "@/lib/utils/date";
 
 export default async function Page() {
   const cuisines = await getAllCuisines();
 
   return (
-    <div className="ml-10 w-2xl">
-      <div className="flex flex-row-reverse my-10">
-        <CreateCuisineDialog />
+    <div className="space-y-4">
+      <div className="flex justify-between">
+        <h1 className="text-2xl font-semibold">Cuisines</h1>
+        <AddCuisineButton />
       </div>
-      <Table>
-        <TableCaption>A list of recipe cuisines.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Created Date</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {cuisines.map((cuisine) => (
-            <TableRow key={`${cuisine._id}`}>
-              <TableCell>{cuisine.name}</TableCell>
-              <TableCell>{formatDateForHuman(cuisine.createdAt)}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+
+      <CuisineTable cuisines={cuisines} />
     </div>
   );
 }

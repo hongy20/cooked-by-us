@@ -13,7 +13,7 @@ import {
 // Menu items.
 const items = [
   {
-    label: "Recipes",
+    label: "Recipe",
     href: "/dashboard",
     icon: BookOpen,
   },

@@ -19,6 +19,11 @@ export const editCuisine = async (cuisineId: string, data: CuisineInput) => {
   );
 };
 
+export const deleteCuisine = async (cuisineId: string) => {
+  await connectDB();
+  return await CuisineModel.findByIdAndDelete(cuisineId);
+};
+
 // Read
 export const doesCuisineExist = cache(async (cuisineId: Types.ObjectId) => {
   await connectDB();

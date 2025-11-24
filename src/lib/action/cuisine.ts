@@ -3,8 +3,9 @@
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { getSession } from "@/lib/auth";
-import { createCuisine } from "@/lib/dal/cuisine";
+import { createCuisine, deleteCuisine } from "@/lib/dal/cuisine";
 import { type CuisineInput, CuisineValidator } from "@/lib/validator/cuisine";
+import { updateRecipesAfterCuisineDeletion } from "../dal/recipe";
 import type { FormState } from "./type";
 
 export type CreateCuisineFormState = FormState<CuisineInput>;
@@ -50,4 +51,16 @@ export const createCuisineAction = async (
   }
 
   redirect(`/dashboard/cuisine`);
+};
+
+export const deleteCuisineAction = async (cuisineId: string) => {
+  const session = await getSession();
+  if (!session) {
+    // TODO: handle unauthorized access
+    return undefined;
+  }
+
+  // TODO: find out what need to be returned
+  await deleteCuisine(cuisineId);
+  await updateRecipesAfterCuisineDeletion(cuisineId);
 };

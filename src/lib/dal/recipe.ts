@@ -20,6 +20,14 @@ export const updateRecipesAfterCategoryDeletion = async (
   );
 };
 
+export const updateRecipesAfterCuisineDeletion = async (cuisineId: string) => {
+  await connectDB();
+  return await RecipeModel.updateMany(
+    { cuisine: cuisineId },
+    { $set: { cuisine: null } },
+  );
+};
+
 export const deleteRecipe = async (recipeId: string) => {
   await connectDB();
   return await RecipeModel.findByIdAndDelete(recipeId);

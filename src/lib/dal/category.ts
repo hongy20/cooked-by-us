@@ -19,6 +19,11 @@ export const editCategory = async (categoryId: string, data: CategoryInput) => {
   );
 };
 
+export const deleteCategory = async (categoryId: string) => {
+  await connectDB();
+  return await CategoryModel.findByIdAndDelete(categoryId);
+};
+
 // Read
 export const doesCategoryExist = cache(async (categoryId: Types.ObjectId) => {
   await connectDB();

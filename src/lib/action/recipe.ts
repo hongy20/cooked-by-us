@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { getSession } from "@/lib/auth";
 import { upload } from "@/lib/cloudinary";
-import { createRecipe } from "@/lib/dal/recipe";
+import { createRecipe, deleteRecipe } from "@/lib/dal/recipe";
 import type { IRecipe } from "@/lib/model/recipe";
 import { type RecipeInput, RecipeValidator } from "@/lib/validator/recipe";
 import type { FormState } from "./type";
@@ -63,3 +63,14 @@ export const createRecipeAction = async (
 
   redirect(`/recipe/${recipe.id}`);
 };
+
+export async function deleteRecipeAction(recipeId: string) {
+  const session = await getSession();
+  if (!session) {
+    // TODO: handle unauthorized access
+    return undefined;
+  }
+
+  // TODO: find out what need to be returned
+  await deleteRecipe(recipeId);
+}

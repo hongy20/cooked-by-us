@@ -3,11 +3,12 @@
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { getSession } from "@/lib/auth";
-import { createCategory } from "@/lib/dal/category";
+import { createCategory, deleteCategory } from "@/lib/dal/category";
 import {
   type CategoryInput,
   CategoryValidator,
 } from "@/lib/validator/category";
+import { updateRecipesAfterCategoryDeletion } from "../dal/recipe";
 import type { FormState } from "./type";
 
 export type CreateCategoryFormState = FormState<CategoryInput>;
@@ -54,3 +55,15 @@ export const createCategoryAction = async (
 
   redirect(`/dashboard/category`);
 };
+
+export async function deleteCategoryAction(categoryId: string) {
+  const session = await getSession();
+  if (!session) {
+    // TODO: handle unauthorized access
+    return { status: "error", message: "You have to login first" };
+  }
+
+  // TODO: find out what need to be returned
+  await deleteCategory(categoryId);
+  await updateRecipesAfterCategoryDeletion(categoryId);
+}

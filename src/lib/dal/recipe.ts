@@ -4,11 +4,28 @@ import { type IPopulatedRecipe, RecipeModel } from "@/lib/model";
 import connectDB from "@/lib/mongodb";
 import type { RecipeInput } from "@/lib/validator/recipe";
 
+// Write
 export const createRecipe = async (data: RecipeInput) => {
   await connectDB();
   return await RecipeModel.create(data);
 };
 
+export const updateRecipesAfterCategoryDeletion = async (
+  categoryId: string,
+) => {
+  await connectDB();
+  return await RecipeModel.updateMany(
+    { category: categoryId },
+    { $set: { category: null } },
+  );
+};
+
+export const deleteRecipe = async (recipeId: string) => {
+  await connectDB();
+  return await RecipeModel.findByIdAndDelete(recipeId);
+};
+
+// Read
 export const getRecipe = cache(async (recipeId: string) => {
   await connectDB();
   return await RecipeModel.findById(recipeId)

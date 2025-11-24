@@ -1,41 +1,18 @@
-import { CreateCategoryDialog } from "@/components/CreateCategoryDialog";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { AddCategoryButton } from "@/components/CategoryTable/AddCategoryButton";
+import { CategoryTable } from "@/components/CategoryTable/CategoryTable";
 import { getAllCategories } from "@/lib/dal/category";
-import { formatDateForHuman } from "@/lib/utils/date";
 
 export default async function Page() {
   const categories = await getAllCategories();
 
   return (
-    <div className="ml-10 w-2xl">
-      <div className="flex flex-row-reverse my-10">
-        <CreateCategoryDialog />
+    <div className="space-y-4">
+      <div className="flex justify-between">
+        <h1 className="text-2xl font-semibold">Categories</h1>
+        <AddCategoryButton />
       </div>
-      <Table>
-        <TableCaption>A list of recipe categories.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Created Date</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {categories.map((category) => (
-            <TableRow key={`${category._id}`}>
-              <TableCell>{category.name}</TableCell>
-              <TableCell>{formatDateForHuman(category.createdAt)}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+
+      <CategoryTable categories={categories} />
     </div>
   );
 }

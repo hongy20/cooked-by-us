@@ -7,12 +7,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import type { IPopulatedRecipe } from "@/lib/model";
-import { RecipeEditForm } from "./RecipeEditForm";
+import type { ICategory } from "@/lib/model";
+import { CategoryEditForm } from "./CategoryEditForm";
 
-type Props = { recipe: IPopulatedRecipe };
+type Props = { category: ICategory };
 
-export const EditRecipeSheet = ({ recipe }: Props) => {
+export const EditCategorySheet = ({ category }: Props) => {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -23,11 +23,11 @@ export const EditRecipeSheet = ({ recipe }: Props) => {
 
       <SheetContent side="right" className="w-[500px]">
         <SheetHeader>
-          <SheetTitle>Edit Recipe</SheetTitle>
+          <SheetTitle>Edit Category</SheetTitle>
         </SheetHeader>
 
         <div className="mt-4">
-          <RecipeEditForm recipe={recipe} />
+          <CategoryEditForm category={category} />
         </div>
       </SheetContent>
     </Sheet>

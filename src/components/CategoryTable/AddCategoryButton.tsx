@@ -8,22 +8,22 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-export function AddRecipeButton() {
+export function AddCategoryButton() {
   return (
     <Sheet>
       <SheetTrigger asChild>
         <Button>
           <Plus className="mr-2 h-4 w-4" />
-          Add Recipe
+          Add Category
         </Button>
       </SheetTrigger>
 
       <SheetContent side="right" className="w-[500px]">
         <SheetHeader>
-          <SheetTitle>Create Recipe</SheetTitle>
+          <SheetTitle>Create Category</SheetTitle>
         </SheetHeader>
 
-        <div className="mt-4">{/* <RecipeCreateForm /> */}</div>
+        <div className="mt-4">{/* <CategoryCreateForm /> */}</div>
       </SheetContent>
     </Sheet>
   );

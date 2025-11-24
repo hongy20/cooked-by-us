@@ -56,14 +56,14 @@ export const createCategoryAction = async (
   redirect(`/dashboard/category`);
 };
 
-export async function deleteCategoryAction(categoryId: string) {
+export const deleteCategoryAction = async (categoryId: string) => {
   const session = await getSession();
   if (!session) {
     // TODO: handle unauthorized access
-    return { status: "error", message: "You have to login first" };
+    return undefined;
   }
 
   // TODO: find out what need to be returned
   await deleteCategory(categoryId);
   await updateRecipesAfterCategoryDeletion(categoryId);
-}
+};

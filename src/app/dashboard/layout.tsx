@@ -22,8 +22,8 @@ export default async function Layout({
 
         <div className="flex-1 flex flex-col">
           {/* Dashboard-specific top bar */}
-          <header className="flex items-center gap-4 border-b px-6 h-14">
-            <SidebarTrigger className="md:hidden" />
+          <header className="flex items-center gap-4 border-b px-6 h-14 md:hidden">
+            <SidebarTrigger />
             <h1 className="font-semibold text-lg">Dashboard</h1>
           </header>
 

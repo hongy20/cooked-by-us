@@ -1,4 +1,4 @@
-import { BookOpen, Globe, List } from "lucide-react";
+import { BookOpen, Database, Globe, List } from "lucide-react";
 import Link from "next/link";
 import {
   Sidebar,
@@ -26,6 +26,11 @@ const items = [
     label: "Cuisine",
     href: "/dashboard/cuisine",
     icon: Globe,
+  },
+  {
+    label: "Bootstrapping",
+    href: "/dashboard/bootstrap",
+    icon: Database,
   },
 ];
 

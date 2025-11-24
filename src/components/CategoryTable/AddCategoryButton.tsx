@@ -1,8 +1,12 @@
+"use client";
+
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -18,12 +22,24 @@ export function AddCategoryButton() {
         </Button>
       </SheetTrigger>
 
-      <SheetContent side="right" className="w-[500px]">
+      <SheetContent
+        side="right"
+        className="w-[500px]"
+        onEscapeKeyDown={(event) => event.preventDefault()}
+        onInteractOutside={(event) => event.preventDefault()}
+      >
         <SheetHeader>
           <SheetTitle>Create Category</SheetTitle>
         </SheetHeader>
 
         <div className="mt-4">{/* <CategoryCreateForm /> */}</div>
+
+        <SheetFooter>
+          <Button type="submit">Create</Button>
+          <SheetClose asChild>
+            <Button variant="outline">Close</Button>
+          </SheetClose>
+        </SheetFooter>
       </SheetContent>
     </Sheet>
   );

@@ -11,12 +11,12 @@ export const createCategory = async (data: CategoryInput) => {
   return await CategoryModel.create(data);
 };
 
-export const editCategory = async (categoryId: string, data: CategoryInput) => {
+export const updateCategory = async (
+  categoryId: string,
+  data: CategoryInput,
+) => {
   await connectDB();
-  return await CategoryModel.findByIdAndUpdate(
-    { _id: categoryId },
-    { $set: data },
-  );
+  return await CategoryModel.findByIdAndUpdate(categoryId, { $set: data });
 };
 
 export const deleteCategory = async (categoryId: string) => {

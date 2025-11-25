@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import { Edit } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useId } from "react";
 import { toast } from "sonner";
@@ -9,43 +9,46 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import {
-  type CreateCategoryFormState,
-  createCategoryAction,
+  type UpdateCategoryFormState,
+  updateCategoryAction,
 } from "@/lib/action/category";
+import type { ICategory } from "@/lib/model";
 import { CategoryEditForm } from "./CategoryEditForm";
 
-const getInitialState = (): CreateCategoryFormState => ({
+const getInitialState = (category: ICategory): UpdateCategoryFormState => ({
   status: "idle",
   fields: {
-    name: "",
+    name: category.name,
+    categoryId: `${category._id}`,
   },
 });
 
-export function AddCategoryButton() {
+type Props = { category: ICategory };
+
+export const EditCategoryButton = ({ category }: Props) => {
   const formId = useId();
   const router = useRouter();
   const [state, action, pending] = useActionState(
-    async (prevState: CreateCategoryFormState, formData: FormData) =>
-      await createCategoryAction(prevState, formData).catch((error) => {
+    async (prevState: UpdateCategoryFormState, formData: FormData) =>
+      await updateCategoryAction(prevState, formData).catch((error) => {
         toast.error(
           "Error",
           error instanceof Error ? { description: error.message } : undefined,
         );
         return prevState;
       }),
-    getInitialState(),
+    getInitialState(category),
   );
 
   useEffect(() => {
     if (state.status === "success") {
-      toast.success("Category created!");
+      toast.success("Category updated!");
       router.refresh();
     }
   }, [state.status, router]);
@@ -53,9 +56,8 @@ export function AddCategoryButton() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button>
-          <Plus className="mr-2 h-4 w-4" />
-          Add Category
+        <Button variant="ghost" size="icon">
+          <Edit className="h-4 w-4" />
         </Button>
       </SheetTrigger>
 
@@ -66,10 +68,7 @@ export function AddCategoryButton() {
         onInteractOutside={(event) => event.preventDefault()}
       >
         <SheetHeader>
-          <SheetTitle>Create Category</SheetTitle>
-          <SheetDescription>
-            Create a new category for your recipes.
-          </SheetDescription>
+          <SheetTitle>Edit Category</SheetTitle>
         </SheetHeader>
 
         <div className="p-4">
@@ -83,7 +82,7 @@ export function AddCategoryButton() {
 
         <SheetFooter>
           <Button type="submit" form={formId} disabled={pending}>
-            {pending ? "Creating..." : "Create"}
+            {pending ? "Saving..." : "Save"}
           </Button>
           <SheetClose asChild>
             <Button variant="outline">Close</Button>
@@ -92,4 +91,4 @@ export function AddCategoryButton() {
       </SheetContent>
     </Sheet>
   );
-}
+};

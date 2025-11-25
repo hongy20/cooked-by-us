@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/table";
 import type { ICategory } from "@/lib/model";
 import { DeleteCategoryButton } from "./DeleteCategoryButton";
-import { EditCategorySheet } from "./EditCategorySheet";
+import { EditCategoryButton } from "./EditCategoryButton";
 
 type Props = { categories: ICategory[] };
 
@@ -39,7 +39,7 @@ export const CategoryTable = ({ categories }: Props) => {
             <TableCell>{category.name}</TableCell>
 
             <TableCell className="flex justify-end gap-3">
-              <EditCategorySheet category={category} />
+              <EditCategoryButton category={category} />
 
               <DeleteCategoryButton categoryId={`${category._id}`} />
             </TableCell>

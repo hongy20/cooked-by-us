@@ -45,7 +45,7 @@ export function AddCategoryButton() {
         return rsp;
       } catch (error) {
         toast.error(
-          "Error",
+          "Category creation failed",
           error instanceof Error ? { description: error.message } : undefined,
         );
         return prevState;

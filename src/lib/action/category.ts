@@ -1,6 +1,5 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import { z } from "zod";
 import { getSession } from "@/lib/auth";
 import {
@@ -8,11 +7,11 @@ import {
   deleteCategory,
   updateCategory,
 } from "@/lib/dal/category";
+import { updateRecipesAfterCategoryDeletion } from "@/lib/dal/recipe";
 import {
   type CategoryInput,
   CategoryValidator,
 } from "@/lib/validator/category";
-import { updateRecipesAfterCategoryDeletion } from "../dal/recipe";
 import type { FormState } from "./type";
 
 export type CreateCategoryFields = CategoryInput;
@@ -89,7 +88,6 @@ export const updateCategoryAction = async (
   }
 
   try {
-    console.log(categoryId, validatedFields.data);
     const updated = await updateCategory(categoryId, validatedFields.data);
     if (!updated) {
       throw new Error("Category not found");
@@ -114,8 +112,6 @@ export const deleteCategoryAction = async (categoryId: string) => {
     throw new Error("You have to login first");
   }
 
-  // TODO: find out what need to be returned
   await deleteCategory(categoryId);
   await updateRecipesAfterCategoryDeletion(categoryId);
-  redirect(`/dashboard/category`);
 };

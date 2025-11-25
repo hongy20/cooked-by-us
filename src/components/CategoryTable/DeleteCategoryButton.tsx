@@ -1,7 +1,9 @@
 "use client";
 
 import { Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useTransition } from "react";
+import { toast } from "sonner";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,7 +22,7 @@ type Props = { categoryId: string };
 
 export const DeleteCategoryButton = ({ categoryId }: Props) => {
   const [pending, startTransition] = useTransition();
-  // TODO: handle server action failures
+  const router = useRouter();
 
   return (
     <AlertDialog>
@@ -44,7 +46,20 @@ export const DeleteCategoryButton = ({ categoryId }: Props) => {
           <AlertDialogAction
             disabled={pending}
             onClick={() =>
-              startTransition(() => deleteCategoryAction(categoryId))
+              startTransition(async () => {
+                try {
+                  await deleteCategoryAction(categoryId);
+                  toast.success("Category deleted!");
+                  router.refresh();
+                } catch (error) {
+                  toast.error(
+                    "Category deletion failed",
+                    error instanceof Error
+                      ? { description: error.message }
+                      : undefined,
+                  );
+                }
+              })
             }
           >
             Delete

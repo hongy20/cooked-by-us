@@ -2,7 +2,7 @@
 
 import { Edit } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useActionState, useEffect, useId } from "react";
+import { useActionState, useId, useRef } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -34,24 +34,28 @@ type Props = { category: ICategory };
 export const EditCategoryButton = ({ category }: Props) => {
   const formId = useId();
   const router = useRouter();
+  const closeRef = useRef<HTMLButtonElement>(null);
+
   const [state, action, pending] = useActionState(
-    async (prevState: UpdateCategoryFormState, formData: FormData) =>
-      await updateCategoryAction(prevState, formData).catch((error) => {
+    async (prevState: UpdateCategoryFormState, formData: FormData) => {
+      try {
+        const rsp = await updateCategoryAction(prevState, formData);
+        if (rsp.status === "success") {
+          closeRef.current?.click(); // Close sheet
+          toast.success("Category updated!");
+          router.refresh();
+        }
+        return rsp;
+      } catch (error) {
         toast.error(
           "Error",
           error instanceof Error ? { description: error.message } : undefined,
         );
         return prevState;
-      }),
+      }
+    },
     getInitialState(category),
   );
-
-  useEffect(() => {
-    if (state.status === "success") {
-      toast.success("Category updated!");
-      router.refresh();
-    }
-  }, [state.status, router]);
 
   return (
     <Sheet>
@@ -63,7 +67,7 @@ export const EditCategoryButton = ({ category }: Props) => {
 
       <SheetContent
         side="right"
-        className="w-[500px]"
+        className="w-full sm:max-w-[500px]"
         onEscapeKeyDown={(event) => event.preventDefault()}
         onInteractOutside={(event) => event.preventDefault()}
       >
@@ -85,7 +89,9 @@ export const EditCategoryButton = ({ category }: Props) => {
             {pending ? "Saving..." : "Save"}
           </Button>
           <SheetClose asChild>
-            <Button variant="outline">Close</Button>
+            <Button variant="outline" ref={closeRef}>
+              Close
+            </Button>
           </SheetClose>
         </SheetFooter>
       </SheetContent>

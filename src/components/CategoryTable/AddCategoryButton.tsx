@@ -65,7 +65,7 @@ export function AddCategoryButton() {
 
       <SheetContent
         side="right"
-        className="w-[500px]"
+        className="w-full sm:max-w-[500px]"
         onEscapeKeyDown={(event) => event.preventDefault()}
         onInteractOutside={(event) => event.preventDefault()}
       >

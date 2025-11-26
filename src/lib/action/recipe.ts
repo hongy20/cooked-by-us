@@ -54,8 +54,10 @@ export const createRecipeAction = async (
   try {
     await createRecipe(validatedFields.data);
     return { status: "success", fields };
-  } catch {
-    throw new Error("Recipe creation failed");
+  } catch (error) {
+    throw new Error(
+      `Recipe creation failed: ${error instanceof Error ? error.message : "Unknown error"}`,
+    );
   }
 };
 
@@ -104,8 +106,10 @@ export const updateRecipeAction = async (
       throw new Error("Recipe not found");
     }
     return { status: "success", fields: patchedFields };
-  } catch {
-    throw new Error("Recipe updation failed");
+  } catch (error) {
+    throw new Error(
+      `Recipe updation failed: ${error instanceof Error ? error.message : "Unknown error"}`,
+    );
   }
 };
 

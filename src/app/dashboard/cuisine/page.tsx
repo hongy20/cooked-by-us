@@ -1,5 +1,5 @@
-import { AddCuisineButton } from "@/components/CuisineTable/AddCuisineButton";
-import { CuisineTable } from "@/components/CuisineTable/CuisineTable";
+import { AddCuisineButton } from "@/components/dashboard/cuisine/AddCuisineButton";
+import { CuisineTable } from "@/components/dashboard/cuisine/CuisineTable";
 import { getAllCuisines } from "@/lib/dal/cuisine";
 
 export default async function Page() {

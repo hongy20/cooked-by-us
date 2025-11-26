@@ -1,5 +1,5 @@
-import { AddRecipeButton } from "@/components/RecipeTable/AddRecipeButton";
-import { RecipeTable } from "@/components/RecipeTable/RecipeTable";
+import { AddRecipeButton } from "@/components/dashboard/recipe/AddRecipeButton";
+import { RecipeTable } from "@/components/dashboard/recipe/RecipeTable";
 import { getAllRecipes } from "@/lib/dal/recipe";
 
 export default async function Page() {

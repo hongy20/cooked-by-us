@@ -1,5 +1,5 @@
-import { AddCategoryButton } from "@/components/CategoryTable/AddCategoryButton";
-import { CategoryTable } from "@/components/CategoryTable/CategoryTable";
+import { AddCategoryButton } from "@/components/dashboard/category/AddCategoryButton";
+import { CategoryTable } from "@/components/dashboard/category/CategoryTable";
 import { getAllCategories } from "@/lib/dal/category";
 
 export default async function Page() {

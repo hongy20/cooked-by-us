@@ -14,7 +14,7 @@ import {
   FieldGroup,
   FieldLabel,
   FieldSet,
-} from "../ui/field";
+} from "../../ui/field";
 
 interface Props {
   fields: CreateCuisineFields | UpdateCuisineFields;

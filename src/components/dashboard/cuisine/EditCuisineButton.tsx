@@ -69,7 +69,7 @@ export const EditCuisineButton = ({ cuisine }: Props) => {
 
       <SheetContent
         side="right"
-        className="w-full sm:max-w-[500px]"
+        className="w-full sm:max-w-[500px] flex flex-col"
         onEscapeKeyDown={(event) => event.preventDefault()}
         onInteractOutside={(event) => event.preventDefault()}
       >
@@ -77,7 +77,7 @@ export const EditCuisineButton = ({ cuisine }: Props) => {
           <SheetTitle>Edit Cuisine</SheetTitle>
         </SheetHeader>
 
-        <div className="p-4">
+        <div className="flex-1 overflow-y-auto overflow-x-hidden p-4">
           <CuisineEditForm
             fields={state.fields}
             formId={formId}
@@ -86,7 +86,7 @@ export const EditCuisineButton = ({ cuisine }: Props) => {
           />
         </div>
 
-        <SheetFooter>
+        <SheetFooter className="border-t p-4">
           <Button type="submit" form={formId} disabled={pending}>
             {pending ? "Saving..." : "Save"}
           </Button>

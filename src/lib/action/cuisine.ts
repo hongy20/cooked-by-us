@@ -86,7 +86,7 @@ export const updateCuisineAction = async (
     throw new Error(
       dupliatedKeyError(e)
         ? "Cuisine already exist"
-        : "Cuisine creation failed",
+        : "Cuisine updation failed",
     );
   }
 };

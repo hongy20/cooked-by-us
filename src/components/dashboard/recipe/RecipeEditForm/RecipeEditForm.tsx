@@ -29,6 +29,9 @@ export const RecipeEditForm = ({ fields, action, formId, errors }: Props) => {
     <form id={formId} action={action} className="space-y-4">
       <FieldSet>
         <FieldGroup>
+          {"recipeId" in fields && fields.recipeId && (
+            <input type="hidden" name="recipeId" value={fields.recipeId} />
+          )}
           <FieldRecipeName
             name="name"
             defaultValue={fields.name}

@@ -15,7 +15,8 @@ import {
   bootstrapRecipesAction,
 } from "@/lib/action/bootstrap";
 
-const capitalizeFirst = (str: string) => str?.[0].toUpperCase() + str.slice(1);
+const capitalizeFirst = (str: string) =>
+  str ? str[0].toUpperCase() + str.slice(1) : "";
 
 const types = ["cuisines", "categories", "recipes"] as const;
 type TypeValue = (typeof types)[number];

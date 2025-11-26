@@ -53,7 +53,7 @@ export const EditRecipeButton = ({ recipe }: Props) => {
           "Error",
           error instanceof Error ? { description: error.message } : undefined,
         );
-        return prevState;
+        return { ...prevState, status: "error" as const };
       }
     },
     getInitialState(recipe),

@@ -6,11 +6,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { IPopulatedRecipe } from "@/lib/model";
+import type { PersistedRecipe } from "@/lib/dal/types";
 import { DeleteRecipeButton } from "./DeleteRecipeButton";
-import { EditRecipeSheet } from "./EditRecipeSheet";
+import { EditRecipeButton } from "./EditRecipeButton";
 
-type Props = { recipes: IPopulatedRecipe[] };
+type Props = { recipes: PersistedRecipe[] };
 
 export const RecipeTable = ({ recipes }: Props) => {
   return (
@@ -37,15 +37,15 @@ export const RecipeTable = ({ recipes }: Props) => {
         )}
 
         {recipes.map((recipe) => (
-          <TableRow key={`${recipe._id}`}>
+          <TableRow key={recipe.id}>
             <TableCell>{recipe.name}</TableCell>
             <TableCell>{recipe.category?.name ?? "—"}</TableCell>
             <TableCell>{recipe.cuisine?.name ?? "—"}</TableCell>
 
             <TableCell className="flex justify-end gap-3">
-              <EditRecipeSheet recipe={recipe} />
+              <EditRecipeButton recipe={recipe} />
 
-              <DeleteRecipeButton recipeId={`${recipe._id}`} />
+              <DeleteRecipeButton recipeId={recipe.id} />
             </TableCell>
           </TableRow>
         ))}

@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/table";
 import type { PersistedCuisine } from "@/lib/dal/types";
 import { DeleteCuisineButton } from "./DeleteCuisineButton";
-import { EditCuisineSheet } from "./EditCuisineSheet";
+import { EditCuisineButton } from "./EditCuisineButton";
 
 type Props = { cuisines: PersistedCuisine[] };
 
@@ -39,7 +39,7 @@ export const CuisineTable = ({ cuisines }: Props) => {
             <TableCell>{cuisine.name}</TableCell>
 
             <TableCell className="flex justify-end gap-3">
-              <EditCuisineSheet cuisine={cuisine} />
+              <EditCuisineButton cuisine={cuisine} />
 
               <DeleteCuisineButton cuisineId={cuisine.id} />
             </TableCell>

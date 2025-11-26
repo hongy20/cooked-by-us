@@ -1,5 +1,3 @@
-"use client";
-
 import { Edit } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useActionState, useId, useRef } from "react";
@@ -15,36 +13,36 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import {
-  type UpdateCuisineFormState,
-  updateCuisineAction,
-} from "@/lib/action/cuisine";
-import type { PersistedCuisine } from "@/lib/dal/types";
-import { CuisineEditForm } from "./CuisineEditForm";
+  type UpdateRecipeFormState,
+  updateRecipeAction,
+} from "@/lib/action/recipe";
+import type { PersistedRecipe } from "@/lib/dal/types";
+import { RecipeEditForm } from "./RecipeEditForm";
 
-const getInitialState = (
-  cuisine: PersistedCuisine,
-): UpdateCuisineFormState => ({
+const getInitialState = (recipe: PersistedRecipe): UpdateRecipeFormState => ({
   status: "idle",
   fields: {
-    name: cuisine.name,
-    cuisineId: cuisine.id,
+    ...recipe,
+    category: recipe.category?.id ?? null,
+    cuisine: recipe.cuisine?.id ?? null,
+    recipeId: recipe.id,
   },
 });
 
-type Props = { cuisine: PersistedCuisine };
+type Props = { recipe: PersistedRecipe };
 
-export const EditCuisineSheet = ({ cuisine }: Props) => {
+export const EditRecipeButton = ({ recipe }: Props) => {
   const formId = useId();
   const router = useRouter();
   const closeRef = useRef<HTMLButtonElement>(null);
 
   const [state, action, pending] = useActionState(
-    async (prevState: UpdateCuisineFormState, formData: FormData) => {
+    async (prevState: UpdateRecipeFormState, formData: FormData) => {
       try {
-        const rsp = await updateCuisineAction(prevState, formData);
+        const rsp = await updateRecipeAction(prevState, formData);
         if (rsp.status === "success") {
           closeRef.current?.click(); // Close sheet
-          toast.success("Cuisine updated!");
+          toast.success("Recipe updated!");
           router.refresh(); // Refresh the current page
         }
         return rsp;
@@ -56,7 +54,7 @@ export const EditCuisineSheet = ({ cuisine }: Props) => {
         return prevState;
       }
     },
-    getInitialState(cuisine),
+    getInitialState(recipe),
   );
 
   return (
@@ -74,11 +72,11 @@ export const EditCuisineSheet = ({ cuisine }: Props) => {
         onInteractOutside={(event) => event.preventDefault()}
       >
         <SheetHeader>
-          <SheetTitle>Edit Cuisine</SheetTitle>
+          <SheetTitle>Edit Recipe</SheetTitle>
         </SheetHeader>
 
-        <div className="p-4">
-          <CuisineEditForm
+        <div className="mt-4">
+          <RecipeEditForm
             fields={state.fields}
             formId={formId}
             action={action}

@@ -13,6 +13,19 @@ export const createRecipe = async (data: RecipeInput): Promise<string> => {
   return `${doc._id}`;
 };
 
+export const updateRecipe = async (
+  recipeId: string,
+  data: RecipeInput,
+): Promise<PersistedRecipe | undefined> => {
+  await connectDB();
+  const doc = await RecipeModel.findByIdAndUpdate(recipeId, {
+    $set: data,
+  })
+    .populate(["category", "cuisine"])
+    .lean<PopulatedRecipeDoc>();
+  return doc ? recipeToClient(doc) : undefined;
+};
+
 export const updateRecipesAfterCategoryDeletion = async (
   categoryId: string,
 ): Promise<boolean> => {

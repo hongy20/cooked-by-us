@@ -36,13 +36,9 @@ const items = [
 
 export function DashboardSidebar() {
   return (
-    <Sidebar
-      className="
-        top-16                      /* adjust to match your global header height */
-        h-[calc(100vh-4rem)]       /* 100vh minus global header */
-        border-r
-      "
-    >
+    // top-16 should match the global header height (4rem);
+    // h-[calc(100vh-4rem)] = 100vh - header
+    <Sidebar className="top-16 h-[calc(100vh-4rem)] border-r">
       <SidebarHeader className="p-4 text-xl font-semibold">
         Dashboard
       </SidebarHeader>

@@ -25,15 +25,15 @@ export default function BootstrapPage() {
     switch (type) {
       case "categories":
         return await bootstrapCategoriesAction()
-          .then(() => toast.success("Bootstrap succeed"))
+          .then(() => toast.success("Bootstrap succeeded"))
           .catch(() => toast.error("Bootstrap failed"));
       case "cuisines":
         return await bootstrapCuisinesAction()
-          .then(() => toast.success("Bootstrap succeed"))
+          .then(() => toast.success("Bootstrap succeeded"))
           .catch(() => toast.error("Bootstrap failed"));
       case "recipes":
         return await bootstrapRecipesAction()
-          .then(() => toast.success("Bootstrap succeed"))
+          .then(() => toast.success("Bootstrap succeeded"))
           .catch(() => toast.error("Bootstrap failed"));
       default:
         console.log("Bootstrap:", type);

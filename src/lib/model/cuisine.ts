@@ -7,7 +7,7 @@ export interface CuisineDoc extends Cuisine, Document {
   updatedAt: Date;
 }
 
-const CuisineInputSchema = new Schema<CuisineDoc>(
+const CuisineSchema = new Schema<CuisineDoc>(
   {
     name: {
       type: String,
@@ -25,4 +25,4 @@ const CuisineInputSchema = new Schema<CuisineDoc>(
 
 export const CuisineModel =
   (models.Cuisine as Model<CuisineDoc>) ||
-  model<CuisineDoc>("Cuisine", CuisineInputSchema);
+  model<CuisineDoc>("Cuisine", CuisineSchema);

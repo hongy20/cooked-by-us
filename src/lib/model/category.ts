@@ -7,7 +7,7 @@ export interface CategoryDoc extends Category, Document {
   updatedAt: Date;
 }
 
-const CategoryInputSchema = new Schema<CategoryDoc>(
+const CategorySchema = new Schema<CategoryDoc>(
   {
     name: {
       type: String,
@@ -25,4 +25,4 @@ const CategoryInputSchema = new Schema<CategoryDoc>(
 
 export const CategoryModel =
   (models.Category as Model<CategoryDoc>) ||
-  model<CategoryDoc>("Category", CategoryInputSchema);
+  model<CategoryDoc>("Category", CategorySchema);

@@ -26,7 +26,7 @@ export const FieldRecipeCuisine = ({ name, defaultValue, errors }: Props) => {
     getAllCuisinesAction()
       .then(setCuisines)
       .catch(() => toast.error("Unable to load cuisines"));
-  });
+  }, []);
 
   return (
     <Field>

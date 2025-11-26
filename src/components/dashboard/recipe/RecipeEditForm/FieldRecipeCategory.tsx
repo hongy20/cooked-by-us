@@ -26,7 +26,7 @@ export const FieldRecipeCategory = ({ name, defaultValue, errors }: Props) => {
     getAllCategoriesAction()
       .then(setCategories)
       .catch(() => toast.error("Unable to load categories"));
-  });
+  }, []);
 
   return (
     <Field>

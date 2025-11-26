@@ -40,11 +40,14 @@ export const createCuisineAction = async (
     await createCuisine(validatedFields.data);
     return { status: "success", fields };
   } catch (e) {
-    throw new Error(
-      dupliatedKeyError(e)
-        ? "Cuisine already exist"
-        : "Cuisine creation failed",
-    );
+    if (dupliatedKeyError(e)) {
+      return {
+        status: "error",
+        fields,
+        errors: { name: ["Cuisine already exist"] },
+      };
+    }
+    throw new Error("Cuisine creation failed");
   }
 };
 
@@ -83,11 +86,14 @@ export const updateCuisineAction = async (
     }
     return { status: "success", fields: patchedFields };
   } catch (e) {
-    throw new Error(
-      dupliatedKeyError(e)
-        ? "Cuisine already exist"
-        : "Cuisine updation failed",
-    );
+    if (dupliatedKeyError(e)) {
+      return {
+        status: "error",
+        fields: patchedFields,
+        errors: { name: ["Cuisine already exist"] },
+      };
+    }
+    throw new Error("Cuisine updation failed");
   }
 };
 

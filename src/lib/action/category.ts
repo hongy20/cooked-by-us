@@ -43,11 +43,14 @@ export const createCategoryAction = async (
     await createCategory(validatedFields.data);
     return { status: "success", fields };
   } catch (e) {
-    throw new Error(
-      dupliatedKeyError(e)
-        ? "Category already exist"
-        : "Category creation failed",
-    );
+    if (dupliatedKeyError(e)) {
+      return {
+        status: "error",
+        fields,
+        errors: { name: ["Category already exist"] },
+      };
+    }
+    throw new Error("Category creation failed");
   }
 };
 
@@ -86,11 +89,14 @@ export const updateCategoryAction = async (
     }
     return { status: "success", fields: patchedFields };
   } catch (e) {
-    throw new Error(
-      dupliatedKeyError(e)
-        ? "Category already exist"
-        : "Category updation failed",
-    );
+    if (dupliatedKeyError(e)) {
+      return {
+        status: "error",
+        fields: patchedFields,
+        errors: { name: ["Category already exist"] },
+      };
+    }
+    throw new Error("Category updation failed");
   }
 };
 

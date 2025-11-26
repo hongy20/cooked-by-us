@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Spinner } from "@/components/ui/spinner";
 import { getAllCuisinesAction } from "@/lib/action/cuisine";
 import type { PersistedCuisine } from "@/lib/dal/types";
 
@@ -19,18 +20,24 @@ interface Props {
 
 export const FieldRecipeCuisine = ({ name, defaultValue, errors }: Props) => {
   const [cuisines, setCuisines] = useState<PersistedCuisine[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [cuisine, setCuisine] = useState<string | undefined>(defaultValue);
   const id = useId();
 
   useEffect(() => {
+    setIsLoading(true);
     getAllCuisinesAction()
       .then(setCuisines)
-      .catch(() => toast.error("Unable to load cuisines"));
+      .catch(() => toast.error("Unable to load cuisines"))
+      .finally(() => setIsLoading(false));
   }, []);
 
   return (
     <Field>
-      <FieldLabel htmlFor={id}>Recipe Cuisine</FieldLabel>
+      <FieldLabel htmlFor={id}>
+        Recipe Cuisine
+        {isLoading && <Spinner />}
+      </FieldLabel>
 
       {/* Prevent form from losing the selected value */}
       <input type="hidden" name={name} value={cuisine ?? ""} />

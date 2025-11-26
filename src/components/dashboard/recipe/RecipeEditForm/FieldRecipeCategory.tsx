@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Spinner } from "@/components/ui/spinner";
 import { getAllCategoriesAction } from "@/lib/action/category";
 import type { PersistedCategory } from "@/lib/dal/types";
 
@@ -19,18 +20,24 @@ interface Props {
 
 export const FieldRecipeCategory = ({ name, defaultValue, errors }: Props) => {
   const [categories, setCategories] = useState<PersistedCategory[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [category, setCategory] = useState<string | undefined>(defaultValue);
   const id = useId();
 
   useEffect(() => {
+    setIsLoading(true);
     getAllCategoriesAction()
       .then(setCategories)
-      .catch(() => toast.error("Unable to load categories"));
+      .catch(() => toast.error("Unable to load categories"))
+      .finally(() => setIsLoading(false));
   }, []);
 
   return (
     <Field>
-      <FieldLabel htmlFor={id}>Recipe Category</FieldLabel>
+      <FieldLabel htmlFor={id}>
+        Recipe Category
+        {isLoading && <Spinner />}
+      </FieldLabel>
 
       {/* Prevent form from losing the selected value */}
       <input type="hidden" name={name} value={category ?? ""} />

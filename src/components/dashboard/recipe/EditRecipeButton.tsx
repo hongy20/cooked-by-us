@@ -1,3 +1,5 @@
+"use client";
+
 import { Edit } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useActionState, useId, useRef } from "react";
@@ -17,7 +19,7 @@ import {
   updateRecipeAction,
 } from "@/lib/action/recipe";
 import type { PersistedRecipe } from "@/lib/dal/types";
-import { RecipeEditForm } from "./RecipeEditForm";
+import { RecipeEditForm } from "./RecipeEditForm/RecipeEditForm";
 
 const getInitialState = (recipe: PersistedRecipe): UpdateRecipeFormState => ({
   status: "idle",
@@ -75,7 +77,7 @@ export const EditRecipeButton = ({ recipe }: Props) => {
           <SheetTitle>Edit Recipe</SheetTitle>
         </SheetHeader>
 
-        <div className="mt-4">
+        <div className="p-4">
           <RecipeEditForm
             fields={state.fields}
             formId={formId}

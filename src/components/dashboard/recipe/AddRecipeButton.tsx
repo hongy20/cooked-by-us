@@ -1,3 +1,5 @@
+"use client";
+
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useActionState, useId, useRef } from "react";
@@ -7,6 +9,7 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
+  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -16,7 +19,7 @@ import {
   type CreateRecipeFormState,
   createRecipeAction,
 } from "@/lib/action/recipe";
-import { RecipeEditForm } from "./RecipeEditForm";
+import { RecipeEditForm } from "./RecipeEditForm/RecipeEditForm";
 
 const getInitialState = (): CreateRecipeFormState => ({
   status: "idle",
@@ -76,6 +79,10 @@ export function AddRecipeButton() {
       >
         <SheetHeader>
           <SheetTitle>Create Recipe</SheetTitle>
+          <SheetDescription>
+            Create new recipe to your app here. Click save when you&apos;re
+            done.
+          </SheetDescription>
         </SheetHeader>
 
         <div className="p-4">

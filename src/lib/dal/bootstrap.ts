@@ -5,7 +5,6 @@ import type { RecipeInput } from "../validator/recipe";
 
 export const bootstrapCuisines = async () => {
   await connectDB();
-
   const cuisines = ["意大利菜", "中国菜", "北欧料理"];
 
   await CuisineModel.bulkWrite(
@@ -21,7 +20,6 @@ export const bootstrapCuisines = async () => {
 
 export const bootstrapCategories = async () => {
   await connectDB();
-
   const categories = [
     "开胃菜/前餐",
     "主菜/正餐",
@@ -44,14 +42,8 @@ export const bootstrapCategories = async () => {
   );
 };
 
-export const bootstrapRecipesForLocalDevelopment = async () => {
-  if (process.env.NODE_ENV !== "development") {
-    console.info("Recipe bootstraping is only enabled for local development!!");
-    return;
-  }
-
+export const bootstrapRecipes = async () => {
   await connectDB();
-
   const recipes: RecipeInput[] = [
     {
       name: "红烧肉",
@@ -84,6 +76,8 @@ export const bootstrapRecipesForLocalDevelopment = async () => {
         "小火炖 60-80 分钟",
         "大火收汁到浓稠、肉块油亮即可",
       ],
+      category: null,
+      cuisine: null,
       cookTime: "PT2H",
       keywords: ["猪肉", "红烧", "软糯", "入口即化"],
     },
@@ -118,7 +112,9 @@ export const bootstrapRecipesForLocalDevelopment = async () => {
         "放入青菜或香菜叶",
         "再煮 20-30 秒即可关火",
       ],
-      cookTime: "",
+      cookTime: "PT30M",
+      category: null,
+      cuisine: null,
       keywords: ["汤味清爽", "开胃", "面食"],
     },
   ];
@@ -127,7 +123,7 @@ export const bootstrapRecipesForLocalDevelopment = async () => {
     recipes.map((recipe) => ({
       updateOne: {
         filter: { name: recipe.name },
-        update: { $setOnInsert: { recipe } },
+        update: { $setOnInsert: { ...recipe } },
         upsert: true,
       },
     })),

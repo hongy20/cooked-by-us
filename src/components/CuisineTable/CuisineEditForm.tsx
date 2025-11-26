@@ -1,30 +1,56 @@
 "use client";
 
-import { useActionState, useEffect, useId } from "react";
-import { Button } from "@/components/ui/button";
+import { useId } from "react";
 import { Input } from "@/components/ui/input";
-import type { ICuisine } from "@/lib/model";
+import type {
+  CreateCuisineFields,
+  CreateCuisineFormState,
+  UpdateCuisineFields,
+  UpdateCuisineFormState,
+} from "@/lib/action/cuisine";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldSet,
+} from "../ui/field";
 
-type Props = { cuisine: ICuisine };
+interface Props {
+  fields: CreateCuisineFields | UpdateCuisineFields;
+  action: (payload: FormData) => void;
+  formId: string;
+  errors?: CreateCuisineFormState["errors"] | UpdateCuisineFormState["errors"];
+}
 
-export const CuisineEditForm = ({ cuisine }: Props) => {
-  const [state, formAction] = useActionState(updateRecipe, null);
-  const id = useId();
+export const CuisineEditForm = ({ fields, action, formId, errors }: Props) => {
+  const nameFieldId = useId();
 
-  // Prefill logic can come from props or useSWR, etc.
-  // For now: placeholder
   return (
-    <form action={formAction} className="space-y-4">
-      <input type="hidden" name="id" value={id} />
+    <form id={formId} action={action} className="space-y-4">
+      <FieldSet>
+        <FieldGroup>
+          <Field>
+            <FieldLabel htmlFor={nameFieldId}>Name</FieldLabel>
+            {"cuisineId" in fields && fields.cuisineId && (
+              <input type="hidden" name="cuisineId" value={fields.cuisineId} />
+            )}
 
-      <div className="space-y-1">
-        <label htmlFor={id} className="text-sm">
-          Name
-        </label>
-        <Input id={id} name="name" defaultValue={state?.name ?? ""} />
-      </div>
-
-      <Button type="submit">Save</Button>
+            <Input
+              id={nameFieldId}
+              name="name"
+              autoComplete="off"
+              required
+              data-1p-ignore
+              placeholder="Cuisine Name"
+              defaultValue={fields.name}
+            />
+            <FieldError
+              errors={errors?.name?.map((message) => ({ message }))}
+            />
+          </Field>
+        </FieldGroup>
+      </FieldSet>
     </form>
   );
 };

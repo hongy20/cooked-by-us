@@ -7,7 +7,8 @@ import { updateRecipesAfterCuisineDeletion } from "../dal/recipe";
 import type { FormState } from "./type";
 import { authenticate, dupliatedKeyError } from "./utils";
 
-export type CreateCuisineFormState = FormState<CuisineInput>;
+export type CreateCuisineFields = CuisineInput;
+export type CreateCuisineFormState = FormState<CreateCuisineFields>;
 
 export const createCuisineAction = async (
   _prevState: CreateCuisineFormState,

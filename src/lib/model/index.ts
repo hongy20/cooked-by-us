@@ -23,6 +23,7 @@ export interface PopulatedRecipeDoc
   extends Omit<RecipeDoc, "category" | "cuisine"> {
   category: {
     // TODO: type it with PopulatedDoc
+    // TODO: clean up unnecessary XDoc type exports
     _id: Types.ObjectId;
     name: string;
     createdAt: Date;

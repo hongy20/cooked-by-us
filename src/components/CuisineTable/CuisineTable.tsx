@@ -6,11 +6,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { ICuisine } from "@/lib/model";
+import type { PersistedCuisine } from "@/lib/dal/types";
 import { DeleteCuisineButton } from "./DeleteCuisineButton";
 import { EditCuisineSheet } from "./EditCuisineSheet";
 
-type Props = { cuisines: ICuisine[] };
+type Props = { cuisines: PersistedCuisine[] };
 
 export const CuisineTable = ({ cuisines }: Props) => {
   return (
@@ -35,13 +35,13 @@ export const CuisineTable = ({ cuisines }: Props) => {
         )}
 
         {cuisines.map((cuisine) => (
-          <TableRow key={`${cuisine._id}`}>
+          <TableRow key={cuisine.id}>
             <TableCell>{cuisine.name}</TableCell>
 
             <TableCell className="flex justify-end gap-3">
               <EditCuisineSheet cuisine={cuisine} />
 
-              <DeleteCuisineButton cuisineId={`${cuisine._id}`} />
+              <DeleteCuisineButton cuisineId={cuisine.id} />
             </TableCell>
           </TableRow>
         ))}

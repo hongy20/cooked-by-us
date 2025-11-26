@@ -40,7 +40,7 @@ export function AddCategoryButton() {
         if (rsp.status === "success") {
           closeRef.current?.click(); // Close sheet
           toast.success("Category created!");
-          router.refresh();
+          router.refresh(); // Refresh the current page
         }
         return rsp;
       } catch (error) {

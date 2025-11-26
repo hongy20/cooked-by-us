@@ -46,20 +46,19 @@ export const DeleteCategoryButton = ({ categoryId }: Props) => {
           <AlertDialogAction
             disabled={pending}
             onClick={() =>
-              startTransition(async () => {
-                try {
-                  await deleteCategoryAction(categoryId);
-                  toast.success("Category deleted!");
-                  router.refresh();
-                } catch (error) {
-                  toast.error(
-                    "Category deletion failed",
-                    error instanceof Error
-                      ? { description: error.message }
-                      : undefined,
-                  );
-                }
-              })
+              startTransition(
+                async () =>
+                  await deleteCategoryAction(categoryId)
+                    .then(() => {
+                      toast.success("Category deleted!");
+                      router.refresh();
+                    })
+                    .catch((error: Error) => {
+                      toast.error("Category deletion failed", {
+                        description: error.message,
+                      });
+                    }),
+              )
             }
           >
             Delete

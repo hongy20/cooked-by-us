@@ -45,7 +45,7 @@ export const EditCategoryButton = ({ category }: Props) => {
         if (rsp.status === "success") {
           closeRef.current?.click(); // Close sheet
           toast.success("Category updated!");
-          router.refresh();
+          router.refresh(); // Refresh the current page
         }
         return rsp;
       } catch (error) {

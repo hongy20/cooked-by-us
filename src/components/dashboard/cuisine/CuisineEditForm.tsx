@@ -28,14 +28,13 @@ export const CuisineEditForm = ({ fields, action, formId, errors }: Props) => {
 
   return (
     <form id={formId} action={action} className="space-y-4">
+      {"cuisineId" in fields && fields.cuisineId && (
+        <input type="hidden" name="cuisineId" value={fields.cuisineId} />
+      )}
       <FieldSet>
         <FieldGroup>
           <Field>
             <FieldLabel htmlFor={nameFieldId}>Name</FieldLabel>
-            {"cuisineId" in fields && fields.cuisineId && (
-              <input type="hidden" name="cuisineId" value={fields.cuisineId} />
-            )}
-
             <Input
               id={nameFieldId}
               name="name"

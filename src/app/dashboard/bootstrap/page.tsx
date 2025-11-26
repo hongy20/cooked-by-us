@@ -22,22 +22,15 @@ type TypeValue = (typeof types)[number];
 
 export default function BootstrapPage() {
   const handleBootstrap = async (type: TypeValue) => {
-    switch (type) {
-      case "categories":
-        return await bootstrapCategoriesAction()
-          .then(() => toast.success("Bootstrap succeeded"))
-          .catch(() => toast.error("Bootstrap failed"));
-      case "cuisines":
-        return await bootstrapCuisinesAction()
-          .then(() => toast.success("Bootstrap succeeded"))
-          .catch(() => toast.error("Bootstrap failed"));
-      case "recipes":
-        return await bootstrapRecipesAction()
-          .then(() => toast.success("Bootstrap succeeded"))
-          .catch(() => toast.error("Bootstrap failed"));
-      default:
-        console.log("Bootstrap:", type);
-    }
+    const actionByType: Record<TypeValue, () => Promise<unknown>> = {
+      categories: bootstrapCategoriesAction,
+      cuisines: bootstrapCuisinesAction,
+      recipes: bootstrapRecipesAction,
+    };
+
+    return actionByType[type]()
+      .then(() => toast.success("Bootstrap succeeded"))
+      .catch(() => toast.error("Bootstrap failed"));
   };
 
   return (

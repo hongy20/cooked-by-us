@@ -96,7 +96,7 @@ export const updateRecipeAction = async (
     }
     return { status: "success", fields: patchedFields };
   } catch {
-    throw new Error("Recipe creation failed");
+    throw new Error("Recipe updation failed");
   }
 };
 

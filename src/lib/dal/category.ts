@@ -12,7 +12,7 @@ export const createCategory = async (
 ): Promise<PersistedCategory> => {
   await connectDB();
   const doc = await CategoryModel.create(data);
-  return toClient(doc.toObject());
+  return toClient(doc);
 };
 
 export const updateCategory = async (
@@ -21,7 +21,7 @@ export const updateCategory = async (
 ): Promise<PersistedCategory | undefined> => {
   await connectDB();
   const doc = await CategoryModel.findByIdAndUpdate(categoryId, { $set: data });
-  return doc ? toClient(doc.toObject()) : undefined;
+  return doc ? toClient(doc) : undefined;
 };
 
 export const deleteCategory = async (categoryId: string): Promise<boolean> => {

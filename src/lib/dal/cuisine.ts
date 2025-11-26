@@ -12,7 +12,7 @@ export const createCuisine = async (
 ): Promise<PersistedCuisine> => {
   await connectDB();
   const doc = await CuisineModel.create(data);
-  return toClient(doc.toObject());
+  return toClient(doc);
 };
 
 export const updateCuisine = async (
@@ -21,7 +21,7 @@ export const updateCuisine = async (
 ): Promise<PersistedCuisine | undefined> => {
   await connectDB();
   const doc = await CuisineModel.findByIdAndUpdate(cuisineId, { $set: data });
-  return doc ? toClient(doc.toObject()) : undefined;
+  return doc ? toClient(doc) : undefined;
 };
 
 export const deleteCuisine = async (cuisineId: string): Promise<boolean> => {

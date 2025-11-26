@@ -49,9 +49,13 @@ export const DeleteCuisineButton = ({ cuisineId }: Props) => {
               startTransition(
                 async () =>
                   await deleteCuisineAction(cuisineId)
-                    .then(() => {
-                      toast.success("Cuisine deleted!");
-                      router.refresh();
+                    .then((ok) => {
+                      if (ok) {
+                        toast.success("Cuisine deleted!");
+                        router.refresh();
+                      } else {
+                        toast.error("Cuisine deletion failed");
+                      }
                     })
                     .catch((error: Error) => {
                       toast.error("Cuisine deletion failed", {

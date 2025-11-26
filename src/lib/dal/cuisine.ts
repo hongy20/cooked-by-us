@@ -20,7 +20,11 @@ export const updateCuisine = async (
   data: CuisineInput,
 ): Promise<PersistedCuisine | undefined> => {
   await connectDB();
-  const doc = await CuisineModel.findByIdAndUpdate(cuisineId, { $set: data });
+  const doc = await CuisineModel.findByIdAndUpdate(
+    cuisineId,
+    { $set: data },
+    { new: true },
+  );
   return doc ? toClient(doc) : undefined;
 };
 

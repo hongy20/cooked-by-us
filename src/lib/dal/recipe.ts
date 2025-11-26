@@ -18,9 +18,13 @@ export const updateRecipe = async (
   data: RecipeInput,
 ): Promise<PersistedRecipe | undefined> => {
   await connectDB();
-  const doc = await RecipeModel.findByIdAndUpdate(recipeId, {
-    $set: data,
-  })
+  const doc = await RecipeModel.findByIdAndUpdate(
+    recipeId,
+    {
+      $set: data,
+    },
+    { new: true },
+  )
     .populate(["category", "cuisine"])
     .lean<PopulatedRecipeDoc>();
   return doc ? toClient(doc) : undefined;

@@ -20,7 +20,11 @@ export const updateCategory = async (
   data: CategoryInput,
 ): Promise<PersistedCategory | undefined> => {
   await connectDB();
-  const doc = await CategoryModel.findByIdAndUpdate(categoryId, { $set: data });
+  const doc = await CategoryModel.findByIdAndUpdate(
+    categoryId,
+    { $set: data },
+    { new: true },
+  );
   return doc ? toClient(doc) : undefined;
 };
 

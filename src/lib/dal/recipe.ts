@@ -4,7 +4,7 @@ import { type PopulatedRecipeDoc, RecipeModel } from "@/lib/model";
 import connectDB from "@/lib/mongodb";
 import type { RecipeInput } from "@/lib/validator/recipe";
 import type { PersistedRecipe } from "./types";
-import { recipeToClient } from "./utils";
+import { toClient } from "./utils";
 
 // Write
 export const createRecipe = async (data: RecipeInput): Promise<string> => {
@@ -23,7 +23,7 @@ export const updateRecipe = async (
   })
     .populate(["category", "cuisine"])
     .lean<PopulatedRecipeDoc>();
-  return doc ? recipeToClient(doc) : undefined;
+  return doc ? toClient(doc) : undefined;
 };
 
 export const updateRecipesAfterCategoryDeletion = async (
@@ -61,7 +61,7 @@ export const getRecipe = cache(
     const doc = await RecipeModel.findById(recipeId)
       .populate(["category", "cuisine"])
       .lean<PopulatedRecipeDoc>();
-    return doc ? recipeToClient(doc) : undefined;
+    return doc ? toClient(doc) : undefined;
   },
 );
 
@@ -71,7 +71,7 @@ export const getAllRecipes = cache(async (): Promise<PersistedRecipe[]> => {
     .sort({ createdAt: -1 })
     .populate(["category", "cuisine"])
     .lean<PopulatedRecipeDoc[]>();
-  return docs.map(recipeToClient);
+  return docs.map((doc) => toClient(doc));
 });
 
 export const getSimilarRecipes = cache(
@@ -85,6 +85,6 @@ export const getSimilarRecipes = cache(
         }).lean<PopulatedRecipeDoc[]>()
       : [];
 
-    return docs.map(recipeToClient);
+    return docs.map((doc) => toClient(doc));
   },
 );

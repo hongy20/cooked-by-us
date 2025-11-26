@@ -42,5 +42,5 @@ export const doesCuisineExist = cache(
 export const getAllCuisines = cache(async (): Promise<PersistedCuisine[]> => {
   await connectDB();
   const docs = await CuisineModel.find().sort({ createdAt: -1 }).lean();
-  return docs.map(toClient);
+  return docs.map((doc) => toClient(doc));
 });

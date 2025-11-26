@@ -17,7 +17,11 @@ export { CuisineModel } from "./cuisine";
 export { RecipeModel } from "./recipe";
 
 import type { Types } from "mongoose";
+import type { CategoryDoc } from "./category";
+import type { CuisineDoc } from "./cuisine";
 import type { RecipeDoc } from "./recipe";
+
+export type { CategoryDoc, CuisineDoc };
 
 export interface PopulatedRecipeDoc
   extends Omit<RecipeDoc, "category" | "cuisine"> {

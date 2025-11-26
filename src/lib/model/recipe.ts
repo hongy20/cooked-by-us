@@ -1,25 +1,10 @@
-import {
-  type Document,
-  type Model,
-  model,
-  models,
-  Schema,
-  type Types,
-} from "mongoose";
+import { type Document, type Model, model, models, Schema } from "mongoose";
 import { doesCategoryExist } from "../dal/category";
 import { doesCuisineExist } from "../dal/cuisine";
+import type { Recipe } from "../domain/recipe";
 
 // Extend the domain model AND Mongoose's Document, avoid duplicated typing
-export interface RecipeDoc extends Document {
-  name: string;
-  description: string;
-  image: string;
-  category: Types.ObjectId | null;
-  cuisine: Types.ObjectId | null;
-  ingredients: string[];
-  instructions: string[];
-  cookTime: string;
-  keywords: string[];
+export interface RecipeDoc extends Recipe, Document {
   createdAt: Date;
   updatedAt: Date;
 }

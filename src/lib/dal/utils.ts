@@ -1,26 +1,47 @@
-import type { PopulatedRecipeDoc } from "../model";
-import type { PersistedRecipe } from "./types";
+import type { CategoryDoc, CuisineDoc, PopulatedRecipeDoc } from "../model";
+import type {
+  PersistedCategory,
+  PersistedCuisine,
+  PersistedRecipe,
+} from "./types";
 
-// TODO: merge toClient and recipeToClient into one function?
-export function toClient<
-  T extends { _id: unknown; createdAt: Date; updatedAt: Date },
->(doc: T) {
-  const { _id, createdAt, updatedAt, ...rest } = doc;
+type Doc = { _id: unknown; createdAt: Date; updatedAt: Date };
+
+// ---- Overload signatures ----
+export function toClient(doc: PopulatedRecipeDoc): PersistedRecipe;
+export function toClient(doc: CategoryDoc): PersistedCategory;
+export function toClient(doc: CuisineDoc): PersistedCuisine;
+
+export function toClient<T extends Doc>(
+  doc: T,
+): Omit<T, "_id"> & {
+  id: string;
+};
+
+// ---- Single implementation ----
+export function toClient(doc: Doc) {
+  // Special case: PopulatedRecipeDoc
+  if (isPopulatedRecipeDoc(doc)) {
+    return {
+      ...baseToClient(doc),
+      category: doc.category ? baseToClient(doc.category) : null,
+      cuisine: doc.cuisine ? baseToClient(doc.cuisine) : null,
+    };
+  }
+
+  // Generic
+  return baseToClient(doc);
+}
+
+// ---- Helper: convert _id fields ----
+function baseToClient<T extends Doc>(doc: T) {
+  const { _id, ...rest } = doc;
   return {
     ...rest,
-    id: `${_id}`,
-    createdAt,
-    updatedAt,
+    id: String(_id),
   };
 }
 
-export function recipeToClient(recipe: PopulatedRecipeDoc): PersistedRecipe {
-  const category = recipe.category ? toClient(recipe.category) : null;
-  const cuisine = recipe.cuisine ? toClient(recipe.cuisine) : null;
-
-  return {
-    ...toClient(recipe),
-    category,
-    cuisine,
-  };
+function isPopulatedRecipeDoc(doc: Doc): doc is PopulatedRecipeDoc {
+  return "category" in doc || "cuisine" in doc;
 }

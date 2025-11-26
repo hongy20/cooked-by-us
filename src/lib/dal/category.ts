@@ -43,6 +43,6 @@ export const getAllCategories = cache(
   async (): Promise<PersistedCategory[]> => {
     await connectDB();
     const docs = await CategoryModel.find().sort({ createdAt: -1 }).lean();
-    return docs.map(toClient);
+    return docs.map((doc) => toClient(doc));
   },
 );

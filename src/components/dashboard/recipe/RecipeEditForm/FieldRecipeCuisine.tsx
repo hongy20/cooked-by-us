@@ -1,4 +1,5 @@
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
+import { toast } from "sonner";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import {
   Select,
@@ -7,7 +8,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { RECIPE_CUISINE } from "@/lib/constant";
+import { getAllCuisinesAction } from "@/lib/action/cuisine";
+import type { PersistedCuisine } from "@/lib/dal/types";
 
 interface Props {
   name: string;
@@ -16,8 +18,15 @@ interface Props {
 }
 
 export const FieldRecipeCuisine = ({ name, defaultValue, errors }: Props) => {
+  const [cuisines, setCuisines] = useState<PersistedCuisine[]>([]);
   const [cuisine, setCuisine] = useState<string | undefined>(defaultValue);
   const id = useId();
+
+  useEffect(() => {
+    getAllCuisinesAction()
+      .then(setCuisines)
+      .catch(() => toast.error("Unable to load cuisines"));
+  });
 
   return (
     <Field>
@@ -31,9 +40,9 @@ export const FieldRecipeCuisine = ({ name, defaultValue, errors }: Props) => {
           <SelectValue placeholder="Choose cuisine" />
         </SelectTrigger>
         <SelectContent>
-          {RECIPE_CUISINE.map((cuisineOption) => (
-            <SelectItem key={cuisineOption} value={cuisineOption}>
-              {cuisineOption}
+          {cuisines.map((option) => (
+            <SelectItem key={option.id} value={option.id}>
+              {option.name}
             </SelectItem>
           ))}
         </SelectContent>

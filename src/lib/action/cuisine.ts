@@ -1,9 +1,15 @@
 "use server";
 
 import { z } from "zod";
-import { createCuisine, deleteCuisine, updateCuisine } from "@/lib/dal/cuisine";
+import {
+  createCuisine,
+  deleteCuisine,
+  getAllCuisines,
+  updateCuisine,
+} from "@/lib/dal/cuisine";
 import { type CuisineInput, CuisineInputSchema } from "@/lib/validator/cuisine";
 import { updateRecipesAfterCuisineDeletion } from "../dal/recipe";
+import type { PersistedCuisine } from "../dal/types";
 import type { FormState } from "./type";
 import { authenticate, dupliatedKeyError } from "./utils";
 
@@ -100,3 +106,6 @@ export const deleteCuisineAction = async (
     updationResult.status === "fulfilled"
   );
 };
+
+export const getAllCuisinesAction = async (): Promise<PersistedCuisine[]> =>
+  await getAllCuisines();

@@ -1,6 +1,7 @@
 import type { HowToStep, Organization, Recipe } from "schema-dts";
 import type { PersistedRecipe } from "@/lib/dal/types";
 import { formatDateForJsonLd } from "@/lib/utils/date";
+import { COOKED_BY_US } from "../constant";
 
 export const getRecipeJsonLd = (recipe: PersistedRecipe): Recipe => {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -14,7 +15,7 @@ export const getRecipeJsonLd = (recipe: PersistedRecipe): Recipe => {
     image: recipe.image,
     author: {
       "@type": "Organization",
-      name: "Cooked By Us",
+      name: COOKED_BY_US,
       url: BASE_URL,
     } satisfies Organization,
     datePublished: formatDateForJsonLd(recipe.createdAt),

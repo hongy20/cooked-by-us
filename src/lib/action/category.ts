@@ -4,6 +4,7 @@ import { z } from "zod";
 import {
   createCategory,
   deleteCategory,
+  getAllCategories,
   updateCategory,
 } from "@/lib/dal/category";
 import { updateRecipesAfterCategoryDeletion } from "@/lib/dal/recipe";
@@ -11,6 +12,7 @@ import {
   type CategoryInput,
   CategoryInputSchema,
 } from "@/lib/validator/category";
+import type { PersistedCategory } from "../dal/types";
 import type { FormState } from "./type";
 import { authenticate, dupliatedKeyError } from "./utils";
 
@@ -107,3 +109,6 @@ export const deleteCategoryAction = async (
     updationResult.status === "fulfilled"
   );
 };
+
+export const getAllCategoriesAction = async (): Promise<PersistedCategory[]> =>
+  await getAllCategories();

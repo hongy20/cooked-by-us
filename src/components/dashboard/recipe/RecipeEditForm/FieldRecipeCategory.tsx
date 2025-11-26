@@ -1,4 +1,5 @@
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
+import { toast } from "sonner";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import {
   Select,
@@ -7,7 +8,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { RECIPE_CATEGORY } from "@/lib/constant";
+import { getAllCategoriesAction } from "@/lib/action/category";
+import type { PersistedCategory } from "@/lib/dal/types";
 
 interface Props {
   name: string;
@@ -16,8 +18,15 @@ interface Props {
 }
 
 export const FieldRecipeCategory = ({ name, defaultValue, errors }: Props) => {
+  const [categories, setCategories] = useState<PersistedCategory[]>([]);
   const [category, setCategory] = useState<string | undefined>(defaultValue);
   const id = useId();
+
+  useEffect(() => {
+    getAllCategoriesAction()
+      .then(setCategories)
+      .catch(() => toast.error("Unable to load categories"));
+  });
 
   return (
     <Field>
@@ -31,9 +40,9 @@ export const FieldRecipeCategory = ({ name, defaultValue, errors }: Props) => {
           <SelectValue placeholder="Choose category" />
         </SelectTrigger>
         <SelectContent>
-          {RECIPE_CATEGORY.map((category) => (
-            <SelectItem key={category} value={category}>
-              {category}
+          {categories.map((option) => (
+            <SelectItem key={option.id} value={option.id}>
+              {option.name}
             </SelectItem>
           ))}
         </SelectContent>

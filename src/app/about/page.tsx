@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { COOKED_BY_US } from "@/lib/constant";
 
 export const metadata: Metadata = {
   title: "About",
@@ -12,7 +13,7 @@ export default function AboutPage() {
       {/* Header */}
       <header className="mb-12 text-center">
         <h1 className="text-4xl font-bold sm:text-5xl">
-          About <span className="font-extrabold">Cooked By Us</span>
+          About <span className="font-extrabold">{COOKED_BY_US}</span>
         </h1>
         <p className="mt-4 text-muted-foreground sm:text-lg">
           Bringing home-tested recipes together into one organized collection.
@@ -38,7 +39,7 @@ export default function AboutPage() {
         </p>
 
         <p className="leading-7 not-first:mt-6">
-          <strong>Cooked By Us</strong> is a way to bring those scattered
+          <strong>{COOKED_BY_US}</strong> is a way to bring those scattered
           lessons together into one organized, personal recipe collection —
           real, tested, and ready to cook from.
         </p>

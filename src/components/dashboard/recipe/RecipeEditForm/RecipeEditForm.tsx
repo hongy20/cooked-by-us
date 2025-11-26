@@ -25,7 +25,6 @@ interface Props {
 }
 
 export const RecipeEditForm = ({ fields, action, formId, errors }: Props) => {
-  console.log(fields);
   return (
     <form id={formId} action={action} className="space-y-4">
       <FieldSet>

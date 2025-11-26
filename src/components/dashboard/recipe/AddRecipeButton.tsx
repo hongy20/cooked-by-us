@@ -47,13 +47,13 @@ export function AddRecipeButton() {
         const rsp = await createRecipeAction(prevState, formData);
         if (rsp.status === "success") {
           closeRef.current?.click(); // Close sheet
-          toast.success("Category created!");
+          toast.success("Recipe created!");
           router.refresh(); // Refresh the current page
         }
         return rsp;
       } catch (error) {
         toast.error(
-          "Category creation failed",
+          "Recipe creation failed",
           error instanceof Error ? { description: error.message } : undefined,
         );
         return prevState;

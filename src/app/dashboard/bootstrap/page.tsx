@@ -22,17 +22,16 @@ const types = ["cuisines", "categories", "recipes"] as const;
 type TypeValue = (typeof types)[number];
 
 export default function BootstrapPage() {
-  const handleBootstrap = async (type: TypeValue) => {
-    const actionByType: Record<TypeValue, () => Promise<unknown>> = {
-      categories: bootstrapCategoriesAction,
-      cuisines: bootstrapCuisinesAction,
-      recipes: bootstrapRecipesAction,
-    };
+  const actionByType: Record<TypeValue, () => Promise<unknown>> = {
+    categories: bootstrapCategoriesAction,
+    cuisines: bootstrapCuisinesAction,
+    recipes: bootstrapRecipesAction,
+  };
 
-    return actionByType[type]()
+  const handleBootstrap = async (type: TypeValue) =>
+    actionByType[type]()
       .then(() => toast.success("Bootstrap succeeded"))
       .catch(() => toast.error("Bootstrap failed"));
-  };
 
   return (
     <div className="space-y-6">

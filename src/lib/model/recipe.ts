@@ -63,7 +63,8 @@ const RecipeSchema = new Schema<RecipeDoc>(
       type: String, // ISO 8601 duration format e.g. "PT1H30M"
       required: true,
       validate: {
-        validator: (v: string) => /^PT(\d+H)?(\d+M)?(\d+S)?$/.test(v),
+        validator: (v: string) =>
+          /^PT(?=\d)((\d+)H)?((\d+)M)?((\d+)S)?$/.test(v),
         message:
           "Cook time must be in ISO 8601 duration format (e.g., PT1H30M)",
       },

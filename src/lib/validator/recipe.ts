@@ -18,7 +18,7 @@ export const RecipeInputSchema = z.object({
   cookTime: z
     .string()
     .regex(
-      /^PT(\d+H)?(\d+M)?(\d+S)?$/,
+      /^PT(?=\d)((\d+)H)?((\d+)M)?((\d+)S)?$/,
       "Cook time must be in ISO 8601 duration format (e.g., PT1H30M).",
     ),
   keywords: stringArraySchemaFactory({

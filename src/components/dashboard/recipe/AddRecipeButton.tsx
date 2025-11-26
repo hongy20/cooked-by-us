@@ -80,7 +80,7 @@ export function AddRecipeButton() {
         <SheetHeader>
           <SheetTitle>Create Recipe</SheetTitle>
           <SheetDescription>
-            Create new recipe to your app here. Click save when you&apos;re
+            Create a new recipe for your app here. Click create when you&apos;re
             done.
           </SheetDescription>
         </SheetHeader>

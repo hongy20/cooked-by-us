@@ -50,7 +50,7 @@ export const EditRecipeButton = ({ recipe }: Props) => {
         return rsp;
       } catch (error) {
         toast.error(
-          "Error",
+          "Recipe updation failed",
           error instanceof Error ? { description: error.message } : undefined,
         );
         return { ...prevState, status: "error" as const };

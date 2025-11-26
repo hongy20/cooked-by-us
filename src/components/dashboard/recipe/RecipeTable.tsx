@@ -28,7 +28,7 @@ export const RecipeTable = ({ recipes }: Props) => {
         {recipes.length === 0 && (
           <TableRow>
             <TableCell
-              colSpan={5}
+              colSpan={4}
               className="text-center text-muted-foreground"
             >
               No recipes yet.

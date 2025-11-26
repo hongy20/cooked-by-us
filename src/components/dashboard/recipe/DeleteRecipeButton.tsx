@@ -49,9 +49,13 @@ export const DeleteRecipeButton = ({ recipeId }: Props) => {
               startTransition(
                 async () =>
                   await deleteRecipeAction(recipeId)
-                    .then(() => {
-                      toast.success("Recipe deleted!");
-                      router.refresh();
+                    .then((ok) => {
+                      if (ok) {
+                        toast.success("Recipe deleted!");
+                        router.refresh();
+                      } else {
+                        toast.error("Recipe deletion failed!");
+                      }
                     })
                     .catch((error: Error) => {
                       toast.error("Recipe deletion failed", {

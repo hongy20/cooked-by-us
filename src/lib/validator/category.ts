@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-export const CategoryValidator = z.object({
+export const CategoryInputSchema = z.object({
   name: z.string().min(1).max(100).trim(),
 });
 
-export type CategoryInput = z.infer<typeof CategoryValidator>;
+export type CategoryInput = z.infer<typeof CategoryInputSchema>;

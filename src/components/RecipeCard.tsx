@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { IPopulatedRecipe } from "@/lib/model";
+import type { PersistedRecipe } from "@/lib/dal/types";
 import {
   Card,
   CardContent,
@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "./ui/card";
 
-export const RecipeCard = ({ recipe }: { recipe: IPopulatedRecipe }) => {
+export const RecipeCard = ({ recipe }: { recipe: PersistedRecipe }) => {
   return (
     <Card>
       <CardHeader>
@@ -28,7 +28,7 @@ export const RecipeCard = ({ recipe }: { recipe: IPopulatedRecipe }) => {
         />
       </CardContent>
       <CardFooter>
-        <Link href={`/recipe/${recipe._id}`}>Open</Link>
+        <Link href={`/recipe/${recipe.id}`}>Open</Link>
       </CardFooter>
     </Card>
   );

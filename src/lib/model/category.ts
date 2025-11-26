@@ -1,12 +1,13 @@
 import { type Document, type Model, model, models, Schema } from "mongoose";
+import type { Category } from "@/lib/domain/category";
 
-export interface ICategory extends Document {
-  name: string;
+// Extend the domain model AND Mongoose's Document, avoid duplicated typing
+export interface CategoryDoc extends Category, Document {
   createdAt: Date;
   updatedAt: Date;
 }
 
-const CategorySchema = new Schema<ICategory>(
+const CategoryInputSchema = new Schema<CategoryDoc>(
   {
     name: {
       type: String,
@@ -18,10 +19,10 @@ const CategorySchema = new Schema<ICategory>(
     },
   },
   {
-    timestamps: true,
+    timestamps: true, // enables createdAt & updatedAt
   },
 );
 
 export const CategoryModel =
-  (models.Category as Model<ICategory>) ||
-  model<ICategory>("Category", CategorySchema);
+  (models.Category as Model<CategoryDoc>) ||
+  model<CategoryDoc>("Category", CategoryInputSchema);

@@ -4,5 +4,5 @@ export type FormState<T> = {
   status: "idle" | "success" | "error";
   fields: T;
   errors?: FieldErrors<T>;
-  message?: string;
+  message?: string; // TODO: get rid of this field
 };

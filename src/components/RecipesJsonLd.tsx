@@ -1,30 +1,17 @@
-import type { ItemList, Recipe, WithContext } from "schema-dts";
-import type { IPopulatedRecipe } from "@/lib/model";
+import type { ItemList, WithContext } from "schema-dts";
+import type { PersistedRecipe } from "@/lib/dal/types";
+import { getRecipeJsonLd } from "@/lib/utils/json-ld";
 
-type Props = { recipes: IPopulatedRecipe[] };
+type Props = { recipes: PersistedRecipe[] };
 
 export const RecipesJsonLd = ({ recipes }: Props) => {
-  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-
-  if (!BASE_URL) {
-    throw new Error("NEXT_PUBLIC_BASE_URL environment variable is not defined");
-  }
-
   const jsonLd: WithContext<ItemList> = {
     "@context": "https://schema.org",
     "@type": "ItemList",
     itemListElement: recipes.map((recipe, index) => ({
       "@type": "ListItem",
       position: index + 1,
-      item: {
-        "@type": "Recipe",
-        name: recipe.name,
-        image: recipe.image,
-        recipeCuisine: recipe.cuisine?.name,
-        recipeCategory: recipe.category?.name,
-        keywords: recipe.keywords.join(", "),
-        url: `${BASE_URL}/recipe/${recipe._id}`,
-      } satisfies Recipe,
+      item: getRecipeJsonLd(recipe),
     })),
   };
 

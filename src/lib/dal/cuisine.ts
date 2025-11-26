@@ -1,36 +1,46 @@
 import "server-only";
-import type { Types } from "mongoose";
 import { cache } from "react";
-import { CuisineModel, type ICuisine } from "@/lib/model/cuisine";
+import { CuisineModel } from "@/lib/model/cuisine";
 import connectDB from "@/lib/mongodb";
 import type { CuisineInput } from "@/lib/validator/cuisine";
+import type { PersistedCuisine } from "./types";
+import { toClient } from "./utils";
 
 // Write
-export const createCuisine = async (data: CuisineInput) => {
+export const createCuisine = async (
+  data: CuisineInput,
+): Promise<PersistedCuisine> => {
   await connectDB();
-  return await CuisineModel.create(data);
+  const doc = await CuisineModel.create(data);
+  return toClient(doc.toObject());
 };
 
-export const editCuisine = async (cuisineId: string, data: CuisineInput) => {
+export const updateCuisine = async (
+  cuisineId: string,
+  data: CuisineInput,
+): Promise<PersistedCuisine | undefined> => {
   await connectDB();
-  return await CuisineModel.findByIdAndUpdate(
-    { _id: cuisineId },
-    { $set: data },
-  );
+  const doc = await CuisineModel.findByIdAndUpdate(cuisineId, { $set: data });
+  return doc ? toClient(doc.toObject()) : undefined;
 };
 
-export const deleteCuisine = async (cuisineId: string) => {
+export const deleteCuisine = async (cuisineId: string): Promise<boolean> => {
   await connectDB();
-  return await CuisineModel.findByIdAndDelete(cuisineId);
+  const doc = await CuisineModel.findByIdAndDelete(cuisineId);
+  return !!doc;
 };
 
 // Read
-export const doesCuisineExist = cache(async (cuisineId: Types.ObjectId) => {
-  await connectDB();
-  return await CuisineModel.findById(cuisineId).select("_id");
-});
+export const doesCuisineExist = cache(
+  async (cuisineId: string): Promise<boolean> => {
+    await connectDB();
+    const exists = await CuisineModel.exists({ _id: cuisineId });
+    return !!exists;
+  },
+);
 
-export const getAllCuisines = cache(async () => {
+export const getAllCuisines = cache(async (): Promise<PersistedCuisine[]> => {
   await connectDB();
-  return await CuisineModel.find().sort({ createdAt: -1 }).lean<ICuisine[]>();
+  const docs = await CuisineModel.find().sort({ createdAt: -1 }).lean();
+  return docs.map(toClient);
 });

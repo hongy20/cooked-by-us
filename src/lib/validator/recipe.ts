@@ -1,12 +1,10 @@
 import { z } from "zod";
-import { objectIdSchema, stringArraySchemaFactory } from "./util";
+import { objectIdSchema, stringArraySchemaFactory } from "./utils";
 
-// Zod schema for the Recipe model
-export const RecipeValidator = z.object({
+export const RecipeInputSchema = z.object({
   name: z.string().min(2).max(30).trim(),
   description: z.string().max(200).trim(),
   image: z.url(),
-  author: objectIdSchema("Invalid author id"),
   category: objectIdSchema("Invalid category id"),
   cuisine: objectIdSchema("Invalid cuisine id"),
   ingredients: stringArraySchemaFactory({
@@ -29,4 +27,4 @@ export const RecipeValidator = z.object({
   }),
 });
 
-export type RecipeInput = z.infer<typeof RecipeValidator>;
+export type RecipeInput = z.infer<typeof RecipeInputSchema>;

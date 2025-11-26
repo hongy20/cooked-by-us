@@ -1,12 +1,11 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import { z } from "zod";
-import { getSession } from "@/lib/auth";
-import { createCuisine, deleteCuisine } from "@/lib/dal/cuisine";
-import { type CuisineInput, CuisineValidator } from "@/lib/validator/cuisine";
+import { createCuisine, deleteCuisine, updateCuisine } from "@/lib/dal/cuisine";
+import { type CuisineInput, CuisineInputSchema } from "@/lib/validator/cuisine";
 import { updateRecipesAfterCuisineDeletion } from "../dal/recipe";
 import type { FormState } from "./type";
+import { authenticate, dupliatedKeyError } from "./utils";
 
 export type CreateCuisineFormState = FormState<CuisineInput>;
 
@@ -14,18 +13,13 @@ export const createCuisineAction = async (
   _prevState: CreateCuisineFormState,
   formData: FormData,
 ): Promise<CreateCuisineFormState> => {
-  const session = await getSession();
+  authenticate();
 
   // 1. Validate form data
   const fields = {
     name: formData.get("name") as string,
   };
-
-  if (!session) {
-    return { status: "error", fields, message: "You have to login first" };
-  }
-
-  const validatedFields = CuisineValidator.safeParse(fields);
+  const validatedFields = CuisineInputSchema.safeParse(fields);
   if (!validatedFields.success) {
     const errors = z.flattenError(validatedFields.error).fieldErrors;
     return {
@@ -37,30 +31,71 @@ export const createCuisineAction = async (
 
   try {
     await createCuisine(validatedFields.data);
+    return { status: "success", fields };
   } catch (e) {
-    console.error(e);
-    const isDupliatedKeyError =
-      e instanceof Object && "code" in e && e.code === 11000;
-    return {
-      status: "error",
-      fields,
-      message: isDupliatedKeyError
+    throw new Error(
+      dupliatedKeyError(e)
         ? "Cuisine already exist"
         : "Cuisine creation failed",
+    );
+  }
+};
+
+export type UpdateCuisineFields = CuisineInput & {
+  cuisineId: string;
+};
+export type UpdateCuisineFormState = FormState<UpdateCuisineFields>;
+
+export const updateCuisineAction = async (
+  _prevState: UpdateCuisineFormState,
+  formData: FormData,
+): Promise<UpdateCuisineFormState> => {
+  authenticate();
+
+  // 1. Validate form data
+  const fields = {
+    name: formData.get("name") as string,
+  };
+  const cuisineId = formData.get("cuisineId") as string;
+  const patchedFields = { ...fields, cuisineId };
+
+  const validatedFields = CuisineInputSchema.safeParse(fields);
+  if (!validatedFields.success) {
+    const errors = z.flattenError(validatedFields.error).fieldErrors;
+    return {
+      status: "error",
+      fields: patchedFields,
+      errors,
     };
   }
 
-  redirect(`/dashboard/cuisine`);
+  try {
+    const updated = await updateCuisine(cuisineId, validatedFields.data);
+    if (!updated) {
+      throw new Error("Cuisine not found");
+    }
+    return { status: "success", fields: patchedFields };
+  } catch (e) {
+    throw new Error(
+      dupliatedKeyError(e)
+        ? "Cuisine already exist"
+        : "Cuisine creation failed",
+    );
+  }
 };
 
-export const deleteCuisineAction = async (cuisineId: string) => {
-  const session = await getSession();
-  if (!session) {
-    // TODO: handle unauthorized access
-    return undefined;
-  }
+export const deleteCuisineAction = async (
+  cuisineId: string,
+): Promise<boolean> => {
+  authenticate();
 
-  // TODO: find out what need to be returned
-  await deleteCuisine(cuisineId);
-  await updateRecipesAfterCuisineDeletion(cuisineId);
+  const [deletionResult, updationResult] = await Promise.allSettled([
+    deleteCuisine(cuisineId),
+    updateRecipesAfterCuisineDeletion(cuisineId),
+  ]);
+
+  return (
+    deletionResult.status === "fulfilled" &&
+    updationResult.status === "fulfilled"
+  );
 };

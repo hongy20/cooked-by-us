@@ -16,14 +16,22 @@ export { CategoryModel } from "./category";
 export { CuisineModel } from "./cuisine";
 export { RecipeModel } from "./recipe";
 
-import type { ICategory } from "./category";
-import type { ICuisine } from "./cuisine";
-import type { IRecipe } from "./recipe";
+import type { Types } from "mongoose";
+import type { RecipeDoc } from "./recipe";
 
-export type IPopulatedRecipe = Omit<IRecipe, "category" | "cuisine"> & {
-  category: ICategory | null;
-} & {
-  cuisine: ICuisine | null;
-};
-
-export type { ICategory, ICuisine, IRecipe };
+export interface PopulatedRecipeDoc
+  extends Omit<RecipeDoc, "category" | "cuisine"> {
+  category: {
+    // TODO: type it with PopulatedDoc
+    _id: Types.ObjectId;
+    name: string;
+    createdAt: Date;
+    updatedAt: Date;
+  } | null;
+  cuisine: {
+    _id: Types.ObjectId;
+    name: string;
+    createdAt: Date;
+    updatedAt: Date;
+  } | null;
+}

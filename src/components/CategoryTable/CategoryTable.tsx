@@ -6,11 +6,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { ICategory } from "@/lib/model";
+import type { PersistedCategory } from "@/lib/dal/types";
 import { DeleteCategoryButton } from "./DeleteCategoryButton";
 import { EditCategoryButton } from "./EditCategoryButton";
 
-type Props = { categories: ICategory[] };
+type Props = { categories: PersistedCategory[] };
 
 export const CategoryTable = ({ categories }: Props) => {
   return (
@@ -35,13 +35,13 @@ export const CategoryTable = ({ categories }: Props) => {
         )}
 
         {categories.map((category) => (
-          <TableRow key={`${category._id}`}>
+          <TableRow key={category.id}>
             <TableCell>{category.name}</TableCell>
 
             <TableCell className="flex justify-end gap-3">
               <EditCategoryButton category={category} />
 
-              <DeleteCategoryButton categoryId={`${category._id}`} />
+              <DeleteCategoryButton categoryId={category.id} />
             </TableCell>
           </TableRow>
         ))}

@@ -46,4 +46,4 @@ export const objectIdSchema = (errorMessage: string) =>
       /^[0-9a-fA-F]{24}$/, // MongoDB ObjectId
       errorMessage,
     )
-    .optional();
+    .nullable();

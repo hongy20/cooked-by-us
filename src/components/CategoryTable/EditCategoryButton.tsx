@@ -18,18 +18,20 @@ import {
   type UpdateCategoryFormState,
   updateCategoryAction,
 } from "@/lib/action/category";
-import type { ICategory } from "@/lib/model";
+import type { PersistedCategory } from "@/lib/dal/types";
 import { CategoryEditForm } from "./CategoryEditForm";
 
-const getInitialState = (category: ICategory): UpdateCategoryFormState => ({
+const getInitialState = (
+  category: PersistedCategory,
+): UpdateCategoryFormState => ({
   status: "idle",
   fields: {
     name: category.name,
-    categoryId: `${category._id}`,
+    categoryId: category.id,
   },
 });
 
-type Props = { category: ICategory };
+type Props = { category: PersistedCategory };
 
 export const EditCategoryButton = ({ category }: Props) => {
   const formId = useId();

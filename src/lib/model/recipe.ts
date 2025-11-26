@@ -9,11 +9,11 @@ import {
 import { doesCategoryExist } from "../dal/category";
 import { doesCuisineExist } from "../dal/cuisine";
 
-export interface IRecipe extends Document {
+// Extend the domain model AND Mongoose's Document, avoid duplicated typing
+export interface RecipeDoc extends Document {
   name: string;
   description: string;
   image: string;
-  author: Types.ObjectId | null;
   category: Types.ObjectId | null;
   cuisine: Types.ObjectId | null;
   ingredients: string[];
@@ -24,7 +24,7 @@ export interface IRecipe extends Document {
   updatedAt: Date;
 }
 
-const RecipeSchema = new Schema<IRecipe>(
+const RecipeSchema = new Schema<RecipeDoc>(
   {
     name: {
       type: String,
@@ -48,17 +48,15 @@ const RecipeSchema = new Schema<IRecipe>(
         message: "Please provide a valid url",
       },
     },
-    author: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-    },
     category: {
       type: Schema.Types.ObjectId,
       ref: "Category",
+      required: false,
     },
     cuisine: {
       type: Schema.Types.ObjectId,
       ref: "Cuisine",
+      required: false,
     },
     ingredients: {
       type: [String],
@@ -95,59 +93,32 @@ const RecipeSchema = new Schema<IRecipe>(
     },
   },
   {
-    timestamps: true,
+    timestamps: true, // enables createdAt & updatedAt
   },
 );
 
 RecipeSchema.pre("save", async function (next) {
-  const recipe = this as IRecipe;
+  const recipe = this as RecipeDoc;
 
-  try {
-    // // Only validate author if it's new or modified
-    // if ((recipe.isModified("author") || recipe.isNew) && recipe.author) {
-    //   const authorExists = await doesCategoryExist(recipe.author);
-    //   if (!authorExists) {
-    //     const error = new Error(
-    //       `Author with ID ${recipe.author} does not exist`,
-    //     );
-    //     error.name = "ValidationError";
-    //     return next(error);
-    //   }
-    // }
-
-    // Only validate category if it's new or modified
-    if ((recipe.isModified("category") || recipe.isNew) && recipe.category) {
-      const categoryExists = await doesCategoryExist(recipe.category);
-      if (!categoryExists) {
-        const error = new Error(
-          `Category with ID ${recipe.category} does not exist`,
-        );
-        error.name = "ValidationError";
-        return next(error);
-      }
+  // Only validate category if it's new or modified
+  if ((recipe.isModified("category") || recipe.isNew) && recipe.category) {
+    const categoryExists = await doesCategoryExist(recipe.category.toString());
+    if (!categoryExists) {
+      return next(new Error(`Category ${recipe.category} does not exist`));
     }
+  }
 
-    // Only validate cuisine if it's new or modified
-    if ((recipe.isModified("cuisine") || recipe.isNew) && recipe.cuisine) {
-      const cuisineExists = await doesCuisineExist(recipe.cuisine);
-      if (!cuisineExists) {
-        const error = new Error(
-          `Cuisine with ID ${recipe.cuisine} does not exist`,
-        );
-        error.name = "ValidationError";
-        return next(error);
-      }
+  // Only validate cuisine if it's new or modified
+  if ((recipe.isModified("cuisine") || recipe.isNew) && recipe.cuisine) {
+    const cuisineExists = await doesCuisineExist(recipe.cuisine.toString());
+    if (!cuisineExists) {
+      return next(new Error(`Cuisine ${recipe.cuisine} does not exist`));
     }
-  } catch {
-    const validationError = new Error(
-      "Invalid category|cuisine ID format or database error",
-    );
-    validationError.name = "ValidationError";
-    return next(validationError);
   }
 
   next();
 });
 
 export const RecipeModel =
-  (models.Recipe as Model<IRecipe>) || model<IRecipe>("Recipe", RecipeSchema);
+  (models.Recipe as Model<RecipeDoc>) ||
+  model<RecipeDoc>("Recipe", RecipeSchema);

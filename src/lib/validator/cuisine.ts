@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const CuisineValidator = z.object({
+export const CuisineInputSchema = z.object({
   name: z
     .string()
     .min(3, {
@@ -10,4 +10,4 @@ export const CuisineValidator = z.object({
     .trim(),
 });
 
-export type CuisineInput = z.infer<typeof CuisineValidator>;
+export type CuisineInput = z.infer<typeof CuisineInputSchema>;

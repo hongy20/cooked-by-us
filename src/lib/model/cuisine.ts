@@ -1,12 +1,13 @@
 import { type Document, type Model, model, models, Schema } from "mongoose";
+import type { Cuisine } from "@/lib/domain/cuisine";
 
-export interface ICuisine extends Document {
-  name: string;
+// Extend the domain model AND Mongoose's Document, avoid duplicated typing
+export interface CuisineDoc extends Cuisine, Document {
   createdAt: Date;
   updatedAt: Date;
 }
 
-const CuisineSchema = new Schema<ICuisine>(
+const CuisineInputSchema = new Schema<CuisineDoc>(
   {
     name: {
       type: String,
@@ -18,10 +19,10 @@ const CuisineSchema = new Schema<ICuisine>(
     },
   },
   {
-    timestamps: true,
+    timestamps: true, // enables createdAt & updatedAt
   },
 );
 
 export const CuisineModel =
-  (models.Cuisine as Model<ICuisine>) ||
-  model<ICuisine>("Cuisine", CuisineSchema);
+  (models.Cuisine as Model<CuisineDoc>) ||
+  model<CuisineDoc>("Cuisine", CuisineInputSchema);

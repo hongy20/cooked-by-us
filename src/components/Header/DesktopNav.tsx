@@ -29,7 +29,7 @@ export const DesktopNav = async () => {
                   </span>
                 ) : (
                   categories.map((category) => (
-                    <li key={`${category._id}`}>
+                    <li key={category.id}>
                       <NavigationMenuLink asChild>
                         <Link
                           href={`/search?category=${encodeURIComponent(category.name)}`}
@@ -53,7 +53,7 @@ export const DesktopNav = async () => {
                   </span>
                 ) : (
                   cuisines.map((cuisine) => (
-                    <li key={`${cuisine._id}`}>
+                    <li key={cuisine.id}>
                       <NavigationMenuLink asChild>
                         <Link
                           href={`/search?cuisine=${encodeURIComponent(cuisine.name)}`}

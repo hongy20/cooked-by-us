@@ -1,9 +1,9 @@
 import Image from "next/image";
-import type { IPopulatedRecipe } from "@/lib/model";
+import type { PersistedRecipe } from "@/lib/dal/types";
 import { isoToHuman } from "@/lib/utils/duration";
 
 type Props = {
-  recipe: IPopulatedRecipe;
+  recipe: PersistedRecipe;
 };
 
 export const RecipeView = ({

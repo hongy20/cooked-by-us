@@ -1,13 +1,11 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import { z } from "zod";
-import { getSession } from "@/lib/auth";
 import { upload } from "@/lib/cloudinary";
 import { createRecipe, deleteRecipe } from "@/lib/dal/recipe";
-import type { IRecipe } from "@/lib/model/recipe";
-import { type RecipeInput, RecipeValidator } from "@/lib/validator/recipe";
+import { type RecipeInput, RecipeInputSchema } from "@/lib/validator/recipe";
 import type { FormState } from "./type";
+import { authenticate } from "./utils";
 
 export type CreateRecipeFormState = FormState<Omit<RecipeInput, "author">>;
 
@@ -15,10 +13,7 @@ export const createRecipeAction = async (
   prevState: CreateRecipeFormState,
   formData: FormData,
 ): Promise<CreateRecipeFormState> => {
-  const session = await getSession();
-  if (!session) {
-    redirect("/");
-  }
+  authenticate();
 
   // 1. Validate form data
   const file = formData.get("image") as File;
@@ -28,7 +23,6 @@ export const createRecipeAction = async (
     name: formData.get("name") as string,
     description: formData.get("description") as string,
     image,
-    author: session.user.id,
     category: formData.get("category") as string,
     cuisine: formData.get("cuisine") as string,
     ingredients: JSON.parse(formData.get("ingredients") as string),
@@ -36,12 +30,10 @@ export const createRecipeAction = async (
     cookTime: formData.get("cookTime") as string,
     keywords: JSON.parse(formData.get("keywords") as string),
   };
-  const validatedFields = RecipeValidator.safeParse(fields);
+  const validatedFields = RecipeInputSchema.safeParse(fields);
 
   if (!validatedFields.success) {
-    const { author: _author, ...errors } = z.flattenError(
-      validatedFields.error,
-    ).fieldErrors;
+    const errors = z.flattenError(validatedFields.error).fieldErrors;
     return {
       status: "error",
       fields,
@@ -49,28 +41,18 @@ export const createRecipeAction = async (
     };
   }
 
-  let recipe: IRecipe | undefined;
   try {
-    recipe = await createRecipe(validatedFields.data);
-  } catch (e) {
-    console.error("Recipe creation failed", e);
-    // TODO: show error in client
-    return {
-      status: "error",
-      fields,
-    };
+    await createRecipe(validatedFields.data);
+    return { status: "success", fields };
+  } catch {
+    throw new Error("Recipe creation failed");
   }
-
-  redirect(`/recipe/${recipe.id}`);
 };
 
-export async function deleteRecipeAction(recipeId: string) {
-  const session = await getSession();
-  if (!session) {
-    // TODO: handle unauthorized access
-    return undefined;
-  }
+export const deleteRecipeAction = async (
+  recipeId: string,
+): Promise<boolean> => {
+  authenticate();
 
-  // TODO: find out what need to be returned
-  await deleteRecipe(recipeId);
-}
+  return await deleteRecipe(recipeId);
+};

@@ -1,36 +1,48 @@
 import "server-only";
-import type { Types } from "mongoose";
 import { cache } from "react";
-import { CategoryModel, type ICategory } from "@/lib/model/category";
+import { CategoryModel } from "@/lib/model/category";
 import connectDB from "@/lib/mongodb";
 import type { CategoryInput } from "@/lib/validator/category";
+import type { PersistedCategory } from "./types";
+import { toClient } from "./utils";
 
 // Write
-export const createCategory = async (data: CategoryInput) => {
+export const createCategory = async (
+  data: CategoryInput,
+): Promise<PersistedCategory> => {
   await connectDB();
-  return await CategoryModel.create(data);
+  const doc = await CategoryModel.create(data);
+  return toClient(doc.toObject());
 };
 
 export const updateCategory = async (
   categoryId: string,
   data: CategoryInput,
-) => {
+): Promise<PersistedCategory | undefined> => {
   await connectDB();
-  return await CategoryModel.findByIdAndUpdate(categoryId, { $set: data });
+  const doc = await CategoryModel.findByIdAndUpdate(categoryId, { $set: data });
+  return doc ? toClient(doc.toObject()) : undefined;
 };
 
-export const deleteCategory = async (categoryId: string) => {
+export const deleteCategory = async (categoryId: string): Promise<boolean> => {
   await connectDB();
-  return await CategoryModel.findByIdAndDelete(categoryId);
+  const doc = await CategoryModel.findByIdAndDelete(categoryId);
+  return !!doc;
 };
 
 // Read
-export const doesCategoryExist = cache(async (categoryId: Types.ObjectId) => {
-  await connectDB();
-  return await CategoryModel.findById(categoryId).select("_id");
-});
+export const doesCategoryExist = cache(
+  async (categoryId: string): Promise<boolean> => {
+    await connectDB();
+    const exists = await CategoryModel.exists({ _id: categoryId });
+    return !!exists;
+  },
+);
 
-export const getAllCategories = cache(async () => {
-  await connectDB();
-  return await CategoryModel.find().sort({ createdAt: -1 }).lean<ICategory[]>();
-});
+export const getAllCategories = cache(
+  async (): Promise<PersistedCategory[]> => {
+    await connectDB();
+    const docs = await CategoryModel.find().sort({ createdAt: -1 }).lean();
+    return docs.map(toClient);
+  },
+);

@@ -1,7 +1,6 @@
 "use server";
 
 import { z } from "zod";
-import { getSession } from "@/lib/auth";
 import {
   createCategory,
   deleteCategory,
@@ -10,9 +9,10 @@ import {
 import { updateRecipesAfterCategoryDeletion } from "@/lib/dal/recipe";
 import {
   type CategoryInput,
-  CategoryValidator,
+  CategoryInputSchema,
 } from "@/lib/validator/category";
 import type { FormState } from "./type";
+import { authenticate, dupliatedKeyError } from "./utils";
 
 export type CreateCategoryFields = CategoryInput;
 export type CreateCategoryFormState = FormState<CreateCategoryFields>;
@@ -21,16 +21,13 @@ export const createCategoryAction = async (
   _prevState: CreateCategoryFormState,
   formData: FormData,
 ): Promise<CreateCategoryFormState> => {
-  const session = await getSession();
-  if (!session) {
-    throw new Error("You have to login first");
-  }
+  authenticate();
 
   // 1. Validate form data
   const fields = {
     name: formData.get("name") as string,
   };
-  const validatedFields = CategoryValidator.safeParse(fields);
+  const validatedFields = CategoryInputSchema.safeParse(fields);
   if (!validatedFields.success) {
     const errors = z.flattenError(validatedFields.error).fieldErrors;
     return {
@@ -42,18 +39,14 @@ export const createCategoryAction = async (
 
   try {
     await createCategory(validatedFields.data);
+    return { status: "success", fields };
   } catch (e) {
-    console.error(e);
-    const isDupliatedKeyError =
-      e instanceof Object && "code" in e && e.code === 11000;
     throw new Error(
-      isDupliatedKeyError
+      dupliatedKeyError(e)
         ? "Category already exist"
         : "Category creation failed",
     );
   }
-
-  return { status: "success", fields };
 };
 
 export type UpdateCategoryFields = CategoryInput & {
@@ -65,10 +58,7 @@ export const updateCategoryAction = async (
   _prevState: UpdateCategoryFormState,
   formData: FormData,
 ): Promise<UpdateCategoryFormState> => {
-  const session = await getSession();
-  if (!session) {
-    throw new Error("You have to login first");
-  }
+  authenticate();
 
   // 1. Validate form data
   const fields = {
@@ -77,7 +67,7 @@ export const updateCategoryAction = async (
   const categoryId = formData.get("categoryId") as string;
   const patchedFields = { ...fields, categoryId };
 
-  const validatedFields = CategoryValidator.safeParse(fields);
+  const validatedFields = CategoryInputSchema.safeParse(fields);
   if (!validatedFields.success) {
     const errors = z.flattenError(validatedFields.error).fieldErrors;
     return {
@@ -92,26 +82,28 @@ export const updateCategoryAction = async (
     if (!updated) {
       throw new Error("Category not found");
     }
+    return { status: "success", fields: patchedFields };
   } catch (e) {
-    console.error(e);
-    const isDupliatedKeyError =
-      e instanceof Object && "code" in e && e.code === 11000;
     throw new Error(
-      isDupliatedKeyError
+      dupliatedKeyError(e)
         ? "Category already exist"
         : "Category updation failed",
     );
   }
-
-  return { status: "success", fields: patchedFields };
 };
 
-export const deleteCategoryAction = async (categoryId: string) => {
-  const session = await getSession();
-  if (!session) {
-    throw new Error("You have to login first");
-  }
+export const deleteCategoryAction = async (
+  categoryId: string,
+): Promise<boolean> => {
+  authenticate();
 
-  await deleteCategory(categoryId);
-  await updateRecipesAfterCategoryDeletion(categoryId);
+  const [deletionResult, updationResult] = await Promise.allSettled([
+    deleteCategory(categoryId),
+    updateRecipesAfterCategoryDeletion(categoryId),
+  ]);
+
+  return (
+    deletionResult.status === "fulfilled" &&
+    updationResult.status === "fulfilled"
+  );
 };

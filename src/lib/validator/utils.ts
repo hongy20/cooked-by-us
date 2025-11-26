@@ -38,7 +38,7 @@ export const stringArraySchemaFactory = ({
   );
 };
 
-export const objectIdSchema = (errorMessage: string) =>
+export const nullableObjectIdSchema = (errorMessage: string) =>
   z
     .string()
     .length(24, errorMessage)

@@ -24,10 +24,16 @@ import { RecipeEditForm } from "./RecipeEditForm/RecipeEditForm";
 const getInitialState = (recipe: PersistedRecipe): UpdateRecipeFormState => ({
   status: "idle",
   fields: {
-    ...recipe,
+    recipeId: recipe.id,
+    name: recipe.name,
+    description: recipe.description,
+    image: recipe.image,
     category: recipe.category?.id ?? null,
     cuisine: recipe.cuisine?.id ?? null,
-    recipeId: recipe.id,
+    ingredients: recipe.ingredients,
+    instructions: recipe.instructions,
+    cookTime: recipe.cookTime,
+    keywords: recipe.keywords,
   },
 });
 

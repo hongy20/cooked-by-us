@@ -30,18 +30,13 @@ export const CategoryEditForm = ({ fields, action, formId, errors }: Props) => {
 
   return (
     <form id={formId} action={action} className="space-y-4">
+      {"categoryId" in fields && fields.categoryId && (
+        <input type="hidden" name="categoryId" value={fields.categoryId} />
+      )}
       <FieldSet>
         <FieldGroup>
           <Field>
             <FieldLabel htmlFor={nameFieldId}>Name</FieldLabel>
-            {"categoryId" in fields && fields.categoryId && (
-              <input
-                type="hidden"
-                name="categoryId"
-                value={fields.categoryId}
-              />
-            )}
-
             <Input
               id={nameFieldId}
               name="name"

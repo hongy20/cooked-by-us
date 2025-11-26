@@ -82,7 +82,9 @@ export const getSimilarRecipes = cache(
       ? await RecipeModel.find({
           keywords: { $in: recipe.keywords },
           _id: { $ne: recipe.id },
-        }).lean<PopulatedRecipeDoc[]>()
+        })
+          .populate(["category", "cuisine"])
+          .lean<PopulatedRecipeDoc[]>()
       : [];
 
     return docs.map((doc) => toClient(doc));

@@ -16,7 +16,6 @@ export { CategoryModel } from "./category";
 export { CuisineModel } from "./cuisine";
 export { RecipeModel } from "./recipe";
 
-import type { Types } from "mongoose";
 import type { CategoryDoc } from "./category";
 import type { CuisineDoc } from "./cuisine";
 import type { RecipeDoc } from "./recipe";
@@ -25,18 +24,6 @@ export type { CategoryDoc, CuisineDoc };
 
 export interface PopulatedRecipeDoc
   extends Omit<RecipeDoc, "category" | "cuisine"> {
-  category: {
-    // TODO: type it with PopulatedDoc
-    // TODO: clean up unnecessary XDoc type exports
-    _id: Types.ObjectId;
-    name: string;
-    createdAt: Date;
-    updatedAt: Date;
-  } | null;
-  cuisine: {
-    _id: Types.ObjectId;
-    name: string;
-    createdAt: Date;
-    updatedAt: Date;
-  } | null;
+  category: CategoryDoc | null;
+  cuisine: CuisineDoc | null;
 }

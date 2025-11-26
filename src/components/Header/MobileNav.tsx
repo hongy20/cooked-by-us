@@ -1,21 +1,21 @@
 import { Menu } from "lucide-react";
 import Link from "next/link";
-import { getAllCategories } from "@/lib/dal/category";
-import { getAllCuisines } from "@/lib/dal/cuisine";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "../ui/accordion";
-import { Button } from "../ui/button";
+} from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "../ui/sheet";
+} from "@/components/ui/sheet";
+import { getAllCategories } from "@/lib/dal/category";
+import { getAllCuisines } from "@/lib/dal/cuisine";
 
 export const MobileNav = async () => {
   const categories = await getAllCategories();

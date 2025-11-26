@@ -1,7 +1,7 @@
 import type { HowToStep, Organization, Recipe } from "schema-dts";
+import { COOKED_BY_US } from "@/lib/constant";
 import type { PersistedRecipe } from "@/lib/dal/types";
 import { formatDateForJsonLd } from "@/lib/utils/date";
-import { COOKED_BY_US } from "../constant";
 
 export const getRecipeJsonLd = (recipe: PersistedRecipe): Recipe => {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;

@@ -1,6 +1,13 @@
 "use client";
 
 import { useId } from "react";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldSet,
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import type {
   CreateCuisineFields,
@@ -8,13 +15,6 @@ import type {
   UpdateCuisineFields,
   UpdateCuisineFormState,
 } from "@/lib/action/cuisine";
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-  FieldSet,
-} from "../../ui/field";
 
 interface Props {
   fields: CreateCuisineFields | UpdateCuisineFields;

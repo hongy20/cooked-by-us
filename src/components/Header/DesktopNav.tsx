@@ -1,6 +1,4 @@
 import Link from "next/link";
-import { getAllCategories } from "@/lib/dal/category";
-import { getAllCuisines } from "@/lib/dal/cuisine";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -9,7 +7,9 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "../ui/navigation-menu";
+} from "@/components/ui/navigation-menu";
+import { getAllCategories } from "@/lib/dal/category";
+import { getAllCuisines } from "@/lib/dal/cuisine";
 
 export const DesktopNav = async () => {
   const categories = await getAllCategories();

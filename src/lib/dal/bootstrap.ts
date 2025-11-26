@@ -1,7 +1,7 @@
 import "server-only";
-import { CategoryModel, CuisineModel, RecipeModel } from "../model";
-import connectDB from "../mongodb";
-import type { RecipeInput } from "../validator/recipe";
+import { CategoryModel, CuisineModel, RecipeModel } from "@/lib/model";
+import connectDB from "@/lib/mongodb";
+import type { RecipeInput } from "@/lib/validator/recipe";
 
 export const bootstrapCuisines = async () => {
   await connectDB();

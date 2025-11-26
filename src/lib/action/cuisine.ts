@@ -7,9 +7,9 @@ import {
   getAllCuisines,
   updateCuisine,
 } from "@/lib/dal/cuisine";
+import { updateRecipesAfterCuisineDeletion } from "@/lib/dal/recipe";
+import type { PersistedCuisine } from "@/lib/dal/types";
 import { type CuisineInput, CuisineInputSchema } from "@/lib/validator/cuisine";
-import { updateRecipesAfterCuisineDeletion } from "../dal/recipe";
-import type { PersistedCuisine } from "../dal/types";
 import type { FormState } from "./type";
 import { authenticate, dupliatedKeyError } from "./utils";
 

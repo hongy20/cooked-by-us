@@ -8,11 +8,11 @@ import {
   updateCategory,
 } from "@/lib/dal/category";
 import { updateRecipesAfterCategoryDeletion } from "@/lib/dal/recipe";
+import type { PersistedCategory } from "@/lib/dal/types";
 import {
   type CategoryInput,
   CategoryInputSchema,
 } from "@/lib/validator/category";
-import type { PersistedCategory } from "../dal/types";
 import type { FormState } from "./type";
 import { authenticate, dupliatedKeyError } from "./utils";
 

@@ -1,4 +1,4 @@
-import type { CategoryDoc, CuisineDoc, PopulatedRecipeDoc } from "../model";
+import type { CategoryDoc, CuisineDoc, PopulatedRecipeDoc } from "@/lib/model";
 import type {
   PersistedCategory,
   PersistedCuisine,

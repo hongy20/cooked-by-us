@@ -4,7 +4,7 @@ import {
   bootstrapCategories,
   bootstrapCuisines,
   bootstrapRecipes,
-} from "../dal/bootstrap";
+} from "@/lib/dal/bootstrap";
 
 export const bootstrapCategoriesAction = bootstrapCategories;
 export const bootstrapCuisinesAction = bootstrapCuisines;

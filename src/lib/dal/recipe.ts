@@ -76,6 +76,7 @@ export const getAllRecipes = cache(async (): Promise<PersistedRecipe[]> => {
 
 export const getSimilarRecipes = cache(
   async (recipeId: string): Promise<PersistedRecipe[]> => {
+    await connectDB();
     const recipe = await getRecipe(recipeId);
 
     const docs = recipe

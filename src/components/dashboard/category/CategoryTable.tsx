@@ -26,7 +26,7 @@ export const CategoryTable = ({ categories }: Props) => {
         {categories.length === 0 && (
           <TableRow>
             <TableCell
-              colSpan={5}
+              colSpan={2}
               className="text-center text-muted-foreground"
             >
               No categories yet.

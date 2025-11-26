@@ -96,7 +96,7 @@ export const updateCategoryAction = async (
         errors: { name: ["Category already exists"] },
       };
     }
-    throw new Error("Category updation failed");
+    throw new Error("Category update failed");
   }
 };
 

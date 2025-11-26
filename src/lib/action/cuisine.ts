@@ -93,7 +93,7 @@ export const updateCuisineAction = async (
         errors: { name: ["Cuisine already exists"] },
       };
     }
-    throw new Error("Cuisine updation failed");
+    throw new Error("Cuisine update failed");
   }
 };
 

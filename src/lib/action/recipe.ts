@@ -108,7 +108,7 @@ export const updateRecipeAction = async (
     return { status: "success", fields: patchedFields };
   } catch (error) {
     throw new Error(
-      `Recipe updation failed: ${error instanceof Error ? error.message : "Unknown error"}`,
+      `Recipe update failed: ${error instanceof Error ? error.message : "Unknown error"}`,
     );
   }
 };

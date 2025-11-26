@@ -26,7 +26,7 @@ export const CuisineTable = ({ cuisines }: Props) => {
         {cuisines.length === 0 && (
           <TableRow>
             <TableCell
-              colSpan={5}
+              colSpan={2}
               className="text-center text-muted-foreground"
             >
               No cuisines yet.

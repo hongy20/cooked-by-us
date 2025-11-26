@@ -41,6 +41,7 @@ export function AddCuisineButton() {
           closeRef.current?.click(); // Close sheet
           toast.success("Cuisine created!");
           router.refresh(); // Refresh the current page
+          return getInitialState(); // Reset form for next use
         }
         return rsp;
       } catch (error) {

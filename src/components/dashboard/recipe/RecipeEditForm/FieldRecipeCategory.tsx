@@ -33,7 +33,7 @@ export const FieldRecipeCategory = ({ name, defaultValue, errors }: Props) => {
       <FieldLabel htmlFor={id}>Recipe Category</FieldLabel>
 
       {/* Prevent form from losing the selected value */}
-      <input type="hidden" name={name} value={category} />
+      <input type="hidden" name={name} value={category ?? ""} />
 
       <Select value={category} onValueChange={setCategory}>
         <SelectTrigger id={id}>

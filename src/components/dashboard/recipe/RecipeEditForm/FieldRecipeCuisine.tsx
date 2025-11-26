@@ -33,7 +33,7 @@ export const FieldRecipeCuisine = ({ name, defaultValue, errors }: Props) => {
       <FieldLabel htmlFor={id}>Recipe Cuisine</FieldLabel>
 
       {/* Prevent form from losing the selected value */}
-      <input type="hidden" name={name} value={cuisine} />
+      <input type="hidden" name={name} value={cuisine ?? ""} />
 
       <Select value={cuisine} onValueChange={setCuisine}>
         <SelectTrigger id={id}>

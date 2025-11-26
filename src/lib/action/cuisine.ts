@@ -20,7 +20,7 @@ export const createCuisineAction = async (
   _prevState: CreateCuisineFormState,
   formData: FormData,
 ): Promise<CreateCuisineFormState> => {
-  authenticate();
+  await authenticate();
 
   // 1. Validate form data
   const fields = {
@@ -60,7 +60,7 @@ export const updateCuisineAction = async (
   _prevState: UpdateCuisineFormState,
   formData: FormData,
 ): Promise<UpdateCuisineFormState> => {
-  authenticate();
+  await authenticate();
 
   // 1. Validate form data
   const fields = {
@@ -100,7 +100,7 @@ export const updateCuisineAction = async (
 export const deleteCuisineAction = async (
   cuisineId: string,
 ): Promise<boolean> => {
-  authenticate();
+  await authenticate();
 
   const [deletionResult, updationResult] = await Promise.allSettled([
     deleteCuisine(cuisineId),

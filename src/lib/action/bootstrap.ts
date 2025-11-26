@@ -5,7 +5,19 @@ import {
   bootstrapCuisines,
   bootstrapRecipes,
 } from "@/lib/dal/bootstrap";
+import { authenticate } from "./utils";
 
-export const bootstrapCategoriesAction = bootstrapCategories;
-export const bootstrapCuisinesAction = bootstrapCuisines;
-export const bootstrapRecipesAction = bootstrapRecipes;
+export const bootstrapCategoriesAction = async () => {
+  await authenticate();
+  await bootstrapCategories();
+};
+
+export const bootstrapCuisinesAction = async () => {
+  await authenticate();
+  await bootstrapCuisines();
+};
+
+export const bootstrapRecipesAction = async () => {
+  await authenticate();
+  await bootstrapRecipes();
+};

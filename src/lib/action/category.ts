@@ -23,7 +23,7 @@ export const createCategoryAction = async (
   _prevState: CreateCategoryFormState,
   formData: FormData,
 ): Promise<CreateCategoryFormState> => {
-  authenticate();
+  await authenticate();
 
   // 1. Validate form data
   const fields = {
@@ -63,7 +63,7 @@ export const updateCategoryAction = async (
   _prevState: UpdateCategoryFormState,
   formData: FormData,
 ): Promise<UpdateCategoryFormState> => {
-  authenticate();
+  await authenticate();
 
   // 1. Validate form data
   const fields = {
@@ -103,7 +103,7 @@ export const updateCategoryAction = async (
 export const deleteCategoryAction = async (
   categoryId: string,
 ): Promise<boolean> => {
-  authenticate();
+  await authenticate();
 
   const [deletionResult, updationResult] = await Promise.allSettled([
     deleteCategory(categoryId),

@@ -14,7 +14,7 @@ export const createRecipeAction = async (
   prevState: CreateRecipeFormState,
   formData: FormData,
 ): Promise<CreateRecipeFormState> => {
-  authenticate();
+  await authenticate();
 
   // 1. Validate form data
   const file = formData.get("image") as File;
@@ -59,7 +59,7 @@ export const updateRecipeAction = async (
   prevState: UpdateRecipeFormState,
   formData: FormData,
 ): Promise<UpdateRecipeFormState> => {
-  authenticate();
+  await authenticate();
 
   // 1. Validate form data
   const file = formData.get("image") as File;
@@ -103,7 +103,7 @@ export const updateRecipeAction = async (
 export const deleteRecipeAction = async (
   recipeId: string,
 ): Promise<boolean> => {
-  authenticate();
+  await authenticate();
 
   return await deleteRecipe(recipeId);
 };

@@ -7,6 +7,15 @@ import { type RecipeInput, RecipeInputSchema } from "@/lib/validator/recipe";
 import type { FormState } from "./type";
 import { authenticate } from "./utils";
 
+const parseJSON = (value: unknown): string[] => {
+  try {
+    const parsed = JSON.parse(value as string);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+};
+
 export type CreateRecipeFields = RecipeInput;
 export type CreateRecipeFormState = FormState<CreateRecipeFields>;
 
@@ -26,10 +35,10 @@ export const createRecipeAction = async (
     image,
     category: formData.get("category") as string,
     cuisine: formData.get("cuisine") as string,
-    ingredients: JSON.parse(formData.get("ingredients") as string),
-    instructions: JSON.parse(formData.get("instructions") as string),
+    ingredients: parseJSON(formData.get("ingredients")),
+    instructions: parseJSON(formData.get("instructions")),
     cookTime: formData.get("cookTime") as string,
-    keywords: JSON.parse(formData.get("keywords") as string),
+    keywords: parseJSON(formData.get("keywords")),
   };
   const validatedFields = RecipeInputSchema.safeParse(fields);
 
@@ -71,10 +80,10 @@ export const updateRecipeAction = async (
     image,
     category: formData.get("category") as string,
     cuisine: formData.get("cuisine") as string,
-    ingredients: JSON.parse(formData.get("ingredients") as string),
-    instructions: JSON.parse(formData.get("instructions") as string),
+    ingredients: parseJSON(formData.get("ingredients")),
+    instructions: parseJSON(formData.get("instructions")),
     cookTime: formData.get("cookTime") as string,
-    keywords: JSON.parse(formData.get("keywords") as string),
+    keywords: parseJSON(formData.get("keywords")),
   };
   const recipeId = formData.get("recipeId") as string;
   const patchedFields = { ...fields, recipeId };

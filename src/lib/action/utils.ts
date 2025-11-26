@@ -7,5 +7,5 @@ export const authenticate = async () => {
   }
 };
 
-export const dupliatedKeyError = (error: unknown) =>
+export const isDuplicatedKeyError = (error: unknown) =>
   error instanceof Object && "code" in error && error.code === 11000;

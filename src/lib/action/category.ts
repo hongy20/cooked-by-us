@@ -14,7 +14,7 @@ import {
   CategoryInputSchema,
 } from "@/lib/validator/category";
 import type { FormState } from "./type";
-import { authenticate, dupliatedKeyError } from "./utils";
+import { authenticate, isDuplicatedKeyError } from "./utils";
 
 export type CreateCategoryFields = CategoryInput;
 export type CreateCategoryFormState = FormState<CreateCategoryFields>;
@@ -43,7 +43,7 @@ export const createCategoryAction = async (
     await createCategory(validatedFields.data);
     return { status: "success", fields };
   } catch (e) {
-    if (dupliatedKeyError(e)) {
+    if (isDuplicatedKeyError(e)) {
       return {
         status: "error",
         fields,
@@ -89,7 +89,7 @@ export const updateCategoryAction = async (
     }
     return { status: "success", fields: patchedFields };
   } catch (e) {
-    if (dupliatedKeyError(e)) {
+    if (isDuplicatedKeyError(e)) {
       return {
         status: "error",
         fields: patchedFields,

@@ -11,7 +11,7 @@ import { updateRecipesAfterCuisineDeletion } from "@/lib/dal/recipe";
 import type { PersistedCuisine } from "@/lib/dal/types";
 import { type CuisineInput, CuisineInputSchema } from "@/lib/validator/cuisine";
 import type { FormState } from "./type";
-import { authenticate, dupliatedKeyError } from "./utils";
+import { authenticate, isDuplicatedKeyError } from "./utils";
 
 export type CreateCuisineFields = CuisineInput;
 export type CreateCuisineFormState = FormState<CreateCuisineFields>;
@@ -40,7 +40,7 @@ export const createCuisineAction = async (
     await createCuisine(validatedFields.data);
     return { status: "success", fields };
   } catch (e) {
-    if (dupliatedKeyError(e)) {
+    if (isDuplicatedKeyError(e)) {
       return {
         status: "error",
         fields,
@@ -86,7 +86,7 @@ export const updateCuisineAction = async (
     }
     return { status: "success", fields: patchedFields };
   } catch (e) {
-    if (dupliatedKeyError(e)) {
+    if (isDuplicatedKeyError(e)) {
       return {
         status: "error",
         fields: patchedFields,

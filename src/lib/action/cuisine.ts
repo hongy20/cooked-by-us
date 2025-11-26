@@ -44,7 +44,7 @@ export const createCuisineAction = async (
       return {
         status: "error",
         fields,
-        errors: { name: ["Cuisine already exist"] },
+        errors: { name: ["Cuisine already exists"] },
       };
     }
     throw new Error("Cuisine creation failed");
@@ -90,7 +90,7 @@ export const updateCuisineAction = async (
       return {
         status: "error",
         fields: patchedFields,
-        errors: { name: ["Cuisine already exist"] },
+        errors: { name: ["Cuisine already exists"] },
       };
     }
     throw new Error("Cuisine updation failed");

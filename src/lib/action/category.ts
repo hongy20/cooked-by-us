@@ -47,7 +47,7 @@ export const createCategoryAction = async (
       return {
         status: "error",
         fields,
-        errors: { name: ["Category already exist"] },
+        errors: { name: ["Category already exists"] },
       };
     }
     throw new Error("Category creation failed");
@@ -93,7 +93,7 @@ export const updateCategoryAction = async (
       return {
         status: "error",
         fields: patchedFields,
-        errors: { name: ["Category already exist"] },
+        errors: { name: ["Category already exists"] },
       };
     }
     throw new Error("Category updation failed");

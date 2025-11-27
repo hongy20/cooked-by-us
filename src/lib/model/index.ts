@@ -16,14 +16,14 @@ export { CategoryModel } from "./category";
 export { CuisineModel } from "./cuisine";
 export { RecipeModel } from "./recipe";
 
-import type { ICategory } from "./category";
-import type { ICuisine } from "./cuisine";
-import type { IRecipe } from "./recipe";
+import type { CategoryDoc } from "./category";
+import type { CuisineDoc } from "./cuisine";
+import type { RecipeDoc } from "./recipe";
 
-export type IPopulatedRecipe = Omit<IRecipe, "category" | "cuisine"> & {
-  category: ICategory;
-} & {
-  cuisine: ICuisine;
-};
+export type { CategoryDoc, CuisineDoc };
 
-export type { ICategory, ICuisine, IRecipe };
+export interface PopulatedRecipeDoc
+  extends Omit<RecipeDoc, "category" | "cuisine"> {
+  category: CategoryDoc | null;
+  cuisine: CuisineDoc | null;
+}

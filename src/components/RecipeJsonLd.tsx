@@ -1,34 +1,13 @@
-import type { HowToStep, Person, Recipe, WithContext } from "schema-dts";
-import type { IPopulatedRecipe } from "@/lib/model";
-import { formatDateForJsonLd } from "@/lib/utils/date";
+import type { Recipe, WithContext } from "schema-dts";
+import type { PersistedRecipe } from "@/lib/dal/types";
+import { getRecipeJsonLd } from "@/lib/utils/json-ld";
 
-type Props = { recipe: IPopulatedRecipe; authorName: string };
+type Props = { recipe: PersistedRecipe };
 
-export const RecipeJsonLd = ({ recipe, authorName }: Props) => {
+export const RecipeJsonLd = ({ recipe }: Props) => {
   const jsonLd: WithContext<Recipe> = {
     "@context": "https://schema.org",
-    "@type": "Recipe",
-    name: recipe.name,
-    image: recipe.image,
-    author: {
-      "@type": "Person",
-      name: authorName,
-    } satisfies Person,
-    datePublished: formatDateForJsonLd(recipe.createdAt),
-    description: recipe.description,
-    recipeCuisine: recipe.cuisine.name,
-    cookTime: recipe.cookTime,
-    keywords: recipe.keywords.join(", "),
-    recipeCategory: recipe.category.name,
-    recipeIngredient: recipe.ingredients,
-    recipeInstructions: recipe.instructions.map(
-      (instruction) =>
-        ({
-          "@type": "HowToStep",
-          text: instruction.text,
-          image: instruction.image,
-        }) satisfies HowToStep,
-    ),
+    ...getRecipeJsonLd(recipe),
   };
 
   return (

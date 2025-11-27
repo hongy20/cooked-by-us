@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Footer } from "@/components/Footer";
 import "./globals.css";
 import { Header } from "@/components/Header/Header";
+import { Toaster } from "@/components/ui/sonner";
+import { COOKED_BY_US } from "@/lib/constant";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,8 +18,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Cooked by Us",
-    default: "Cooked by Us",
+    template: `%s | ${COOKED_BY_US}`,
+    default: COOKED_BY_US,
   },
   description:
     "Browse our complete collection of recipes, from quick weeknight meals to gourmet dishes. Find step-by-step instructions, ingredients, and tips for every cuisine.",
@@ -34,7 +36,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Header />
-        <main>{children}</main>
+        {children}
+        <Toaster />
         <Footer />
       </body>
     </html>

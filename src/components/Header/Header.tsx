@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { COOKED_BY_US } from "@/lib/constant";
 import { DesktopNav } from "./DesktopNav";
 import { MobileNav } from "./MobileNav";
 import { UserNav } from "./UserNav";
@@ -10,7 +11,7 @@ export const Header = () => {
         <MobileNav />
 
         <Link href="/" className="text-xl font-bold mr-4">
-          Cooked By Us
+          {COOKED_BY_US}
         </Link>
 
         <DesktopNav />

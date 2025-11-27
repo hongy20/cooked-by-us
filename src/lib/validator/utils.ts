@@ -38,8 +38,12 @@ export const stringArraySchemaFactory = ({
   );
 };
 
-export const objectIdSchema = (errorMessage: string) =>
+export const nullableObjectIdSchema = (errorMessage: string) =>
   z
     .string()
     .length(24, errorMessage)
-    .regex(/^[0-9a-fA-F]{24}$/, errorMessage); // MongoDB ObjectId
+    .regex(
+      /^[0-9a-fA-F]{24}$/, // MongoDB ObjectId
+      errorMessage,
+    )
+    .nullable();

@@ -1,31 +1,24 @@
 import { z } from "zod";
-import { objectIdSchema, stringArraySchemaFactory } from "./util";
+import { nullableObjectIdSchema, stringArraySchemaFactory } from "./utils";
 
-// Zod schema for an individual instruction step
-const InstructionValidator = z.object({
-  text: z.string().min(1, "Instruction text cannot be empty."),
-  image: z.url("Instruction image must be a valid URL.").optional(),
-});
-
-// Zod schema for the Recipe model
-export const RecipeValidator = z.object({
-  name: z.string().min(3).trim(),
-  description: z.string().trim(),
+export const RecipeInputSchema = z.object({
+  name: z.string().min(2).max(30).trim(),
+  description: z.string().max(200).trim(),
   image: z.url(),
-  author: objectIdSchema("Author ID must be valid"),
-  category: objectIdSchema("A recipe category is required"),
-  cuisine: objectIdSchema("A recipe cuisine is required"),
+  category: nullableObjectIdSchema("Invalid category id"),
+  cuisine: nullableObjectIdSchema("Invalid cuisine id"),
   ingredients: stringArraySchemaFactory({
     minLength: 1,
     errorMessage: "Ingredients cannot be empty — add at least one",
   }),
-  instructions: z
-    .array(InstructionValidator)
-    .min(1, "At least one instruction step is required."),
+  instructions: stringArraySchemaFactory({
+    minLength: 1,
+    errorMessage: "Instructions cannot be empty — add at least one",
+  }),
   cookTime: z
     .string()
     .regex(
-      /^PT(\d+H)?(\d+M)?(\d+S)?$/,
+      /^PT(?=\d)((\d+)H)?((\d+)M)?((\d+)S)?$/,
       "Cook time must be in ISO 8601 duration format (e.g., PT1H30M).",
     ),
   keywords: stringArraySchemaFactory({
@@ -34,6 +27,4 @@ export const RecipeValidator = z.object({
   }),
 });
 
-export type InstructionInput = z.infer<typeof InstructionValidator>;
-
-export type RecipeInput = z.infer<typeof RecipeValidator>;
+export type RecipeInput = z.infer<typeof RecipeInputSchema>;

@@ -1,24 +1,29 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import { z } from "zod";
-import { getSession } from "@/lib/auth";
 import { upload } from "@/lib/cloudinary";
-import { createRecipe } from "@/lib/dal/recipe";
-import type { IRecipe } from "@/lib/model/recipe";
-import { type RecipeInput, RecipeValidator } from "@/lib/validator/recipe";
+import { createRecipe, deleteRecipe, updateRecipe } from "@/lib/dal/recipe";
+import { type RecipeInput, RecipeInputSchema } from "@/lib/validator/recipe";
 import type { FormState } from "./type";
+import { authenticate } from "./utils";
 
-export type CreateRecipeFormState = FormState<Omit<RecipeInput, "author">>;
+const parseJSON = (value: unknown): string[] => {
+  try {
+    const parsed = JSON.parse(value as string);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+};
+
+export type CreateRecipeFields = RecipeInput;
+export type CreateRecipeFormState = FormState<CreateRecipeFields>;
 
 export const createRecipeAction = async (
   prevState: CreateRecipeFormState,
   formData: FormData,
 ): Promise<CreateRecipeFormState> => {
-  const session = await getSession();
-  if (!session) {
-    redirect("/");
-  }
+  await authenticate();
 
   // 1. Validate form data
   const file = formData.get("image") as File;
@@ -28,20 +33,17 @@ export const createRecipeAction = async (
     name: formData.get("name") as string,
     description: formData.get("description") as string,
     image,
-    author: session.user.id,
     category: formData.get("category") as string,
     cuisine: formData.get("cuisine") as string,
-    ingredients: JSON.parse(formData.get("ingredients") as string),
-    instructions: JSON.parse(formData.get("instructions") as string),
+    ingredients: parseJSON(formData.get("ingredients")),
+    instructions: parseJSON(formData.get("instructions")),
     cookTime: formData.get("cookTime") as string,
-    keywords: JSON.parse(formData.get("keywords") as string),
+    keywords: parseJSON(formData.get("keywords")),
   };
-  const validatedFields = RecipeValidator.safeParse(fields);
+  const validatedFields = RecipeInputSchema.safeParse(fields);
 
   if (!validatedFields.success) {
-    const { author: _author, ...errors } = z.flattenError(
-      validatedFields.error,
-    ).fieldErrors;
+    const errors = z.flattenError(validatedFields.error).fieldErrors;
     return {
       status: "error",
       fields,
@@ -49,17 +51,72 @@ export const createRecipeAction = async (
     };
   }
 
-  let recipe: IRecipe | undefined;
   try {
-    recipe = await createRecipe(validatedFields.data);
-  } catch (e) {
-    console.error("Recipe creation failed", e);
-    // TODO: show error in client
+    await createRecipe(validatedFields.data);
+    return { status: "success", fields };
+  } catch (error) {
+    throw new Error(
+      `Recipe creation failed: ${error instanceof Error ? error.message : "Unknown error"}`,
+    );
+  }
+};
+
+export type UpdateRecipeFields = RecipeInput & {
+  recipeId: string;
+};
+export type UpdateRecipeFormState = FormState<UpdateRecipeFields>;
+
+export const updateRecipeAction = async (
+  prevState: UpdateRecipeFormState,
+  formData: FormData,
+): Promise<UpdateRecipeFormState> => {
+  await authenticate();
+
+  // 1. Validate form data
+  const file = formData.get("image") as File;
+  const image = file.size > 0 ? await upload(file) : prevState.fields.image;
+
+  const fields = {
+    name: formData.get("name") as string,
+    description: formData.get("description") as string,
+    image,
+    category: formData.get("category") as string,
+    cuisine: formData.get("cuisine") as string,
+    ingredients: parseJSON(formData.get("ingredients")),
+    instructions: parseJSON(formData.get("instructions")),
+    cookTime: formData.get("cookTime") as string,
+    keywords: parseJSON(formData.get("keywords")),
+  };
+  const recipeId = formData.get("recipeId") as string;
+  const patchedFields = { ...fields, recipeId };
+
+  const validatedFields = RecipeInputSchema.safeParse(fields);
+  if (!validatedFields.success) {
+    const errors = z.flattenError(validatedFields.error).fieldErrors;
     return {
       status: "error",
-      fields,
+      fields: patchedFields,
+      errors,
     };
   }
 
-  redirect(`/recipe/${recipe.id}`);
+  try {
+    const updated = await updateRecipe(recipeId, validatedFields.data);
+    if (!updated) {
+      throw new Error("Recipe not found");
+    }
+    return { status: "success", fields: patchedFields };
+  } catch (error) {
+    throw new Error(
+      `Recipe update failed: ${error instanceof Error ? error.message : "Unknown error"}`,
+    );
+  }
+};
+
+export const deleteRecipeAction = async (
+  recipeId: string,
+): Promise<boolean> => {
+  await authenticate();
+
+  return await deleteRecipe(recipeId);
 };

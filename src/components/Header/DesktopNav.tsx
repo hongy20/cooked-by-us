@@ -1,6 +1,4 @@
 import Link from "next/link";
-import { getAllCategories } from "@/lib/dal/category";
-import { getAllCuisines } from "@/lib/dal/cuisine";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -9,7 +7,9 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "../ui/navigation-menu";
+} from "@/components/ui/navigation-menu";
+import { getAllCategories } from "@/lib/dal/category";
+import { getAllCuisines } from "@/lib/dal/cuisine";
 
 export const DesktopNav = async () => {
   const categories = await getAllCategories();
@@ -29,7 +29,7 @@ export const DesktopNav = async () => {
                   </span>
                 ) : (
                   categories.map((category) => (
-                    <li key={`${category._id}`}>
+                    <li key={category.id}>
                       <NavigationMenuLink asChild>
                         <Link
                           href={`/search?category=${encodeURIComponent(category.name)}`}
@@ -53,7 +53,7 @@ export const DesktopNav = async () => {
                   </span>
                 ) : (
                   cuisines.map((cuisine) => (
-                    <li key={`${cuisine._id}`}>
+                    <li key={cuisine.id}>
                       <NavigationMenuLink asChild>
                         <Link
                           href={`/search?cuisine=${encodeURIComponent(cuisine.name)}`}

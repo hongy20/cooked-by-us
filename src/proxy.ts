@@ -5,15 +5,15 @@ const protectedRoutesPattern = /^\/dashboard(\/|$)/;
 
 export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
+  if (path === "/dashboard") {
+    return NextResponse.redirect(new URL("/dashboard/recipe", request.url));
+  }
+
   const isProtectedRoute = protectedRoutesPattern.test(path);
   const session = await getSession();
 
   if (isProtectedRoute && !session) {
     return NextResponse.redirect(new URL("/", request.url));
-  }
-
-  if (path === "/dashboard") {
-    return NextResponse.redirect(new URL("/dashboard/recipe", request.url));
   }
 
   return NextResponse.next();

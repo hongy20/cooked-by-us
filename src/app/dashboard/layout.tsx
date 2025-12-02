@@ -1,15 +1,11 @@
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 import { DashboardSidebar } from "@/components/dashboard/DashboardSidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { getSession } from "@/lib/auth";
 
-export default async function Layout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await getSession();
-
   if (!session) {
     redirect("/");
   }
@@ -31,5 +27,17 @@ export default async function Layout({
         </div>
       </div>
     </SidebarProvider>
+  );
+};
+
+export default async function Layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <Suspense>
+      <DashboardLayout>{children}</DashboardLayout>
+    </Suspense>
   );
 }

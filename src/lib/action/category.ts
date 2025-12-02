@@ -2,7 +2,7 @@
 
 import { updateTag } from "next/cache";
 import { z } from "zod";
-import { CACHE_TAG_CATEGORIES } from "@/lib/constant";
+import { CACHE_TAG_CATEGORIES, CACHE_TAG_RECIPES } from "@/lib/constant";
 import {
   createCategory,
   deleteCategory,
@@ -118,7 +118,9 @@ export const deleteCategoryAction = async (
 
   if (deleted) {
     updateTag(CACHE_TAG_CATEGORIES);
-    await updateRecipesAfterCategoryDeletion(categoryId).catch(console.error);
+    await updateRecipesAfterCategoryDeletion(categoryId)
+      .catch(console.error)
+      .finally(() => updateTag(CACHE_TAG_RECIPES));
   }
 
   return deleted;

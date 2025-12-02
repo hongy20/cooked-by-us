@@ -2,7 +2,7 @@
 
 import { updateTag } from "next/cache";
 import { z } from "zod";
-import { CACHE_TAG_CUISINES } from "@/lib/constant";
+import { CACHE_TAG_CUISINES, CACHE_TAG_RECIPES } from "@/lib/constant";
 import {
   createCuisine,
   deleteCuisine,
@@ -115,7 +115,9 @@ export const deleteCuisineAction = async (
 
   if (deleted) {
     updateTag(CACHE_TAG_CUISINES);
-    await updateRecipesAfterCuisineDeletion(cuisineId).catch(console.error);
+    await updateRecipesAfterCuisineDeletion(cuisineId)
+      .catch(console.error)
+      .finally(() => updateTag(CACHE_TAG_RECIPES));
   }
 
   return deleted;

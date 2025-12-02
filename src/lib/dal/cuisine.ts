@@ -1,5 +1,7 @@
 import "server-only";
+import { cacheTag } from "next/cache";
 import { cache } from "react";
+import { CACHE_TAG_CUISINES } from "@/lib/constant";
 import { CuisineModel } from "@/lib/model/cuisine";
 import connectDB from "@/lib/mongodb";
 import type { CuisineInput } from "@/lib/validator/cuisine";
@@ -37,13 +39,19 @@ export const deleteCuisine = async (cuisineId: string): Promise<boolean> => {
 // Read
 export const doesCuisineExist = cache(
   async (cuisineId: string): Promise<boolean> => {
+    "use cache";
+    cacheTag(CACHE_TAG_CUISINES);
+
     await connectDB();
-    const exists = await CuisineModel.exists({ _id: cuisineId });
-    return !!exists;
+    const doc = await CuisineModel.exists({ _id: cuisineId });
+    return !!doc;
   },
 );
 
 export const getAllCuisines = cache(async (): Promise<PersistedCuisine[]> => {
+  "use cache";
+  cacheTag(CACHE_TAG_CUISINES);
+
   await connectDB();
   const docs = await CuisineModel.find().sort({ createdAt: -1 }).lean();
   return docs.map((doc) => toClient(doc));

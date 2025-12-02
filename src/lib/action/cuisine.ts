@@ -1,6 +1,8 @@
 "use server";
 
+import { updateTag } from "next/cache";
 import { z } from "zod";
+import { CACHE_TAG_CUISINES } from "@/lib/constant";
 import {
   createCuisine,
   deleteCuisine,
@@ -38,6 +40,9 @@ export const createCuisineAction = async (
 
   try {
     await createCuisine(validatedFields.data);
+
+    updateTag(CACHE_TAG_CUISINES);
+
     return { status: "success", fields };
   } catch (e) {
     if (isDuplicatedKeyError(e)) {
@@ -81,9 +86,13 @@ export const updateCuisineAction = async (
 
   try {
     const updated = await updateCuisine(cuisineId, validatedFields.data);
-    if (!updated) {
+
+    if (updated) {
+      updateTag(CACHE_TAG_CUISINES);
+    } else {
       throw new Error("Cuisine not found");
     }
+
     return { status: "success", fields: patchedFields };
   } catch (e) {
     if (isDuplicatedKeyError(e)) {
@@ -102,15 +111,14 @@ export const deleteCuisineAction = async (
 ): Promise<boolean> => {
   await authenticate();
 
-  const [deletionResult, updationResult] = await Promise.allSettled([
-    deleteCuisine(cuisineId),
-    updateRecipesAfterCuisineDeletion(cuisineId),
-  ]);
+  const deleted = await deleteCuisine(cuisineId);
 
-  return (
-    deletionResult.status === "fulfilled" &&
-    updationResult.status === "fulfilled"
-  );
+  if (deleted) {
+    updateTag(CACHE_TAG_CUISINES);
+    await updateRecipesAfterCuisineDeletion(cuisineId).catch(console.error);
+  }
+
+  return deleted;
 };
 
 export const getAllCuisinesAction = async (): Promise<PersistedCuisine[]> =>

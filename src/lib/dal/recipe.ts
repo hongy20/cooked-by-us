@@ -1,5 +1,11 @@
 import "server-only";
+import { cacheTag } from "next/cache";
 import { cache } from "react";
+import {
+  CACHE_TAG_CATEGORIES,
+  CACHE_TAG_CUISINES,
+  CACHE_TAG_RECIPES,
+} from "@/lib/constant";
 import { type PopulatedRecipeDoc, RecipeModel } from "@/lib/model";
 import connectDB from "@/lib/mongodb";
 import type { RecipeInput } from "@/lib/validator/recipe";
@@ -61,6 +67,11 @@ export const deleteRecipe = async (recipeId: string): Promise<boolean> => {
 // Read
 export const getRecipe = cache(
   async (recipeId: string): Promise<PersistedRecipe | undefined> => {
+    "use cache";
+    cacheTag(CACHE_TAG_RECIPES);
+    cacheTag(CACHE_TAG_CATEGORIES);
+    cacheTag(CACHE_TAG_CUISINES);
+
     await connectDB();
     const doc = await RecipeModel.findById(recipeId)
       .populate(["category", "cuisine"])
@@ -70,6 +81,11 @@ export const getRecipe = cache(
 );
 
 export const getAllRecipes = cache(async (): Promise<PersistedRecipe[]> => {
+  "use cache";
+  cacheTag(CACHE_TAG_RECIPES);
+  cacheTag(CACHE_TAG_CATEGORIES);
+  cacheTag(CACHE_TAG_CUISINES);
+
   await connectDB();
   const docs = await RecipeModel.find()
     .sort({ createdAt: -1 })
@@ -80,6 +96,11 @@ export const getAllRecipes = cache(async (): Promise<PersistedRecipe[]> => {
 
 export const getSimilarRecipes = cache(
   async (recipeId: string): Promise<PersistedRecipe[]> => {
+    "use cache";
+    cacheTag(CACHE_TAG_RECIPES);
+    cacheTag(CACHE_TAG_CATEGORIES);
+    cacheTag(CACHE_TAG_CUISINES);
+
     await connectDB();
     const recipe = await getRecipe(recipeId);
 

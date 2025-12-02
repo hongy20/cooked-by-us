@@ -7,6 +7,7 @@ if (!CLOUDINARY_FOLDER) {
 
 const nextConfig: NextConfig = {
   /* config options here */
+  cacheComponents: true,
   experimental: {
     serverActions: {
       bodySizeLimit: "3MB",

@@ -9,3 +9,12 @@ export const authenticate = async () => {
 
 export const isDuplicatedKeyError = (error: unknown) =>
   error instanceof Object && "code" in error && error.code === 11000;
+
+export const parseJSON = (value: unknown): string[] => {
+  try {
+    const parsed = JSON.parse(value as string);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+};

@@ -1,5 +1,7 @@
 import "server-only";
+import { cacheTag } from "next/cache";
 import { cache } from "react";
+import { CACHE_TAG_CATEGORIES } from "@/lib/constant";
 import { CategoryModel } from "@/lib/model/category";
 import connectDB from "@/lib/mongodb";
 import type { CategoryInput } from "@/lib/validator/category";
@@ -37,14 +39,20 @@ export const deleteCategory = async (categoryId: string): Promise<boolean> => {
 // Read
 export const doesCategoryExist = cache(
   async (categoryId: string): Promise<boolean> => {
+    "use cache";
+    cacheTag(CACHE_TAG_CATEGORIES);
+
     await connectDB();
-    const exists = await CategoryModel.exists({ _id: categoryId });
-    return !!exists;
+    const doc = await CategoryModel.exists({ _id: categoryId });
+    return !!doc;
   },
 );
 
 export const getAllCategories = cache(
   async (): Promise<PersistedCategory[]> => {
+    "use cache";
+    cacheTag(CACHE_TAG_CATEGORIES);
+
     await connectDB();
     const docs = await CategoryModel.find().sort({ createdAt: -1 }).lean();
     return docs.map((doc) => toClient(doc));

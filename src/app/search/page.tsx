@@ -12,12 +12,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Page({ searchParams }: PageProps<"/search">) {
-  const query = await searchParams;
-  console.log(
-    `q: ${query.q}, category: ${query.category}, cuisine: ${query.cuisine}`,
-  );
+// type Props = PageProps<"/search">;
 
+export default async function Page() {
   return (
     <main className="container mx-auto py-16 px-4 sm:px-6 lg:px-8 text-center">
       <header className="mb-8">

@@ -1,6 +1,8 @@
 "use server";
 
+import { updateTag } from "next/cache";
 import { z } from "zod";
+import { CACHE_TAG_CATEGORIES, CACHE_TAG_RECIPES } from "@/lib/constant";
 import {
   createCategory,
   deleteCategory,
@@ -41,6 +43,9 @@ export const createCategoryAction = async (
 
   try {
     await createCategory(validatedFields.data);
+
+    updateTag(CACHE_TAG_CATEGORIES);
+
     return { status: "success", fields };
   } catch (e) {
     if (isDuplicatedKeyError(e)) {
@@ -84,9 +89,13 @@ export const updateCategoryAction = async (
 
   try {
     const updated = await updateCategory(categoryId, validatedFields.data);
-    if (!updated) {
+
+    if (updated) {
+      updateTag(CACHE_TAG_CATEGORIES);
+    } else {
       throw new Error("Category not found");
     }
+
     return { status: "success", fields: patchedFields };
   } catch (e) {
     if (isDuplicatedKeyError(e)) {
@@ -105,15 +114,16 @@ export const deleteCategoryAction = async (
 ): Promise<boolean> => {
   await authenticate();
 
-  const [deletionResult, updationResult] = await Promise.allSettled([
-    deleteCategory(categoryId),
-    updateRecipesAfterCategoryDeletion(categoryId),
-  ]);
+  const deleted = await deleteCategory(categoryId);
 
-  return (
-    deletionResult.status === "fulfilled" &&
-    updationResult.status === "fulfilled"
-  );
+  if (deleted) {
+    updateTag(CACHE_TAG_CATEGORIES);
+    await updateRecipesAfterCategoryDeletion(categoryId)
+      .catch(console.error)
+      .finally(() => updateTag(CACHE_TAG_RECIPES));
+  }
+
+  return deleted;
 };
 
 export const getAllCategoriesAction = async (): Promise<PersistedCategory[]> =>

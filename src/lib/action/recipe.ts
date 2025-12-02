@@ -1,20 +1,13 @@
 "use server";
 
+import { updateTag } from "next/cache";
 import { z } from "zod";
 import { upload } from "@/lib/cloudinary";
+import { CACHE_TAG_RECIPES } from "@/lib/constant";
 import { createRecipe, deleteRecipe, updateRecipe } from "@/lib/dal/recipe";
 import { type RecipeInput, RecipeInputSchema } from "@/lib/validator/recipe";
 import type { FormState } from "./type";
-import { authenticate } from "./utils";
-
-const parseJSON = (value: unknown): string[] => {
-  try {
-    const parsed = JSON.parse(value as string);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
-};
+import { authenticate, parseJSON } from "./utils";
 
 export type CreateRecipeFields = RecipeInput;
 export type CreateRecipeFormState = FormState<CreateRecipeFields>;
@@ -53,6 +46,9 @@ export const createRecipeAction = async (
 
   try {
     await createRecipe(validatedFields.data);
+
+    updateTag(CACHE_TAG_RECIPES);
+
     return { status: "success", fields };
   } catch (error) {
     throw new Error(
@@ -102,9 +98,13 @@ export const updateRecipeAction = async (
 
   try {
     const updated = await updateRecipe(recipeId, validatedFields.data);
-    if (!updated) {
+
+    if (updated) {
+      updateTag(CACHE_TAG_RECIPES);
+    } else {
       throw new Error("Recipe not found");
     }
+
     return { status: "success", fields: patchedFields };
   } catch (error) {
     throw new Error(
@@ -118,5 +118,11 @@ export const deleteRecipeAction = async (
 ): Promise<boolean> => {
   await authenticate();
 
-  return await deleteRecipe(recipeId);
+  const deleted = await deleteRecipe(recipeId);
+
+  if (deleted) {
+    updateTag(CACHE_TAG_RECIPES);
+  }
+
+  return deleted;
 };

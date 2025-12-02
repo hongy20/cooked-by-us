@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { RecipeJsonLd } from "@/components/RecipeJsonLd";
 import { RecipeView } from "@/components/RecipeView";
 import { SimilarRecipes } from "@/components/SimilarRecipes";
@@ -24,9 +25,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function Page({ params }: Props) {
-  const recipeId = await params.then(({ id }) => id);
-  const recipe = await getRecipe(recipeId).catch(console.error);
+const PageContent = async ({
+  recipeIdPromise,
+}: {
+  recipeIdPromise: Promise<string>;
+}) => {
+  const recipeId = await recipeIdPromise;
+  const recipe = await getRecipe(recipeId);
 
   if (!recipe) {
     notFound();
@@ -38,5 +43,15 @@ export default async function Page({ params }: Props) {
       <RecipeView recipe={recipe} />
       <SimilarRecipes recipeId={recipeId} />
     </main>
+  );
+};
+
+export default async function Page({ params }: Props) {
+  const recipeIdPromise = params.then(({ id }) => id);
+
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PageContent recipeIdPromise={recipeIdPromise} />
+    </Suspense>
   );
 }

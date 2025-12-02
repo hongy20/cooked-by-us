@@ -68,9 +68,7 @@ export const deleteRecipe = async (recipeId: string): Promise<boolean> => {
 export const getRecipe = cache(
   async (recipeId: string): Promise<PersistedRecipe | undefined> => {
     "use cache";
-    cacheTag(CACHE_TAG_RECIPES);
-    cacheTag(CACHE_TAG_CATEGORIES);
-    cacheTag(CACHE_TAG_CUISINES);
+    cacheTag(CACHE_TAG_RECIPES, CACHE_TAG_CATEGORIES, CACHE_TAG_CUISINES);
 
     await connectDB();
     const doc = await RecipeModel.findById(recipeId)
@@ -82,9 +80,7 @@ export const getRecipe = cache(
 
 export const getAllRecipes = cache(async (): Promise<PersistedRecipe[]> => {
   "use cache";
-  cacheTag(CACHE_TAG_RECIPES);
-  cacheTag(CACHE_TAG_CATEGORIES);
-  cacheTag(CACHE_TAG_CUISINES);
+  cacheTag(CACHE_TAG_RECIPES, CACHE_TAG_CATEGORIES, CACHE_TAG_CUISINES);
 
   await connectDB();
   const docs = await RecipeModel.find()
@@ -97,9 +93,7 @@ export const getAllRecipes = cache(async (): Promise<PersistedRecipe[]> => {
 export const getSimilarRecipes = cache(
   async (recipeId: string): Promise<PersistedRecipe[]> => {
     "use cache";
-    cacheTag(CACHE_TAG_RECIPES);
-    cacheTag(CACHE_TAG_CATEGORIES);
-    cacheTag(CACHE_TAG_CUISINES);
+    cacheTag(CACHE_TAG_RECIPES, CACHE_TAG_CATEGORIES, CACHE_TAG_CUISINES);
 
     await connectDB();
     const recipe = await getRecipe(recipeId);

@@ -36,7 +36,7 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   return (
-    <Suspense>
+    <Suspense fallback={<div>Loading...</div>}>
       <DashboardLayout>{children}</DashboardLayout>
     </Suspense>
   );

@@ -19,6 +19,8 @@ This section explains the key **Next.js features** and technical decisions behin
 - Define metadata with [static `metadata` object and dynamic `generateMetadata` function](https://nextjs.org/docs/app/getting-started/metadata-and-og-images)
 - Use [structured data](https://nextjs.org/docs/app/guides/json-ld) for better search visibility
 - [Cache database requests](https://nextjs.org/docs/app/getting-started/fetching-data#deduplicate-requests-and-cache-data) across the current render pass with React `cache` function
+- Enable [Cache Components](https://nextjs.org/docs/app/getting-started/cache-components) to improve performance
+- Leverage [Caching and Revalidating](https://nextjs.org/docs/app/getting-started/caching-and-revalidating) strategies for improved data access efficiency
 
 ## Other Tools and Integrations
 

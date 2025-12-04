@@ -30,33 +30,20 @@ const PageContent = async ({
 }: {
   recipeIdPromise: Promise<string>;
 }) => {
-  const start = performance.now();
-  console.log("Start render");
-
   const recipeId = await recipeIdPromise;
   const recipe = await getRecipe(recipeId);
-
-  console.log(
-    "After parsing recipeId and invoking 'getRecipe'",
-    performance.now() - start,
-    "ms",
-  );
 
   if (!recipe) {
     notFound();
   }
 
-  const jsx = (
+  return (
     <main className="my-10 mx-12 md:mx-24 lg:mx-36">
       <RecipeJsonLd recipe={recipe} />
       <RecipeView recipe={recipe} />
       <SimilarRecipes recipeId={recipeId} />
     </main>
   );
-
-  console.log("After JSX", performance.now() - start, "ms");
-
-  return jsx;
 };
 
 export default async function Page({ params }: Props) {

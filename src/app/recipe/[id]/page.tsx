@@ -30,7 +30,7 @@ const PageContent = async ({
 }: {
   recipeIdPromise: Promise<string>;
 }) => {
-  const start = Date.now();
+  const start = performance.now();
   console.log("Start render");
 
   const recipeId = await recipeIdPromise;
@@ -38,7 +38,7 @@ const PageContent = async ({
 
   console.log(
     "After parsing recipeId and invoking 'getRecipe'",
-    Date.now() - start,
+    performance.now() - start,
     "ms",
   );
 
@@ -54,7 +54,7 @@ const PageContent = async ({
     </main>
   );
 
-  console.log("After JSX", Date.now() - start, "ms");
+  console.log("After JSX", performance.now() - start, "ms");
 
   return jsx;
 };

@@ -45,9 +45,11 @@ export const RecipeCard = ({ recipe }: { recipe: PersistedRecipe }) => {
         </CardHeader>
 
         <CardContent>
-          <CardDescription className="line-clamp-2">
-            {recipe.description}
-          </CardDescription>
+          {recipe.description && (
+            <CardDescription className="line-clamp-2">
+              {recipe.description}
+            </CardDescription>
+          )}
 
           <p className="mt-3 text-xs text-muted-foreground">
             ⏱ {isoToHuman(recipe.cookTime)}

@@ -50,7 +50,7 @@ export default async function Page({ params }: Props) {
   const recipeIdPromise = params.then(({ id }) => id);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<RecipeDetail recipe={null} />}>
       <PageContent recipeIdPromise={recipeIdPromise} />
     </Suspense>
   );

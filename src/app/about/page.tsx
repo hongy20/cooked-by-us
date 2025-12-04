@@ -44,6 +44,18 @@ export default function AboutPage() {
           real, tested, and ready to cook from.
         </p>
 
+        <section className="mt-8">
+          <h2 className="text-2xl font-semibold mb-4">
+            No Cookies, No Tracking
+          </h2>
+          <p className="leading-7">
+            This website does not use cookies or any tracking technologies to
+            identify individual visitors. Because of this, there is no need for
+            a cookie consent banner. You can explore recipes freely and
+            privately, without any personal data being stored or shared.
+          </p>
+        </section>
+
         <div className="mt-8 text-center">
           <Button asChild>
             <Link href="/">Back to Home</Link>

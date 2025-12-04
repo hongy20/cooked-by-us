@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Footer } from "@/components/Footer";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Header } from "@/components/Header/Header";
 import { Toaster } from "@/components/ui/sonner";
 import { COOKED_BY_US } from "@/lib/constant";
@@ -37,6 +39,8 @@ export default function RootLayout({
       >
         <Header />
         {children}
+        <SpeedInsights />
+        <Analytics />
         <Toaster />
         <Footer />
       </body>

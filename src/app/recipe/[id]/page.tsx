@@ -8,6 +8,10 @@ import { getRecipe } from "@/lib/dal/recipe";
 
 type Props = PageProps<"/recipe/[id]">;
 
+// Next.js will invalidate the cache when a
+// request comes in, at most once every 60 seconds.
+export const revalidate = 60;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const recipeId = await params.then(({ id }) => id);
   const recipe = await getRecipe(recipeId).catch(console.error);
@@ -30,33 +34,20 @@ const PageContent = async ({
 }: {
   recipeIdPromise: Promise<string>;
 }) => {
-  const start = performance.now();
-  console.log("Start render");
-
   const recipeId = await recipeIdPromise;
   const recipe = await getRecipe(recipeId);
-
-  console.log(
-    "After parsing recipeId and invoking 'getRecipe'",
-    performance.now() - start,
-    "ms",
-  );
 
   if (!recipe) {
     notFound();
   }
 
-  const jsx = (
+  return (
     <main className="my-10 mx-12 md:mx-24 lg:mx-36">
       <RecipeJsonLd recipe={recipe} />
       <RecipeView recipe={recipe} />
       <SimilarRecipes recipeId={recipeId} />
     </main>
   );
-
-  console.log("After JSX", performance.now() - start, "ms");
-
-  return jsx;
 };
 
 export default async function Page({ params }: Props) {

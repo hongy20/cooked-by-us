@@ -8,10 +8,6 @@ import { getRecipe } from "@/lib/dal/recipe";
 
 type Props = PageProps<"/recipe/[id]">;
 
-// Next.js will invalidate the cache when a
-// request comes in, at most once every 60 seconds.
-export const revalidate = 60;
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const recipeId = await params.then(({ id }) => id);
   const recipe = await getRecipe(recipeId).catch(console.error);

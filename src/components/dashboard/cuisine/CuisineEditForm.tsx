@@ -19,11 +19,18 @@ import type {
 interface Props {
   fields: CreateCuisineFields | UpdateCuisineFields;
   action: (payload: FormData) => void;
+  setDirty: () => void;
   formId: string;
   errors?: CreateCuisineFormState["errors"] | UpdateCuisineFormState["errors"];
 }
 
-export const CuisineEditForm = ({ fields, action, formId, errors }: Props) => {
+export const CuisineEditForm = ({
+  fields,
+  action,
+  formId,
+  errors,
+  setDirty,
+}: Props) => {
   const nameFieldId = useId();
 
   return (
@@ -43,6 +50,7 @@ export const CuisineEditForm = ({ fields, action, formId, errors }: Props) => {
               data-1p-ignore
               placeholder="Cuisine Name"
               defaultValue={fields.name}
+              onChange={setDirty}
             />
             <FieldError
               errors={errors?.name?.map((message) => ({ message }))}

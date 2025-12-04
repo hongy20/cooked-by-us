@@ -11,11 +11,17 @@ interface Props {
   name: string;
   defaultValue: string;
   errors?: string[];
+  setDirty: () => void;
 }
 
 const FILE_SIZE_LIMIT_IN_MB = 2;
 
-export const FieldRecipeImage = ({ name, defaultValue, errors }: Props) => {
+export const FieldRecipeImage = ({
+  name,
+  defaultValue,
+  errors,
+  setDirty,
+}: Props) => {
   const [clientError, setClientError] = useState<string | null>(null);
   const id = useId();
 
@@ -29,6 +35,7 @@ export const FieldRecipeImage = ({ name, defaultValue, errors }: Props) => {
         accept="image/*"
         required={!defaultValue}
         onChange={(e) => {
+          setDirty();
           const file = e.target.files?.item(0);
           if (
             file instanceof File &&

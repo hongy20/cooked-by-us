@@ -19,13 +19,20 @@ import type {
 interface Props {
   fields: CreateCategoryFields | UpdateCategoryFields;
   action: (payload: FormData) => void;
+  setDirty: () => void;
   formId: string;
   errors?:
     | CreateCategoryFormState["errors"]
     | UpdateCategoryFormState["errors"];
 }
 
-export const CategoryEditForm = ({ fields, action, formId, errors }: Props) => {
+export const CategoryEditForm = ({
+  fields,
+  action,
+  formId,
+  errors,
+  setDirty,
+}: Props) => {
   const nameFieldId = useId();
 
   return (
@@ -45,6 +52,7 @@ export const CategoryEditForm = ({ fields, action, formId, errors }: Props) => {
               data-1p-ignore
               placeholder="Category Name"
               defaultValue={fields.name}
+              onChange={setDirty}
             />
             <FieldError
               errors={errors?.name?.map((message) => ({ message }))}

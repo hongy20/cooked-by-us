@@ -2,8 +2,9 @@
 
 import { Edit } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useActionState, useId, useRef } from "react";
+import { useActionState, useId, useState } from "react";
 import { toast } from "sonner";
+import { UnsavedChangesDialog } from "@/components/dashboard/UnsavedChangesDialog";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -14,6 +15,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useUnsavedChangesGuard } from "@/hooks/use-unsaved-changes-guard";
 import {
   type UpdateRecipeFormState,
   updateRecipeAction,
@@ -42,14 +44,28 @@ type Props = { recipe: PersistedRecipe };
 export const EditRecipeButton = ({ recipe }: Props) => {
   const formId = useId();
   const router = useRouter();
-  const closeRef = useRef<HTMLButtonElement>(null);
+  const [open, setOpen] = useState(false);
+  const [isDirty, setIsDirty] = useState(false);
+  const {
+    unsavedChangesDialogOpen,
+    setUnsavedChangesDialogOpen,
+    requestClose,
+    confirmClose,
+  } = useUnsavedChangesGuard({
+    isDirty,
+    onConfirm: () => {
+      setIsDirty(false);
+      setOpen(false);
+    },
+  });
 
   const [state, action, pending] = useActionState(
     async (prevState: UpdateRecipeFormState, formData: FormData) => {
       try {
         const rsp = await updateRecipeAction(prevState, formData);
         if (rsp.status === "success") {
-          closeRef.current?.click(); // Close sheet
+          setIsDirty(false);
+          setOpen(false);
           toast.success("Recipe updated!");
           router.refresh(); // Refresh the current page
         }
@@ -66,43 +82,54 @@ export const EditRecipeButton = ({ recipe }: Props) => {
   );
 
   return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <Edit className="h-4 w-4" />
-        </Button>
-      </SheetTrigger>
-
-      <SheetContent
-        side="right"
-        className="w-full sm:max-w-[500px] flex flex-col"
-        onEscapeKeyDown={(event) => event.preventDefault()}
-        onInteractOutside={(event) => event.preventDefault()}
+    <>
+      <Sheet
+        open={open}
+        onOpenChange={(next) => {
+          if (!next) requestClose();
+          else setOpen(true);
+        }}
       >
-        <SheetHeader>
-          <SheetTitle>Edit Recipe</SheetTitle>
-        </SheetHeader>
-
-        <div className="flex-1 overflow-y-auto overflow-x-hidden p-4">
-          <RecipeEditForm
-            fields={state.fields}
-            formId={formId}
-            action={action}
-            errors={state.errors}
-          />
-        </div>
-
-        <SheetFooter className="border-t p-4">
-          <Button type="submit" form={formId} disabled={pending}>
-            {pending ? "Saving..." : "Save"}
+        <SheetTrigger asChild>
+          <Button variant="ghost" size="icon">
+            <Edit className="h-4 w-4" />
           </Button>
-          <SheetClose asChild>
-            <Button variant="outline" ref={closeRef}>
-              Close
+        </SheetTrigger>
+
+        <SheetContent
+          side="right"
+          className="w-full sm:max-w-[500px] flex flex-col"
+        >
+          <SheetHeader>
+            <SheetTitle>Edit Recipe</SheetTitle>
+          </SheetHeader>
+
+          <div className="flex-1 overflow-y-auto overflow-x-hidden p-4">
+            <RecipeEditForm
+              fields={state.fields}
+              formId={formId}
+              action={action}
+              setDirty={() => setIsDirty(true)}
+              errors={state.errors}
+            />
+          </div>
+
+          <SheetFooter className="border-t p-4">
+            <Button type="submit" form={formId} disabled={pending}>
+              {pending ? "Saving..." : "Save"}
             </Button>
-          </SheetClose>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
+            <SheetClose asChild>
+              <Button variant="outline">Close</Button>
+            </SheetClose>
+          </SheetFooter>
+        </SheetContent>
+      </Sheet>
+
+      <UnsavedChangesDialog
+        open={unsavedChangesDialogOpen}
+        onOpenChange={setUnsavedChangesDialogOpen}
+        onConfirm={confirmClose}
+      />
+    </>
   );
 };

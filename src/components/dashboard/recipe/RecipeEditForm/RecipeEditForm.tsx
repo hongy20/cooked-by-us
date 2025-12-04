@@ -20,11 +20,18 @@ import { FieldRecipeName } from "./FieldRecipeName";
 interface Props {
   fields: CreateRecipeFields | UpdateRecipeFields;
   action: (payload: FormData) => void;
+  setDirty: () => void;
   formId: string;
   errors?: CreateRecipeFormState["errors"] | UpdateRecipeFormState["errors"];
 }
 
-export const RecipeEditForm = ({ fields, action, formId, errors }: Props) => {
+export const RecipeEditForm = ({
+  fields,
+  action,
+  formId,
+  errors,
+  setDirty,
+}: Props) => {
   return (
     <form id={formId} action={action} className="space-y-4">
       <FieldSet>
@@ -36,46 +43,55 @@ export const RecipeEditForm = ({ fields, action, formId, errors }: Props) => {
             name="name"
             defaultValue={fields.name}
             errors={errors?.name}
+            setDirty={setDirty}
           />
           <FieldRecipeDescription
             name="description"
             defaultValue={fields.description}
             errors={errors?.description}
+            setDirty={setDirty}
           />
           <FieldRecipeImage
             name="image"
             defaultValue={fields.image}
             errors={errors?.image}
+            setDirty={setDirty}
           />
           <FieldRecipeCategory
             name="category"
             defaultValue={fields.category ?? undefined}
             errors={errors?.category}
+            setDirty={setDirty}
           />
           <FieldRecipeCuisine
             name="cuisine"
             defaultValue={fields.cuisine ?? undefined}
             errors={errors?.cuisine}
+            setDirty={setDirty}
           />
           <FieldRecipeIngredients
             name="ingredients"
             defaultValue={fields.ingredients}
             errors={errors?.ingredients}
+            setDirty={setDirty}
           />
           <FieldRecipeInstructions
             name="instructions"
             defaultValue={fields.instructions}
             errors={errors?.instructions}
+            setDirty={setDirty}
           />
           <FieldRecipeCookTime
             name="cookTime"
             defaultValue={fields.cookTime}
             errors={errors?.cookTime}
+            setDirty={setDirty}
           />
           <FieldRecipeKeywords
             name="keywords"
             defaultValue={fields.keywords}
             errors={errors?.keywords}
+            setDirty={setDirty}
           />
         </FieldGroup>
       </FieldSet>

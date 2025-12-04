@@ -1,3 +1,4 @@
+import { Lock } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -44,16 +45,16 @@ export default function AboutPage() {
           real, tested, and ready to cook from.
         </p>
 
-        <section className="mt-8">
-          <h2 className="text-2xl font-semibold mb-4">
-            No Cookies, No Tracking
-          </h2>
-          <p className="leading-7">
-            This website does not use cookies or any tracking technologies to
-            identify individual visitors. Because of this, there is no need for
-            a cookie consent banner. You can explore recipes freely and
-            privately, without any personal data being stored or shared.
-          </p>
+        <section className="mt-8 flex items-start gap-2">
+          <Lock className="h-5 w-5 text-muted-foreground mt-1" />
+          <div>
+            <h2 className="text-xl font-semibold mb-2">Privacy Note</h2>
+            <p className="leading-7 text-muted-foreground">
+              This website does not use cookies or any tracking technologies to
+              identify visitors. There is no cookie consent banner because no
+              personal data is stored or tracked.
+            </p>
+          </div>
         </section>
 
         <div className="mt-8 text-center">

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { RecipeDetail } from "@/components/RecipeDetail";
 import { RecipeJsonLd } from "@/components/RecipeJsonLd";
-import { RecipeView } from "@/components/RecipeView";
 import { SimilarRecipes } from "@/components/SimilarRecipes";
 import { getRecipe } from "@/lib/dal/recipe";
 
@@ -40,7 +40,7 @@ const PageContent = async ({
   return (
     <main className="my-10 mx-12 md:mx-24 lg:mx-36">
       <RecipeJsonLd recipe={recipe} />
-      <RecipeView recipe={recipe} />
+      <RecipeDetail recipe={recipe} />
       <SimilarRecipes recipeId={recipeId} />
     </main>
   );

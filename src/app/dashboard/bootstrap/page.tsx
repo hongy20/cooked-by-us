@@ -36,7 +36,7 @@ export default function BootstrapPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Bootstrapping</h1>
+        <h1 className="text-2xl font-semibold">Bootstrapping ⚠️🏗️🚧🚨</h1>
       </div>
 
       {/* Container card to match dashboard style */}

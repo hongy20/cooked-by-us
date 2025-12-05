@@ -25,7 +25,7 @@ const getInitialState = (): CreateRecipeFormState => ({
 
 export const AddRecipeButton = () => (
   <EntitySheet
-    getInitialState={() => getInitialState()}
+    getInitialState={getInitialState}
     action={createRecipeAction}
     editForm={RecipeEditForm}
     successMessage="Recipe created!"

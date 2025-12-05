@@ -70,7 +70,7 @@ GOOGLE_CLIENT_SECRET=
 
 # Comma-separated list of Google account emails that are allowed to sign in.
 # Only users whose Google login email appears in this list will be granted access
-ALLOWED_GOOGLE_EMAILS=email1@example.com,email2@example.com #
+ALLOWED_GOOGLE_EMAILS=email1@example.com,email2@example.com
 
 # Cloudinary API Keys. https://cloudinary.com/documentation/node_integration
 CLOUDINARY_URL=cloudinary://my_key:my_secret@my_cloud_name

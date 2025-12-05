@@ -65,9 +65,12 @@ export const EntityDeletionDialog = ({
                         toast.error(failureMessage);
                       }
                     })
-                    .catch((error: Error) => {
+                    .catch((error) => {
                       toast.error(failureMessage, {
-                        description: error.message,
+                        description:
+                          error instanceof Error
+                            ? error.message
+                            : String(error),
                       });
                     }),
               )

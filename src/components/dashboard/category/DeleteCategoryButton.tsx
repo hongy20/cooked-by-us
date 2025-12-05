@@ -9,8 +9,7 @@ export const DeleteCategoryButton = ({ categoryId }: Props) => (
   <EntityDeletionDialog
     action={() => deleteCategoryAction(categoryId)}
     dialogTitle="Delete Category"
-    dialogDescription="This action cannot be undone. Are you sure you want to delete this
-            category?"
+    dialogDescription="This action cannot be undone. Are you sure you want to delete this category?"
     successMessage="Category deleted!"
     failureMessage="Category deletion failed"
   />

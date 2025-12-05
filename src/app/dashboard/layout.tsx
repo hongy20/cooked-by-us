@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { DashboardSidebar } from "@/components/dashboard/DashboardSidebar";
+import { DashboardSkeleton } from "@/components/dashboard/DashboardSkeleton";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { getSession } from "@/lib/auth";
 
@@ -36,7 +37,7 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<DashboardSkeleton />}>
       <DashboardLayout>{children}</DashboardLayout>
     </Suspense>
   );

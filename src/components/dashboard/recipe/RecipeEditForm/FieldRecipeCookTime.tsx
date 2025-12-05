@@ -16,13 +16,19 @@ interface Props {
   name: string;
   defaultValue: string;
   errors?: string[];
+  setDirty: () => void;
 }
 
 const MIN_MINUTES = 10;
 const MAX_MINUTES = 600;
 const DEFAULT_MINUTES = 30;
 
-export const FieldRecipeCookTime = ({ name, defaultValue, errors }: Props) => {
+export const FieldRecipeCookTime = ({
+  name,
+  defaultValue,
+  errors,
+  setDirty,
+}: Props) => {
   const id = useId();
   const [cookTimeInMinutes, setCookTimeInMinutes] = useState(() => {
     if (!defaultValue) return DEFAULT_MINUTES;
@@ -50,7 +56,10 @@ export const FieldRecipeCookTime = ({ name, defaultValue, errors }: Props) => {
           id={id}
           value={[cookTimeInMinutes]}
           onValueChange={(value) => {
-            if (value.length > 0) setCookTimeInMinutes(value[0]);
+            if (value.length > 0) {
+              setCookTimeInMinutes(value[0]);
+              setDirty();
+            }
           }}
           max={MAX_MINUTES}
           min={MIN_MINUTES}

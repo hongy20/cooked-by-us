@@ -6,9 +6,15 @@ interface Props {
   name: string;
   defaultValue: string;
   errors?: string[];
+  setDirty: () => void;
 }
 
-export const FieldRecipeName = ({ name, defaultValue, errors }: Props) => {
+export const FieldRecipeName = ({
+  name,
+  defaultValue,
+  errors,
+  setDirty,
+}: Props) => {
   const id = useId();
 
   return (
@@ -21,6 +27,7 @@ export const FieldRecipeName = ({ name, defaultValue, errors }: Props) => {
         required
         placeholder="Recipe Name"
         defaultValue={defaultValue}
+        onChange={setDirty}
       />
       <FieldError errors={errors?.map((message) => ({ message }))} />
     </Field>

@@ -18,9 +18,15 @@ interface Props {
   name: string;
   defaultValue: string | undefined;
   errors?: string[];
+  setDirty: () => void;
 }
 
-export const FieldRecipeCuisine = ({ name, defaultValue, errors }: Props) => {
+export const FieldRecipeCuisine = ({
+  name,
+  defaultValue,
+  errors,
+  setDirty,
+}: Props) => {
   const [cuisines, setCuisines] = useState<PersistedCuisine[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [cuisine, setCuisine] = useState<string | undefined>(defaultValue);
@@ -44,7 +50,13 @@ export const FieldRecipeCuisine = ({ name, defaultValue, errors }: Props) => {
       {/* Prevent form from losing the selected value */}
       <input type="hidden" name={name} value={cuisine ?? ""} />
 
-      <Select value={cuisine} onValueChange={setCuisine}>
+      <Select
+        value={cuisine}
+        onValueChange={(value) => {
+          setCuisine(value);
+          setDirty();
+        }}
+      >
         <SelectTrigger id={id}>
           <SelectValue placeholder="Choose cuisine" />
         </SelectTrigger>

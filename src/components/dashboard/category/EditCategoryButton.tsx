@@ -1,19 +1,7 @@
 "use client";
 
 import { Edit } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useActionState, useId, useRef } from "react";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { EntitySheet } from "@/components/dashboard/EntitySheet";
 import {
   type UpdateCategoryFormState,
   updateCategoryAction,
@@ -33,70 +21,16 @@ const getInitialState = (
 
 type Props = { category: PersistedCategory };
 
-export const EditCategoryButton = ({ category }: Props) => {
-  const formId = useId();
-  const router = useRouter();
-  const closeRef = useRef<HTMLButtonElement>(null);
-
-  const [state, action, pending] = useActionState(
-    async (prevState: UpdateCategoryFormState, formData: FormData) => {
-      try {
-        const rsp = await updateCategoryAction(prevState, formData);
-        if (rsp.status === "success") {
-          closeRef.current?.click(); // Close sheet
-          toast.success("Category updated!");
-          router.refresh(); // Refresh the current page
-        }
-        return rsp;
-      } catch (error) {
-        toast.error(
-          "Error",
-          error instanceof Error ? { description: error.message } : undefined,
-        );
-        return prevState;
-      }
-    },
-    getInitialState(category),
-  );
-
-  return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <Edit className="h-4 w-4" />
-        </Button>
-      </SheetTrigger>
-
-      <SheetContent
-        side="right"
-        className="w-full sm:max-w-[500px] flex flex-col"
-        onEscapeKeyDown={(event) => event.preventDefault()}
-        onInteractOutside={(event) => event.preventDefault()}
-      >
-        <SheetHeader>
-          <SheetTitle>Edit Category</SheetTitle>
-        </SheetHeader>
-
-        <div className="flex-1 overflow-y-auto overflow-x-hidden p-4">
-          <CategoryEditForm
-            fields={state.fields}
-            formId={formId}
-            action={action}
-            errors={state.errors}
-          />
-        </div>
-
-        <SheetFooter className="border-t p-4">
-          <Button type="submit" form={formId} disabled={pending}>
-            {pending ? "Saving..." : "Save"}
-          </Button>
-          <SheetClose asChild>
-            <Button variant="outline" ref={closeRef}>
-              Close
-            </Button>
-          </SheetClose>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
-  );
-};
+export const EditCategoryButton = ({ category }: Props) => (
+  <EntitySheet
+    getInitialState={() => getInitialState(category)}
+    action={updateCategoryAction}
+    editForm={CategoryEditForm}
+    successMessage="Category updated!"
+    failureMessage="Error"
+    sheetTitle="Edit Category"
+    sheetTriggerIcon={Edit}
+    sheetSubmitText="Save"
+    sheetSubmittingText="Saving..."
+  />
+);

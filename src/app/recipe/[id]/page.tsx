@@ -38,11 +38,11 @@ const PageContent = async ({
   }
 
   return (
-    <main className="my-10 mx-12 md:mx-24 lg:mx-36">
+    <>
       <RecipeJsonLd recipe={recipe} />
       <RecipeDetail recipe={recipe} />
       <SimilarRecipes recipeId={recipeId} />
-    </main>
+    </>
   );
 };
 
@@ -50,14 +50,10 @@ export default async function Page({ params }: Props) {
   const recipeIdPromise = params.then(({ id }) => id);
 
   return (
-    <Suspense
-      fallback={
-        <main className="my-10 mx-12 md:mx-24 lg:mx-36">
-          <RecipeDetail recipe={null} />
-        </main>
-      }
-    >
-      <PageContent recipeIdPromise={recipeIdPromise} />
-    </Suspense>
+    <main className="my-10 mx-4 md:mx-16 lg:mx-24">
+      <Suspense fallback={<RecipeDetail recipe={null} />}>
+        <PageContent recipeIdPromise={recipeIdPromise} />
+      </Suspense>
+    </main>
   );
 }

@@ -6,12 +6,14 @@ interface Props {
   name: string;
   defaultValue: string[];
   errors?: string[];
+  setDirty: () => void;
 }
 
 export const FieldRecipeInstructions = ({
   name,
   defaultValue,
   errors,
+  setDirty,
 }: Props) => {
   const [instructions, setInstructions] = useState<string[]>(defaultValue);
   const [textareaValue, setTextareaValue] = useState(defaultValue.join("\n"));
@@ -37,7 +39,10 @@ export const FieldRecipeInstructions = ({
           id={id}
           placeholder="Type your recipe instructions, with each step on its own line"
           value={textareaValue}
-          onChange={(e) => setTextareaValue(e.target.value)}
+          onChange={(e) => {
+            setTextareaValue(e.target.value);
+            setDirty();
+          }}
         />
 
         {/* Instruction list */}

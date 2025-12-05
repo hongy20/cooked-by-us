@@ -8,9 +8,15 @@ interface Props {
   name: string;
   defaultValue: string[];
   errors?: string[];
+  setDirty: () => void;
 }
 
-export const FieldRecipeKeywords = ({ name, defaultValue, errors }: Props) => {
+export const FieldRecipeKeywords = ({
+  name,
+  defaultValue,
+  errors,
+  setDirty,
+}: Props) => {
   const [keywords, setKeywords] = useState<string[]>(defaultValue);
   const [inputValue, setInputValue] = useState("");
   const id = useId();
@@ -19,10 +25,12 @@ export const FieldRecipeKeywords = ({ name, defaultValue, errors }: Props) => {
     const cleaned = keyword.trim();
     if (!cleaned) return;
     setKeywords((prev) => (prev.includes(cleaned) ? prev : [...prev, cleaned]));
+    setDirty();
   };
 
   const removeKeyword = (keyword: string) => {
     setKeywords((prev) => prev.filter((k) => k !== keyword));
+    setDirty();
   };
 
   return (
@@ -36,7 +44,10 @@ export const FieldRecipeKeywords = ({ name, defaultValue, errors }: Props) => {
         <Input
           id={id}
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+            setDirty();
+          }}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               e.preventDefault();

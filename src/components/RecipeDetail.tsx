@@ -12,7 +12,7 @@ export const RecipeDetail = ({ recipe }: Props) => {
   const isSkeleton = !recipe;
 
   return (
-    <article className="max-w-4xl mx-auto p-6 space-y-6">
+    <article className="max-w-4xl mx-auto p-2 space-y-6">
       <header className="space-y-2">
         <h1 className="text-3xl font-bold">
           {isSkeleton ? <Skeleton className="h-10" /> : recipe.name}

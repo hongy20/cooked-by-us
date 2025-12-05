@@ -38,7 +38,7 @@ const PageContent = async ({
   }
 
   return (
-    <main className="my-10 mx-12 md:mx-24 lg:mx-36">
+    <main className="my-10 mx-4 md:mx-16 lg:mx-24">
       <RecipeJsonLd recipe={recipe} />
       <RecipeDetail recipe={recipe} />
       <SimilarRecipes recipeId={recipeId} />

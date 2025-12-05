@@ -57,8 +57,27 @@ bun install
 Create a .env file with the following keys:
 
 ```bash
-# TBD
-ALLOWED_GOOGLE_EMAILS="email1@example.com,email2@example.com"
+# Better Auth Config. https://www.better-auth.com/docs/installation
+BETTER_AUTH_SECRET= # A secret value used for encryption and hashing
+BETTER_AUTH_URL=http://localhost:3000 # Base URL of your app (use same as NEXT_PUBLIC_BASE_URL for local dev)
+
+# MongoDB Connection String. https://www.mongodb.com/docs/manual/reference/connection-string/
+MONGODB_URI=mongodb+srv://myDatabaseUser:D1fficultP%40ssw0rd@cluster0.example.mongodb.net/?...
+
+# Google API client ID. https://developers.google.com/identity/oauth2/web/guides/get-google-api-clientid
+GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET= # Google API client secret from the same OAuth app credentials
+
+# Comma-separated list of Google account emails that are allowed to sign in.
+# Only users whose Google login email appears in this list will be granted access
+ALLOWED_GOOGLE_EMAILS=email1@example.com,email2@example.com
+
+# Cloudinary API Keys. https://cloudinary.com/documentation/node_integration
+CLOUDINARY_URL=cloudinary://my_key:my_secret@my_cloud_name
+CLOUDINARY_FOLDER= # Folder for your app
+
+# Next.js Environment Variables for the Browser. https://nextjs.org/docs/app/guides/environment-variables
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
 ```
 
 ### 4. Run the Development Server

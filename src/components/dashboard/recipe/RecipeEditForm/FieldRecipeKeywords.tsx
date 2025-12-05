@@ -25,10 +25,12 @@ export const FieldRecipeKeywords = ({
     const cleaned = keyword.trim();
     if (!cleaned) return;
     setKeywords((prev) => (prev.includes(cleaned) ? prev : [...prev, cleaned]));
+    setDirty();
   };
 
   const removeKeyword = (keyword: string) => {
     setKeywords((prev) => prev.filter((k) => k !== keyword));
+    setDirty();
   };
 
   return (

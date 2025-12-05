@@ -36,12 +36,13 @@ type Props<FormFields> = {
   failureMessage: string;
   sheetTitle: string;
   sheetDescription?: string;
-  sheetTriggerText?: string;
-  sheetTriggerIcon?: LucideIcon;
   sheetSubmitText: string;
   sheetSubmittingText: string;
   sheetCloseText?: string;
-};
+} & (
+  | { sheetTriggerText: string; sheetTriggerIcon?: LucideIcon }
+  | { sheetTriggerText?: string; sheetTriggerIcon: LucideIcon }
+);
 
 export const EntitySheet = <FormFields,>({
   getInitialState,

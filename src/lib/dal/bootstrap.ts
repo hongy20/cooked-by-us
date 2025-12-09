@@ -1,7 +1,7 @@
 import "server-only";
+import type { Recipe } from "@/lib/domain/recipe";
 import { CategoryModel, CuisineModel, RecipeModel } from "@/lib/model";
 import connectDB from "@/lib/mongodb";
-import type { RecipeInput } from "@/lib/validator/recipe";
 
 export const bootstrapCuisines = async () => {
   await connectDB();
@@ -44,7 +44,7 @@ export const bootstrapCategories = async () => {
 
 export const bootstrapRecipes = async () => {
   await connectDB();
-  const recipes: RecipeInput[] = [
+  const recipes: Recipe[] = [
     {
       name: "红烧肉",
       description:

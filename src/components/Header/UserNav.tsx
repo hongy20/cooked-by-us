@@ -46,7 +46,7 @@ export function UserNav() {
 
   // Loading state (better-auth fetch in progress)
   if (isPending) {
-    return <div className="h-8 w-20 rounded bg-muted animate-pulse" />;
+    return <div className="h-8 w-16 rounded bg-muted animate-pulse" />;
   }
 
   // Not logged in → show Login CTA

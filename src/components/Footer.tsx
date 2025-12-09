@@ -4,7 +4,7 @@ import { ThemeSwitcher } from "./ThemeSwitcher";
 export const Footer = () => {
   return (
     <footer className="border-t bg-background py-6 text-center text-sm text-muted-foreground">
-      <div className="mx-auto flex items-center justify-between px-4 gap-4">
+      <div className="mx-auto flex flex-col sm:flex-row items-center justify-between px-4 gap-4">
         <p>
           Built by{" "}
           <Link

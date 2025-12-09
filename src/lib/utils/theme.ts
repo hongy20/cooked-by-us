@@ -37,7 +37,7 @@ export function getApplyThemeScript() {
   return `(${applyTheme
     .toString()
     .replace(
-      /getThemeFromLocalStorage/gi,
+      /getThemeFromLocalStorage/g,
       `(${getThemeFromLocalStorage.toString()})`,
     )
     .replace(/<\/script>/gi, "<\\/script>")})()`;

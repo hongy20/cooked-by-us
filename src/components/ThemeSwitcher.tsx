@@ -25,7 +25,12 @@ export function ThemeSwitcher() {
 
   useEffect(() => {
     // Apply theme immediately when component mounts
-    const stored = (localStorage.getItem("theme") as ThemeOption) || "system";
+    let stored: ThemeOption = "system";
+    try {
+      stored = (localStorage.getItem("theme") as ThemeOption) || "system";
+    } catch {
+      // localStorage unavailable (private window), use default
+    }
     setTheme(stored);
 
     // Only apply if not already applied by the head script
@@ -53,7 +58,11 @@ export function ThemeSwitcher() {
 
   const onSelectHandler = (value: ThemeOption) => {
     setTheme(value);
-    localStorage.setItem("theme", value);
+    try {
+      localStorage.setItem("theme", value);
+    } catch {
+      // localStorage unavailable, theme still applied to DOM
+    }
     applyTheme(value);
   };
 

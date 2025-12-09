@@ -70,14 +70,28 @@ export function ThemeSwitcher() {
     <div className="flex rounded-lg overflow-hidden border border-neutral-300 dark:border-neutral-700">
       {mounted
         ? [
-            { option: "light" as const, icon: Sun },
-            { option: "dark" as const, icon: Moon },
-            { option: "system" as const, icon: Monitor },
-          ].map(({ option, icon: Icon }) => (
+            {
+              option: "light" as const,
+              icon: Sun,
+              label: "Switch to light theme",
+            },
+            {
+              option: "dark" as const,
+              icon: Moon,
+              label: "Switch to dark theme",
+            },
+            {
+              option: "system" as const,
+              icon: Monitor,
+              label: "Use system theme",
+            },
+          ].map(({ option, icon: Icon, label }) => (
             <button
               type="button"
               key={option}
               onClick={() => onSelectHandler(option)}
+              aria-label={label}
+              aria-pressed={theme === option}
               className={`flex items-center justify-center w-8 h-8 transition-colors cursor-pointer ${
                 theme === option /* active vs inactive */
                   ? "bg-neutral-200 dark:bg-neutral-700 text-black dark:text-white"

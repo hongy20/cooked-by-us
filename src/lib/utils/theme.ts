@@ -1,7 +1,12 @@
 export function getThemeScript() {
   // normal JS/TS code, fully linted
   const code = () => {
-    const user = localStorage.getItem("theme");
+    let user = null;
+    try {
+      user = localStorage.getItem("theme");
+    } catch {
+      // localStorage unavailable (private mode, etc.)
+    }
     const systemDark = window.matchMedia(
       "(prefers-color-scheme: dark)",
     ).matches;

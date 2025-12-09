@@ -27,7 +27,17 @@ export function ThemeSwitcher() {
     // Apply theme immediately when component mounts
     const stored = (localStorage.getItem("theme") as ThemeOption) || "system";
     setTheme(stored);
-    applyTheme(stored);
+
+    // Only apply if not already applied by the head script
+    const isDark = document.documentElement.classList.contains("dark");
+    const shouldBeDark =
+      stored === "dark" ||
+      (stored === "system" &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches);
+    if (isDark !== shouldBeDark) {
+      applyTheme(stored);
+    }
+
     setMounted(true);
   }, [applyTheme]);
 

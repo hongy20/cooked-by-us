@@ -7,7 +7,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Header } from "@/components/Header/Header";
 import { Toaster } from "@/components/ui/sonner";
 import { COOKED_BY_US } from "@/lib/constant";
-import { getThemeScript } from "@/lib/utils/theme";
+import { getApplyThemeScript } from "@/lib/utils/theme";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script>{getThemeScript()}</script>
+        <script>{getApplyThemeScript()}</script>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

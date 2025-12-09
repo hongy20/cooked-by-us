@@ -1,50 +1,26 @@
 "use client";
 
 import { Monitor, Moon, Sun } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  applyTheme,
+  getThemeFromLocalStorage,
+  setThemeToLocalStorage,
+  type ThemeOption,
+} from "@/lib/utils/theme";
 import { Skeleton } from "./ui/skeleton";
-
-type ThemeOption = "light" | "dark" | "system";
 
 export function ThemeSwitcher() {
   const [theme, setTheme] = useState<ThemeOption>("system");
   const [mounted, setMounted] = useState(false);
 
-  const applyTheme = useCallback((value: ThemeOption) => {
-    const root = document.documentElement;
-    const systemDark = window.matchMedia(
-      "(prefers-color-scheme: dark)",
-    ).matches;
-
-    if (value === "dark" || (value === "system" && systemDark)) {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-  }, []);
-
   useEffect(() => {
     // Apply theme immediately when component mounts
-    let stored: ThemeOption = "system";
-    try {
-      stored = (localStorage.getItem("theme") as ThemeOption) || "system";
-    } catch {
-      // localStorage unavailable (private window), use default
-    }
+    const stored = getThemeFromLocalStorage();
     setTheme(stored);
-
-    // Only apply if not already applied by the head script
-    const isDark = document.documentElement.classList.contains("dark");
-    const shouldBeDark =
-      stored === "dark" ||
-      (stored === "system" &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches);
-    if (isDark !== shouldBeDark) {
-      applyTheme(stored);
-    }
-
+    applyTheme(stored);
     setMounted(true);
-  }, [applyTheme]);
+  }, []);
 
   useEffect(() => {
     // Update theme if OS changes and mode is "system"
@@ -54,15 +30,11 @@ export function ThemeSwitcher() {
     };
     mq.addEventListener("change", handler);
     return () => mq.removeEventListener("change", handler);
-  }, [theme, applyTheme]);
+  }, [theme]);
 
   const onSelectHandler = (value: ThemeOption) => {
+    setThemeToLocalStorage(value);
     setTheme(value);
-    try {
-      localStorage.setItem("theme", value);
-    } catch {
-      // localStorage unavailable, theme still applied to DOM
-    }
     applyTheme(value);
   };
 

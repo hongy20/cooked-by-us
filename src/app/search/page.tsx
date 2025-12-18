@@ -16,12 +16,12 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   return (
-    <main className="container mx-auto py-16 px-4 sm:px-6 lg:px-8 text-center">
+    <main className="container mx-auto px-4 py-16 text-center sm:px-6 lg:px-8">
       <header className="mb-8">
-        <h1 className="text-4xl font-bold sm:text-5xl">Search Coming Soon</h1>
+        <h1 className="font-bold text-4xl sm:text-5xl">Search Coming Soon</h1>
       </header>
 
-      <section className="prose mx-auto max-w-xl sm:prose-lg">
+      <section className="prose sm:prose-lg mx-auto max-w-xl">
         <p>
           The search functionality will be implemented once there are enough
           recipes in the system to make it useful.

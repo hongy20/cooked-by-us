@@ -42,9 +42,9 @@ export const MobileNav = async () => {
             <Accordion type="single" collapsible>
               <AccordionItem value="categories">
                 <AccordionTrigger>Categories</AccordionTrigger>
-                <AccordionContent className="flex flex-col pl-4 space-y-1">
+                <AccordionContent className="flex flex-col space-y-1 pl-4">
                   {categories.length === 0 ? (
-                    <span className="p-2 text-sm text-muted-foreground">
+                    <span className="p-2 text-muted-foreground text-sm">
                       No categories available
                     </span>
                   ) : (
@@ -52,7 +52,7 @@ export const MobileNav = async () => {
                       <Link
                         key={category.id}
                         href={`/search?category=${encodeURIComponent(category.name)}`}
-                        className="p-2 rounded hover:bg-accent"
+                        className="rounded p-2 hover:bg-accent"
                       >
                         {category.name}
                       </Link>
@@ -62,9 +62,9 @@ export const MobileNav = async () => {
               </AccordionItem>
               <AccordionItem value="cuisine">
                 <AccordionTrigger>Cuisines</AccordionTrigger>
-                <AccordionContent className="flex flex-col pl-4 space-y-1">
+                <AccordionContent className="flex flex-col space-y-1 pl-4">
                   {cuisines.length === 0 ? (
-                    <span className="p-2 text-sm text-muted-foreground">
+                    <span className="p-2 text-muted-foreground text-sm">
                       No cuisines available
                     </span>
                   ) : (
@@ -72,7 +72,7 @@ export const MobileNav = async () => {
                       <Link
                         key={cuisine.id}
                         href={`/search?cuisine=${encodeURIComponent(cuisine.name)}`}
-                        className="p-2 rounded hover:bg-accent"
+                        className="rounded p-2 hover:bg-accent"
                       >
                         {cuisine.name}
                       </Link>

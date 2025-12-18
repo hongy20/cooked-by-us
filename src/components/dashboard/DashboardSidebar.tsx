@@ -39,7 +39,7 @@ export function DashboardSidebar() {
     // top-16 should match the global header height (4rem);
     // h-[calc(100vh-4rem)] = 100vh - header
     <Sidebar className="top-16 h-[calc(100vh-4rem)] border-r">
-      <SidebarHeader className="p-4 text-xl font-semibold">
+      <SidebarHeader className="p-4 font-semibold text-xl">
         Dashboard
       </SidebarHeader>
 
@@ -58,7 +58,7 @@ export function DashboardSidebar() {
         </SidebarMenu>
       </SidebarContent>
 
-      <SidebarFooter className="p-4 text-sm text-muted-foreground">
+      <SidebarFooter className="p-4 text-muted-foreground text-sm">
         © {new Date().getFullYear()}
       </SidebarFooter>
     </Sidebar>

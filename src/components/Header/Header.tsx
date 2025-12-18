@@ -6,11 +6,11 @@ import { UserNav } from "./UserNav";
 
 export const Header = () => {
   return (
-    <header className="border-b bg-background mx-4">
+    <header className="mx-4 border-b bg-background">
       <div className="flex h-16 items-center gap-1">
         <MobileNav />
 
-        <Link href="/" className="text-xl font-bold mr-4">
+        <Link href="/" className="mr-4 font-bold text-xl">
           {COOKED_BY_US}
         </Link>
 

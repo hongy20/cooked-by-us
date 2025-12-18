@@ -121,7 +121,7 @@ export const EntitySheet = <FormFields,>({
 
         <SheetContent
           side="right"
-          className="w-full sm:max-w-[500px] flex flex-col"
+          className="flex w-full flex-col sm:max-w-[500px]"
         >
           <SheetHeader>
             <SheetTitle>{sheetTitle}</SheetTitle>

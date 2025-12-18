@@ -13,13 +13,13 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <SidebarProvider>
-      <div className="flex flex-1 w-full">
+      <div className="flex w-full flex-1">
         {/* Sidebar: positioned below global header */}
         <DashboardSidebar />
 
-        <div className="flex-1 flex flex-col">
+        <div className="flex flex-1 flex-col">
           {/* Dashboard-specific top bar */}
-          <header className="flex items-center gap-4 border-b px-6 h-14 md:hidden">
+          <header className="flex h-14 items-center gap-4 border-b px-6 md:hidden">
             <SidebarTrigger />
             <h1 className="font-semibold text-lg">Dashboard</h1>
           </header>

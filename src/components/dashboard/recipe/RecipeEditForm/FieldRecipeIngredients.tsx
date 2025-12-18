@@ -46,11 +46,11 @@ export const FieldRecipeIngredients = ({
         />
 
         {/* Ingredient list */}
-        <ul className="list-disc list-inside">
+        <ul className="list-inside list-disc">
           {ingredients.map((ingredient) => (
             <li
               key={ingredient}
-              className="text-muted-foreground p-0.5 odd:bg-gray-100 even:bg-white"
+              className="p-0.5 text-muted-foreground odd:bg-gray-100 even:bg-white"
             >
               {ingredient}
             </li>

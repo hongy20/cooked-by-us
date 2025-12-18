@@ -24,7 +24,7 @@ export const DesktopNav = async () => {
             <NavigationMenuContent>
               <ul className="grid w-[200px] gap-1">
                 {categories.length === 0 ? (
-                  <span className="p-2 text-sm text-muted-foreground">
+                  <span className="p-2 text-muted-foreground text-sm">
                     No categories available
                   </span>
                 ) : (
@@ -48,7 +48,7 @@ export const DesktopNav = async () => {
             <NavigationMenuContent>
               <ul className="grid w-[200px] gap-1">
                 {cuisines.length === 0 ? (
-                  <span className="p-2 text-sm text-muted-foreground">
+                  <span className="p-2 text-muted-foreground text-sm">
                     No cuisines available
                   </span>
                 ) : (

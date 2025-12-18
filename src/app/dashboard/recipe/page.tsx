@@ -8,7 +8,7 @@ export default async function Page() {
   return (
     <div className="space-y-4">
       <div className="flex justify-between">
-        <h1 className="text-2xl font-semibold">Recipes</h1>
+        <h1 className="font-semibold text-2xl">Recipes</h1>
         <AddRecipeButton />
       </div>
 

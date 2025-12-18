@@ -46,7 +46,7 @@ export function UserNav() {
 
   // Loading state (better-auth fetch in progress)
   if (isPending) {
-    return <div className="h-8 w-16 rounded bg-muted animate-pulse" />;
+    return <div className="h-8 w-16 animate-pulse rounded bg-muted" />;
   }
 
   // Not logged in → show Login CTA
@@ -61,11 +61,11 @@ export function UserNav() {
           <Button
             variant="outline"
             onClick={handleLogin}
-            className="flex-row items-center gap-2 w-full"
+            className="w-full flex-row items-center gap-2"
           >
             <span className="dark:text-gray-300">Login with Google</span>
           </Button>
-          <p className="text-muted-foreground pt-2 text-xs text-center">
+          <p className="pt-2 text-center text-muted-foreground text-xs">
             Access restricted to authorized accounts
           </p>
         </DropdownMenuContent>
@@ -94,8 +94,8 @@ export function UserNav() {
 
       <DropdownMenuContent align="end" className="w-48">
         <div className="px-3 py-2">
-          <p className="text-sm font-medium">{user.name}</p>
-          <p className="text-xs text-muted-foreground">{user.email}</p>
+          <p className="font-medium text-sm">{user.name}</p>
+          <p className="text-muted-foreground text-xs">{user.email}</p>
         </div>
 
         <DropdownMenuSeparator />
@@ -110,7 +110,7 @@ export function UserNav() {
           <Button
             variant="outline"
             onClick={handleLogout}
-            className="flex-row items-center gap-2 w-full"
+            className="w-full flex-row items-center gap-2"
           >
             <LogOut />
             Logout

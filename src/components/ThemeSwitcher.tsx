@@ -39,7 +39,7 @@ export function ThemeSwitcher() {
   };
 
   return (
-    <div className="flex rounded-lg overflow-hidden border border-neutral-300 dark:border-neutral-700">
+    <div className="flex overflow-hidden rounded-lg border border-neutral-300 dark:border-neutral-700">
       {mounted
         ? [
             {
@@ -64,10 +64,10 @@ export function ThemeSwitcher() {
               onClick={() => onSelectHandler(option)}
               aria-label={label}
               aria-pressed={theme === option}
-              className={`flex items-center justify-center w-8 h-8 transition-colors cursor-pointer ${
+              className={`flex h-8 w-8 cursor-pointer items-center justify-center transition-colors ${
                 theme === option /* active vs inactive */
-                  ? "bg-neutral-200 dark:bg-neutral-700 text-black dark:text-white"
-                  : "text-neutral-500 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                  ? "bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
+                  : "text-neutral-500 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800"
               }`}
             >
               <Icon className="size-4" />
@@ -78,7 +78,7 @@ export function ThemeSwitcher() {
             <Skeleton
               // biome-ignore lint/suspicious/noArrayIndexKey: placeholder
               key={i}
-              className="w-8 h-8 rounded-none"
+              className="h-8 w-8 rounded-none"
             />
           ))}
     </div>

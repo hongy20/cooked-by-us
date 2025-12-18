@@ -3,8 +3,8 @@ import { ThemeSwitcher } from "./ThemeSwitcher";
 
 export const Footer = () => {
   return (
-    <footer className="border-t bg-background py-6 text-center text-sm text-muted-foreground">
-      <div className="mx-auto flex flex-col sm:flex-row items-center justify-between px-4 gap-4">
+    <footer className="border-t bg-background py-6 text-center text-muted-foreground text-sm">
+      <div className="mx-auto flex flex-col items-center justify-between gap-4 px-4 sm:flex-row">
         <p>
           Built by{" "}
           <Link
